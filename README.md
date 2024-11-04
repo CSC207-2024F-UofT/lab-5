@@ -2,21 +2,20 @@
 
 ## Team Members
 
-⁠Farshad Haddadi 
+Farshad Haddadi 
 * GitHub username: farshad-haddadi
-* Email:⁠⁠ farshad.haddadi@mail.utoronto.ca
+
+Hongcheng Huo
+* GitHub username: hhcgoodluck
 
 Sung-chi (William) Wu
-* GitHub username: ⁠⁠wusungch 
-* Email:⁠⁠ sungchi2024@outlook.com
+* GitHub username: wusungch 
 
 Xinyu (Cindy) Zhang
 * GitHub username: Cindyzzz616
-* Email: cxy.zhang16@gmail.com
 
 Shuxin (Kate) Zhou
 * GitHub username: kayzoo8
-* Email: katezhou2005@gmail.com
 
 
 ## User Stories
