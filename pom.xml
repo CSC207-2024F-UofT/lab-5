@@ -4,6 +4,22 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <repositories>
+        <repository>
+            <id>central</id>
+            <name>Central Repository</name>
+            <url>https://repo.maven.apache.org/maven2</url>
+            <layout>default</layout>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
+
     <groupId>edu.csc207</groupId>
     <artifactId>homework-5</artifactId>
     <version>1.0-SNAPSHOT</version>
@@ -34,6 +50,12 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>com.github.MatthewWeisCaps</groupId>
+            <artifactId>spoonacular-food-api-java</artifactId>
+            <version>1.0</version>
+        </dependency>
+
     </dependencies>
 
 
@@ -45,3 +67,4 @@
     </properties>
 
 </project>
+
