@@ -1,181 +1,32 @@
-# Lab 5: Logout
+# CSC207 Project - Recipe Generator
 
-## Preamble
+## Team Members
 
-In the current homework, you added code to the login use case to save the currently-logged-in
-user by saving the user in the Data Access Layer. You also added a unit test for this.
+⁠Farshad Haddadi 
+* GitHub username: farshad-haddadi
+* Email:⁠⁠ farshad.haddadi@mail.utoronto.ca
 
-In this lab, you will complete a logout use case as a team. You will also begin to discuss your project
-and the use cases that need to be implemented. 
+Sung-chi (William) Wu
+* GitHub username: ⁠⁠wusungch 
+* Email:⁠⁠ sungchi2024@outlook.com
 
-We have created all the Clean Architecture classes necessary for the logout use case.
+Xinyu (Cindy) Zhang
+* GitHub username: Cindyzzz616
+* Email: cxy.zhang16@gmail.com
 
-By Friday, your team will submit:
-- your completed lab code [for credit]
-- a draft of your project blueprint proposal. [required, but not for credit]
+Shuxin (Kate) Zhou
+* GitHub username: kayzoo8
+* Email: katezhou2005@gmail.com
 
-# Phase 2 [for credit]
-_(recall, Phase 1 was your solo task of adding the storage of the currently-logged-in user)_
 
-## Task 0: Fork this repo on GitHub
-**To get started, one team member should fork this repo on GitHub and share it with the team. 
-All of you should then clone it.**
+## User Stories
+*	Member 1: The core feature of the program allows users to input ingredients they have on hand and receive recipe suggestions. Users can enter ingredients separated by commas, and the system will generate relevant recipes. If some ingredients are missing, the system can suggest close alternatives or highlight what else is needed. This feature helps users efficiently use the ingredients they already own, potentially reducing food waste and unnecessary shopping trips.
 
-* * *
+*	Member 2: A key component of the system is the ability for users to filter recipes by diet and cuisine. This feature allows users to customize results based on dietary needs—such as vegan, gluten-free, or keto—or by preferred cuisines like Italian or Mexican. Users can apply multiple filters simultaneously to find recipes that meet both dietary restrictions and taste preferences. Managing these filters effectively ensures that the results remain useful even when dietary and cultural preferences overlap.
 
-Suggested logistics: One of you should invite the others to collaborate on their fork of the
-original repo on GitHub. You can do this in your repo on GitHub under `Settings -> Collaborators`.
-This will allow you to push branches to a common repo and then use pull requests to contribute
-your code and review. To prevent others from pushing directly to the main branch,
-we recommend you set branch protection rules on GitHub. Below are how the settings might look if you
-add branch protection rules:
+*	Member 3: Another feature provides detailed nutritional information for each recipe. Users can click a button to access data such as calorie counts, macronutrients (carbs, proteins, fats), and other key nutrients. This feature supports those who are tracking their nutrition or following specific dietary goals. It is important for the system to present this information clearly, accounting for potential variations in portion sizes and ingredient substitutions.
 
-![image of branch protection rules for main with the
-requirement of two approvers to merge in pull requests.
-](images/branch_protection_rules.png)
+*	Member 4: The system will also allow users to bookmark recipes for future reference. This feature enables users to save recipes they find interesting or useful and organize them into categories like "Dinner" or "Favorites." Additionally, a "Recently Viewed" section can help users retrieve recipes they forgot to bookmark. The ability to sync bookmarks across devices ensures easy access whether users are on a phone or computer.
 
-* * *
+*	Member 5: Finally, the program offers a shopping list feature for adjacent recipes. When users are missing one or two ingredients for a recipe, the system will generate a shopping list with only the required items. This function can help users decide what to buy if they want to try new meals without doing extensive shopping. Export options, such as saving the list as a PDF or sharing it with other apps, enhance usability. The system will also need to distinguish between essential ingredients and common pantry staples to keep the lists concise.
 
-Open the project in IntelliJ and make sure you can successfully run `app/Main.java`.
-Note: you may need to set the Project SDK in the `Project Structure...` menu, and possibly
-also manually link the Maven project, as you did in Phase 1.
-
-## Task 1: Understanding the Program
-
-You may notice that we have refactored the CA engine code _slightly_ since Phase 1, but the
-way we build the engine is drastically different: we have switched from using Factories to
-using the Builder design pattern, which we'll be discussing in lecture soon. 
-
-Open up `app.Main` and read it as a team.
-- What are the Views and what are the current Use Cases?
-- Which Uses Cases are triggered from each View?
-- Which version of the DAO is `app.Main` using?
-
-The major change since Phase 1 is that we have added the `app.AppBuilder` class which makes
-it easier to understand how our CA engine is being constructed — it also makes `app.Main` nice and concise!
-- Why do all those `addX` methods end in `return this;`? 
-
-Run the program and make sure the signup and login Use Cases work.
-
-Currently, you'll notice that the "Log Out" button still doesn't actually log you out. It's time to fix
-that button, which is part of the `LoggedInView`.
-We have created all the classes for you, but some of the code is missing.
-As a team, your task is to fill in the missing code so that the Logout Use Case is implemented.
-**The next part of the readme describes how your team will do this.**
-
-* * *
-
-**Your team will know when you are done when:**
-
-- Clicking the "Log Out" button takes the user back to the Login View when you use the program.
-- The provided `LogoutInteractorTest` test passes.
-
-The "Log Out" button is an instance variable in class `LoggedInVew`. Go find it.
-Also look at the `interface_adapter.change_password.LoggedInViewModel`, which contains any
-data showing on the `LoggedInVew`.
-
-* * *
-
-## Task 2: Dividing up the work
-
-There are `TODO` comments left in the files
-Recall that you can use the TODO tool window to conveniently pull up a complete list.
-
-Once the TODOs are all complete, the "Log Out" button _should_ work!
-
-As a team, split up the TODOs (see below) between the members of your team.
-
-There are TODOs in seven of the files.
-Make sure each member has at least one TODO which they will be responsible for completing.
-If your team prefers to work in pairs, that is fine too. Your individual branches
-will not be graded for this — only the final, working version.
-
-The TODOs are summarized below (by file) to help your team decide how to split them up:
-
-* * *
-
-- `Main.java`
-
-  - [ ] TODO: add the Logout Use Case to the app using the appBuilder
-
-* * *
-
-- `LoggedInView.java` (tip: refer to the other views for similar code)
-
-  - [ ] TODO: save the logout controller in the instance variable.
-  - [ ] TODO: execute the logout use case through the Controller
-
-* * *
-
-- `LogoutController.java` (tip: refer to the other controllers for similar code)
-
-  - [ ] TODO: Save the interactor in the instance variable.
-  - [ ] TODO: run the use case interactor for the logout use case
-
-* * *
-
-- `LogoutInputData.java` (should be done with the LogoutInteractor TODOs below)
-
-  - [ ] TODO: save the current username in an instance variable and add a getter.
-
-- `LogoutInteractor.java` (tip: refer to `ChangePasswordInteractor.java` for similar code)
-
-  - [ ] TODO: save the DAO and Presenter in the instance variables.
-  - [ ] TODO: implement the logic of the Logout Use Case
-
-* * *
-
-- `LogoutOutputData.java`
-
-  - [ ] TODO: save the parameters in the instance variables.
-
-* * *
-
-- `LogoutPresenter.java` (tip: refer to `SignupPresenter.java` for similar code)
-
-  - [ ] TODO: assign to the three instance variables.
-  - [ ] TODO: have prepareSuccessView update the LoggedInState
-  - [ ] TODO: have prepareSuccessView update the LoginState
-
-* * *
-
-1. Make a branch named the first part of your UofT email address, everything before the `@`.
-For example, if your email address is `paul.gries@mail.utoronto.ca`, then the branch name would
-be `paul.gries`.
-
-Make sure you switch to the new branch.
-
-In the terminal, this would look like below, but replaced with your own information:
-```
-git branch paul.gries
-git switch paul.gries
-```
-
-2. Complete your assigned TODOs and make a pull request on GitHub. In your pull request,
-   briefly describe what your TODOs were and how you implemented them. If you aren't sure
-   about part of it, include this in your pull request so everyone knows what to look
-   for when reviewing — or you can of course discuss with your team before making your
-   pull request since you are physically working in the same space.
-   - **Important: don't push any changes to the `.idea` folder, as that
-     may cause issues for your other teammates, as some files contain
-     configurations specific to your individual IntelliJ projects.**
-
-3. Review each other's pull requests to ensure each TODO is correctly implemented and that
-   there are no Checkstyle issues in the files that were modified.
-
-4. Once all TODOs are completed, your team should debug as needed to ensure the
-   correctness of the code. Setting a breakpoint where the log-out use case
-   interactor starts its work will likely be a great place to start when debugging.
-
-And that's it; you now have a working Logout Use Case! Instructions for
-how to submit your work on MarkUs will be posted later.
-
-Your team should spend the rest of the lab working on your project blueprint.
-
-* * *
-
-# Project Blueprint
-
-See Quercus for details about the project blueprint! By the end of the week,
-the goal is for your team to have a fully drafted blueprint so that your team
-will be ready to get started on your project after Reading Week.
