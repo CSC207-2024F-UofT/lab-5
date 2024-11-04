@@ -1,28 +1,15 @@
 package app;
 
-import javax.swing.JFrame;
+import data_access.RecipeDAOImpl;
+import interface_adapter.RecipeController;
+import use_case.SearchRecipeUseCase;
+import view.RecipeView;
 
-/**
- * The Main class of our application.
- */
 public class Main {
-    /**
-     * Builds and runs the CA architecture of the application.
-     * @param args unused arguments
-     */
     public static void main(String[] args) {
-        final AppBuilder appBuilder = new AppBuilder();
-        // TODO: add the Logout Use Case to the app using the appBuilder
-        final JFrame application = appBuilder
-                                            .addLoginView()
-                                            .addSignupView()
-                                            .addLoggedInView()
-                                            .addSignupUseCase()
-                                            .addLoginUseCase()
-                                            .addChangePasswordUseCase()
-                                            .build();
-
-        application.pack();
-        application.setVisible(true);
+        RecipeDAOImpl recipeDAO = new RecipeDAOImpl();
+        SearchRecipeUseCase searchRecipeUseCase = new SearchRecipeUseCase(recipeDAO);
+        RecipeController controller = new RecipeController(searchRecipeUseCase);
+        new RecipeView(controller);
     }
 }

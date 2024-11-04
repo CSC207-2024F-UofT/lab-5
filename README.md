@@ -17,6 +17,9 @@ Xinyu (Cindy) Zhang
 Shuxin (Kate) Zhou
 * GitHub username: kayzoo8
 
+Hongcheng (Morgan）Huo
+* Github username: hhcgoodluck
+* Email: hhcgoodluck@outlook.com
 
 ## User Stories
 *	Member 1: The core feature of the program allows users to input ingredients they have on hand and receive recipe suggestions. Users can enter ingredients separated by commas, and the system will generate relevant recipes. If some ingredients are missing, the system can suggest close alternatives or highlight what else is needed. This feature helps users efficiently use the ingredients they already own, potentially reducing food waste and unnecessary shopping trips.
