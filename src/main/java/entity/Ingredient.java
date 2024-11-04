@@ -1,5 +1,8 @@
 package entity;
 
+/**
+ * Represents an ingredient from our recipe.
+ */
 public class Ingredient {
     private String name;
 
