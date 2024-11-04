@@ -1,7 +1,7 @@
 package view;
 
-import interface_adapter.RecipeController;
 import entity.Recipe;
+import interface_adapter.RecipeController;
 
 import javax.swing.*;
 import java.awt.*;
