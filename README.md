@@ -6,6 +6,10 @@
 * GitHub username: farshad-haddadi
 * Email:⁠⁠ farshad.haddadi@mail.utoronto.ca
 
+Hongcheng (Morgan）Huo
+* Github username: hhcgoodluck
+* Email: hhcgoodluck@outlook.com
+
 Sung-chi (William) Wu
 * GitHub username: ⁠⁠wusungch 
 * Email:⁠⁠ sungchi2024@outlook.com
@@ -17,10 +21,6 @@ Xinyu (Cindy) Zhang
 Shuxin (Kate) Zhou
 * GitHub username: kayzoo8
 * Email: katezhou2005@gmail.com
-
-Hongcheng (Morgan）Huo
-* Github username: hhcgoodluck
-* Email: hhcgoodluck@outlook.com
 
 ## User Stories
 *	Member 1: The core feature of the program allows users to input ingredients they have on hand and receive recipe suggestions. Users can enter ingredients separated by commas, and the system will generate relevant recipes. If some ingredients are missing, the system can suggest close alternatives or highlight what else is needed. This feature helps users efficiently use the ingredients they already own, potentially reducing food waste and unnecessary shopping trips.
