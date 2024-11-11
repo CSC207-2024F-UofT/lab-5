@@ -9,6 +9,7 @@ public class Recipe {
     private String name;
     private String url;
     private List<String> ingredients;
+    private String cuisineType;
 
     public Recipe(String name, String url, List<String> ingredients) {
         this.name = name;
@@ -26,5 +27,9 @@ public class Recipe {
 
     public List<String> getIngredients() {
         return ingredients;
+    }
+
+    public String getCuisineType() {
+        return cuisineType;
     }
 }
