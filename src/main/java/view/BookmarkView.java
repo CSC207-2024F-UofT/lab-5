@@ -1,6 +1,7 @@
 package view;
 
 import entity.Recipe;
+import entity.User;
 // import interface_adapter.BookmarkController;
 
 import javax.swing.*;
@@ -32,7 +33,7 @@ public class BookmarkView extends JFrame {
         this.bookmarkList = new JList<>();
 
         // TODO getname() method
-        setTitle(user.getname() + "'s Bookmarks");
+        setTitle(user.getUsername() + "'s Bookmarks");
         setSize(800, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
