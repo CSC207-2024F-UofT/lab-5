@@ -6,6 +6,7 @@ import java.util.List;
  * This class returns a recipe from the API.
  */
 public class Recipe {
+    private String id;
     private String name;
     private String url;
     private List<String> ingredients;

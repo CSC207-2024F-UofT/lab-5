@@ -1,20 +1,10 @@
 package app;
 
-import data_access.SpoonacularRecipeDAO;
-import interface_adapter.RecipeController;
-import use_case.SearchRecipeUseCase;
-import view.RecipeView;
+import view.LoginSignupPage;
 
 public class Main {
     public static void main(String[] args) {
-        // Initialize dependencies
-        SpoonacularRecipeDAO recipeDAO = new SpoonacularRecipeDAO();
-        SearchRecipeUseCase searchRecipeUseCase = new SearchRecipeUseCase(recipeDAO);
-        RecipeController controller = new RecipeController(searchRecipeUseCase);
-
-        // Launch the UI
-        new RecipeView(controller);
+        // Launch the login/signup page as the first view
+        new LoginSignupPage();
     }
 }
-
-
