@@ -1,8 +1,7 @@
 package interface_adapter;
 
-import entity.Recipe;
 import use_case.SearchRecipeUseCase;
-
+import entity.Recipe;
 import java.util.List;
 
 public class RecipeController {
