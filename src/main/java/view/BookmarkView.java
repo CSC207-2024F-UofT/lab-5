@@ -1,7 +1,7 @@
 package view;
 
 import entity.Recipe;
-import interface_adapter.BookmarkController;
+// import interface_adapter.BookmarkController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,7 +17,7 @@ public class BookmarkView extends JFrame {
 
     // attributes for default view
     private JList<String> bookmarkList;
-    private BookmarkController controller;
+    // private BookmarkController controller;
     private User user;
 
     // button to view individual recipes
@@ -27,8 +27,7 @@ public class BookmarkView extends JFrame {
     /*
     Generates the default view of a user's bookmarked recipes.
      */
-    public BookmarkView(BookmarkController controller, User user) {
-        this.controller = controller;
+    public BookmarkView(User user) {
         // TODO getBookmarks() method
         this.bookmarkList = new JList<>();
 
@@ -39,7 +38,8 @@ public class BookmarkView extends JFrame {
 
         add(new JScrollPane(bookmarkList), BorderLayout.CENTER);
 
-        // view recipe button for each item in the list
+        // TODO view recipe button for each item in the list - in progress
+        /*
         bookmarkList.add("view recipe", viewRecipeButton);
         // or do JButton b = new JButton("view recipe")?
         viewRecipeButton.addActionListener(new ActionListener() {
@@ -50,31 +50,33 @@ public class BookmarkView extends JFrame {
                 dispose();
             }
         });
+         */
 
-        // Search function
-        ingredientInput = new JTextField(20);
-        searchButton = new JButton("Find Recipes by Ingredients");
-        recipeListByIngredient = new JList<>();
+        // TODO Search function - in progress
+//        ingredientInput = new JTextField(20);
+//        searchButton = new JButton("Find Recipes by Ingredients");
+//        recipeListByIngredient = new JList<>();
+//
+//        nameInput = new JTextField(20);
+//        searchButton = new JButton("Find Recipes by Name");
+//        recipeListByName = new JList<>();
+//
+//        searchButton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                String ingredientsText = ingredientInput.getText();
+//                java.util.List<String> ingredients = Arrays.asList(ingredientsText.split(","));
+//                List<Recipe> recipes = controller.getRecipes(ingredients);
+//
+//                String[] recipeNames = recipes.stream()
+//                        .map(recipe -> recipe.getName() + " - " + recipe.getUrl())
+//                        .toArray(String[]::new);
+//                recipeList.setListData(recipeNames);
+//            }
+//        });
 
-        nameInput = new JTextField(20);
-        searchButton = new JButton("Find Recipes by Name");
-        recipeListByName = new JList<>();
-
-        searchButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String ingredientsText = ingredientInput.getText();
-                java.util.List<String> ingredients = Arrays.asList(ingredientsText.split(","));
-                List<Recipe> recipes = controller.getRecipes(ingredients);
-
-                String[] recipeNames = recipes.stream()
-                        .map(recipe -> recipe.getName() + " - " + recipe.getUrl())
-                        .toArray(String[]::new);
-                recipeList.setListData(recipeNames);
-            }
-        });
-
-        // Display search bar
+        // TODO Display search bar
+        /*
         final JPanel panel = new JPanel();
         panel.add(new JLabel("Enter ingredients (comma-separated):"));
         panel.add(ingredientInput);
@@ -83,7 +85,7 @@ public class BookmarkView extends JFrame {
 
         // Button to view individual recipes
         add(viewRecipeButton, BorderLayout.SOUTH);
-
+        */
         setVisible(true);
     }
 }
