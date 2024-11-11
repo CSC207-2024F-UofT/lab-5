@@ -32,7 +32,6 @@ public class BookmarkView extends JFrame {
         // TODO getBookmarks() method
         this.bookmarkList = new JList<>();
 
-        // TODO getname() method
         setTitle(user.getUsername() + "'s Bookmarks");
         setSize(800, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
