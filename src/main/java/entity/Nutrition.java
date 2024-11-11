@@ -1,7 +1,7 @@
 package entity;
 
 /**
- * Represent the nutritional information for a recipe.
+ * Represents the nutritional information for a recipe.
  */
 public class Nutrition {
     private final String name;
