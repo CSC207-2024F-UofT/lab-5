@@ -10,7 +10,7 @@ public class SpoonacularExample {
     private static final String BASE_URL = "https://api.spoonacular.com";
 
     public static void main(String[] args) {
-        OkHttpClient client = new OkHttpClient();
+        final OkHttpClient client = new OkHttpClient();
 
         // Define the endpoint and query parameters
         final String endpoint = "/recipes/complexSearch";
