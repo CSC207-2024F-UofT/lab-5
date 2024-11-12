@@ -45,9 +45,9 @@ public class ViewNutritionDataAccessImpl implements ViewNutritionDataAccessInter
                         String name = nutrientJson.getString("name");
                         double amount = nutrientJson.getDouble("amount");
                         String unit = nutrientJson.getString("unit");
-                        double percentDailyNeeds = nutrientJson.optDouble("percentDailyNeeds", 0);
+                        double percentOfDailyNeeds = nutrientJson.optDouble("percentOfDailyNeeds", 0);
 
-                        Nutrition nutrition = new Nutrition(name, amount, unit, percentDailyNeeds);
+                        Nutrition nutrition = new Nutrition(name, amount, unit, percentOfDailyNeeds);
                         nutritionList.add(nutrition);
                     }
                 }

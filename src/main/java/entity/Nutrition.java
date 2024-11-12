@@ -7,13 +7,13 @@ public class Nutrition {
     private final String name;
     private final double amount;
     private final String unit;
-    private final double percentDailyNeeds;
+    private final double percentOfDailyNeeds;
 
     public Nutrition(String name, double amount, String unit, double percentDailyNeeds) {
         this.name = name;
         this.amount = amount;
         this.unit = unit;
-        this.percentDailyNeeds = percentDailyNeeds;
+        this.percentOfDailyNeeds = percentDailyNeeds;
     }
 
     public String getName() {
@@ -29,11 +29,11 @@ public class Nutrition {
     }
 
     public double getPercentDailyNeeds() {
-        return percentDailyNeeds;
+        return percentOfDailyNeeds;
     }
 
     @Override
     public String toString() {
-        return name + ": " + amount + " " + unit + " (" + percentDailyNeeds + "% of daily needs)";
+        return name + ": " + amount + " " + unit + " (" + percentOfDailyNeeds + "% of daily needs)";
     }
 }
