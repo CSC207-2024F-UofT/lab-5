@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 
 // TODO make an interface or parent class for BookmarkView and RecentlyViewedView? Can be something like RecipeListView
+// This View would need a button that adds a recipe to bookmarks - or maybe it should be in IndividualRecipeView
 public class RecentlyViewedView extends JFrame {
     // should the search attributes be defined here?
     private JTextField searchField;
@@ -34,4 +35,5 @@ public class RecentlyViewedView extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         add(new JScrollPane(recentlyViewedList), BorderLayout.CENTER);
+    }
 }

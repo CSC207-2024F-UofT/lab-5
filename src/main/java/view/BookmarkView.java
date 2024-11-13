@@ -6,7 +6,12 @@ import entity.User;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
+// implements ActionListener removed for now
 public class BookmarkView extends JFrame {
     // should the search attributes be defined here?
     private JTextField searchField;
@@ -40,19 +45,22 @@ public class BookmarkView extends JFrame {
 
         add(new JScrollPane(bookmarkList), BorderLayout.CENTER);
 
-        // TODO view recipe button for each item in the list - in progress
-        /*
-        bookmarkList.add("view recipe", viewRecipeButton);
-        // or do JButton b = new JButton("view recipe")?
-        viewRecipeButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                new IndividualRecipeView;
-                // close the current frame - TODO add a back button?
-                //  Or just don't dispose so you can access another recipe at the same time?
-                dispose();
+        // TODO view individual recipes function - in progress
+//        bookmarkList.add("view recipe", viewRecipeButton);
+//        // or do JButton b = new JButton("view recipe")?
+//        viewRecipeButton.addActionListener(this);
+
+        bookmarkList.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent event) {
+                if (event.getClickCount() == 2) {
+                    int index = bookmarkList.locationToIndex(event.getPoint()); // Get index of clicked item
+                    if (index >= 0) { // Ensure valid index
+                        Recipe selectedItem = bookmarkList.getModel().getElementAt(index); // Get selected item
+                        new IndividualRecipeView(selectedItem);
+                    }
+                }
             }
         });
-         */
 
         // TODO Search function - in progress
 //        ingredientInput = new JTextField(20);
@@ -90,4 +98,8 @@ public class BookmarkView extends JFrame {
         */
         setVisible(true);
     }
+    // might not need this or the view recipe button altogether
+//    public void actionPerformed(ActionEvent event) {
+//        new IndividualRecipeView(recipe, nutrition);
+//    }
 }
