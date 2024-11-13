@@ -7,11 +7,13 @@ public class User {
     private String username;
     private String password;
     private List<Recipe> bookmarks;
+    private List<Recipe> recentlyViewed;
 
     public User(String username, String password) {
         this.username = username;
         this.password = password;
         this.bookmarks = new ArrayList<>();
+        this.recentlyViewed = new ArrayList<>();
     }
 
     // Getters and Setters
@@ -35,10 +37,21 @@ public class User {
         return bookmarks;
     }
 
+    public List<Recipe> getRecentlyViewed() {
+        return recentlyViewed;
+    }
+
     /*
-    Add a recipe to the list of bookmarks.
-     */
+        Add a recipe to the list of bookmarks.
+         */
     public void addBookmark(Recipe recipe) {
         this.bookmarks.add(recipe);
+    }
+
+    /*
+    Update recentlyViewed when the user views a recipe.
+     */
+    public void addRecentlyViewed(Recipe recipe) {
+        this.recentlyViewed.add(recipe);
     }
 }
