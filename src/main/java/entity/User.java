@@ -1,20 +1,44 @@
 package entity;
 
-/**
- * The representation of a user in our program.
- */
-public interface User {
+import java.util.ArrayList;
+import java.util.List;
 
-    /**
-     * Returns the username of the user.
-     * @return the username of the user.
+public class User {
+    private String username;
+    private String password;
+    private List<Recipe> bookmarks;
+
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+        this.bookmarks = new ArrayList<>();
+    }
+
+    // Getters and Setters
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public List<Recipe> getBookmarks() {
+        return bookmarks;
+    }
+
+    /*
+    Add a recipe to the list of bookmarks.
      */
-    String getName();
-
-    /**
-     * Returns the password of the user.
-     * @return the password of the user.
-     */
-    String getPassword();
-
+    public void addBookmark(Recipe recipe) {
+        this.bookmarks.add(recipe);
+    }
 }
