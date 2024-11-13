@@ -6,10 +6,6 @@ import entity.User;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Arrays;
-import java.util.List;
 
 public class BookmarkView extends JFrame {
     // should the search attributes be defined here?
@@ -17,20 +13,26 @@ public class BookmarkView extends JFrame {
     private JButton searchButton;
 
     // attributes for default view
-    private JList<String> bookmarkList;
+    private JList<Recipe> bookmarkList;
     // private BookmarkController controller;
     private User user;
 
     // button to view individual recipes
     private JButton viewRecipeButton;
     // TODO modify as needed after User entity is added
+    private DefaultListModel<Recipe> listModel;
 
     /*
     Generates the default view of a user's bookmarked recipes.
      */
     public BookmarkView(User user) {
         // TODO getBookmarks() method
-        this.bookmarkList = new JList<>();
+        this.bookmarkList = new JList<Recipe>();
+        this.listModel = new DefaultListModel<Recipe>();
+        for (int i = 0; i < user.getBookmarks().size(); i++) {
+            listModel.addElement(user.getBookmarks().get(i));
+        }
+        this.bookmarkList.setModel(listModel);
 
         setTitle(user.getUsername() + "'s Bookmarks");
         setSize(800, 300);

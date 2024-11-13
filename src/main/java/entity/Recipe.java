@@ -33,4 +33,10 @@ public class Recipe {
     public String getCuisineType() {
         return cuisineType;
     }
+
+    // Display the recipe as a string.
+    @Override
+    public String toString() {
+        return this.name;
+    }
 }
