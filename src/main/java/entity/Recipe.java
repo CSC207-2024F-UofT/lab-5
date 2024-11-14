@@ -9,10 +9,10 @@ public class Recipe {
     private String id;
     private String name;
     private String url;
-    private List<String> ingredients;
+    private List<Ingredient> ingredients;
     private String cuisineType;
 
-    public Recipe(String name, String url, List<String> ingredients) {
+    public Recipe(String name, String url, List<Ingredient> ingredients) {
         this.name = name;
         this.url = url;
         this.ingredients = ingredients;
@@ -26,7 +26,7 @@ public class Recipe {
         return url;
     }
 
-    public List<String> getIngredients() {
+    public List<Ingredient> getIngredients() {
         return ingredients;
     }
 
