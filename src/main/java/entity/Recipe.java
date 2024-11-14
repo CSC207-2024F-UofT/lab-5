@@ -10,8 +10,12 @@ public class Recipe {
     private String name;
     private String url;
     private List<Ingredient> ingredients;
-    private String cuisineType;
+    private String cuisineType; // should correspond to "cuisines" in API recipes
 
+    // Other attributes based on API documentation
+    private String image;
+
+    // TODO update constructor to initialize all the attributes
     public Recipe(String name, String url, List<Ingredient> ingredients) {
         this.name = name;
         this.url = url;
