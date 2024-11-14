@@ -1,53 +1,52 @@
 package view;
 
-import entity.Recipe;
-import entity.User;
-
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
-public class RecipeListView extends JFrame {
+import javax.swing.*;
+
+import entity.Recipe;
+import entity.User;
+
+public abstract class RecipeListView extends JFrame {
     // attributes for default view
-    private JList<Recipe> recipeList;
-//    private DefaultListModel<Recipe> listModel;
-    private User user;
+    private final JList<Recipe> recipeList;
+    private final DefaultListModel<Recipe> listModel;
 
     // TODO attributes for other functionalities...
     private JTextField searchField;
     private JButton searchButton;
     // private BookmarkController controller;
-    // button to view individual recipes - might remove
-    private JButton viewRecipeButton;
 
     /*
     Generates the default view of a list of recipes associated with a User.
      */
     public RecipeListView(User user) {
-        this.user = user;
         this.recipeList = new JList<>();
-//        this.listModel = new DefaultListModel<>();
-//        this.recipeList.setModel(listModel);
+        this.listModel = new DefaultListModel<>();
 
         setSize(800, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        final List<Recipe> recipes = getRecipeList(user);
+        for (Recipe recipe : recipes) {
+            this.listModel.addElement(recipe);
+        }
+
+        this.recipeList.setModel(listModel);
         add(new JScrollPane(recipeList), BorderLayout.CENTER);
 
-        // TODO view individual recipes - to be confirmed
-//        bookmarkList.add("view recipe", viewRecipeButton);
-//        // or do JButton b = new JButton("view recipe")?
-//        viewRecipeButton.addActionListener(this);
         recipeList.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent event) {
                 if (event.getClickCount() == 2) {
                     // Get index of clicked item
-                    int index = recipeList.locationToIndex(event.getPoint());
+                    final int index = recipeList.locationToIndex(event.getPoint());
                     // Ensure valid index
                     if (index >= 0) {
                         // Get selected item
-                        Recipe selectedItem = recipeList.getModel().getElementAt(index);
+                        final Recipe selectedItem = recipeList.getModel().getElementAt(index);
                         // Open a new window
                         new IndividualRecipeView(selectedItem);
                     }
@@ -95,4 +94,6 @@ public class RecipeListView extends JFrame {
 //    public void actionPerformed(ActionEvent event) {
 //        new IndividualRecipeView(recipe, nutrition);
 //    }
+
+    protected abstract List<Recipe> getRecipeList(User user1);
 }

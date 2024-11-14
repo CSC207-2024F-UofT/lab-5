@@ -4,6 +4,7 @@ import entity.Recipe;
 import entity.User;
 import view.BookmarkView;
 import view.LoginSignupPage;
+import view.RecentlyViewedView;
 
 import java.util.List;
 
@@ -17,12 +18,15 @@ public class Main {
         // Launch the login/signup page as the first view
         new LoginSignupPage();
 
-        // Temporarily launch the bookmarks page upon running the program
+        // Temporarily launch the bookmarks page and recently viewed page upon running the program
         user = new User("Test_username", "Test_password");
         recipe1 = new Recipe("name1", "url1", List.of("a", "b", "c"));
         recipe2 = new Recipe("name2", "url2", List.of("a", "b", "c"));
         user.addBookmark(recipe1);
         user.addBookmark(recipe2);
+        user.addRecentlyViewed(recipe1);
+        user.addRecentlyViewed(recipe2);
         new BookmarkView(user);
+        new RecentlyViewedView(user);
     }
 }
