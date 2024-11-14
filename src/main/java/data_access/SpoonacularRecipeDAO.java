@@ -1,5 +1,6 @@
 package data_access;
 
+import entity.Ingredient;
 import entity.Recipe;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -58,9 +59,9 @@ public class SpoonacularRecipeDAO implements RecipeDAO {
                     JSONArray ingredientsJson = recipeJson.getJSONArray("usedIngredients");
 
                     // Collect ingredients from the JSON response
-                    List<String> recipeIngredients = new ArrayList<>();
+                    List<Ingredient> recipeIngredients = new ArrayList<>();
                     for (int j = 0; j < ingredientsJson.length(); j++) {
-                        recipeIngredients.add(ingredientsJson.getJSONObject(j).getString("name"));
+                        recipeIngredients.add(new Ingredient(ingredientsJson.getJSONObject(j).getString("name")));
                     }
 
                     // Create and add Recipe object to the list
