@@ -74,6 +74,14 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                 }
         );
 
+        forgotpassword.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        loginController.switchToForgotPasswordView();
+                    }
+                }
+        );
+
         cancel.addActionListener(this);
 
         usernameInputField.getDocument().addDocumentListener(new DocumentListener() {

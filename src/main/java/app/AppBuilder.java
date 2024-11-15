@@ -9,6 +9,7 @@ import javax.swing.WindowConstants;
 import data_access.InMemoryUserDataAccessObject;
 import entity.CommonUserFactory;
 import entity.UserFactory;
+import interface_adapter.ForgotPassword.ForgotPasswordViewModel;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.ChangePasswordPresenter;
@@ -33,10 +34,7 @@ import use_case.logout.LogoutOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
-import view.ProfileView;
-import view.LoginView;
-import view.SignupView;
-import view.ViewManager;
+import view.*;
 
 /**
  * The AppBuilder class is responsible for putting together the pieces of
@@ -66,6 +64,8 @@ public class AppBuilder {
     private ProfileViewModel profileViewModel;
     private ProfileView profileView;
     private LoginView loginView;
+    private ForgotPasswordViewModel forgotPasswordViewModel;
+    private ForgotPasswordView forgotPasswordView;
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -104,6 +104,13 @@ public class AppBuilder {
         return this;
     }
 
+    public AppBuilder addForgotPasswordView() {
+        forgotPasswordViewModel = new ForgotPasswordViewModel();
+        forgotPasswordView = new ForgotPasswordView(forgotPasswordViewModel);
+        cardPanel.add(forgotPasswordView, forgotPasswordViewModel.getViewName());
+        return this;
+    }
+
     /**
      * Adds the Signup Use Case to the application.
      * @return this builder
@@ -125,7 +132,7 @@ public class AppBuilder {
      */
     public AppBuilder addLoginUseCase() {
         final LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel,
-                profileViewModel, loginViewModel);
+                profileViewModel, loginViewModel, forgotPasswordViewModel);
         final LoginInputBoundary loginInteractor = new LoginInteractor(
                 userDataAccessObject, loginOutputBoundary);
 
