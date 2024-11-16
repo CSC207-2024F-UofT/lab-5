@@ -10,7 +10,9 @@ public class Recipe {
     private String name;
     private String url;
     private List<Ingredient> ingredients;
-    private String cuisineType; // should correspond to "cuisines" in API recipes
+    private String cuisineType;
+    // should correspond to "cuisines" in API recipes
+    private String dietaryType;
 
     // Other attributes based on API documentation
     private String image;
@@ -20,6 +22,15 @@ public class Recipe {
         this.name = name;
         this.url = url;
         this.ingredients = ingredients;
+    }
+
+    // overloading the constructor
+    public Recipe(String name, String url, List<Ingredient> ingredients, String cuisineType, String dietaryType) {
+        this.name = name;
+        this.url = url;
+        this.ingredients = ingredients;
+        this.cuisineType = cuisineType;
+        this.dietaryType = dietaryType;
     }
 
     // getters
