@@ -14,6 +14,7 @@ public class Main {
     private static User user;
     private static Recipe recipe1;
     private static Recipe recipe2;
+    private static String imageURL;
     private static Ingredient ingredient1;
     private static Ingredient ingredient2;
 
@@ -27,6 +28,9 @@ public class Main {
         ingredient2 = new Ingredient("Test_Ingredient2");
         recipe1 = new Recipe("name1", "url1", List.of(ingredient1, ingredient2));
         recipe2 = new Recipe("name2", "url2", List.of(ingredient1, ingredient2));
+        imageURL = "https://img.spoonacular.com/recipes/716429-556x370.jpg";
+        recipe1.setImage(imageURL);
+        recipe2.setImage(imageURL);
         user.addBookmark(recipe1);
         user.addBookmark(recipe2);
         user.addRecentlyViewed(recipe1);

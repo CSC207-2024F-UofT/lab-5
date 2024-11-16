@@ -36,7 +36,20 @@ public abstract class RecipeListView extends JFrame {
         }
 
         this.recipeList.setModel(listModel);
-        add(new JScrollPane(recipeList), BorderLayout.CENTER);
+
+        // Wrap the JList in a JScrollPane
+        final JScrollPane scrollPane = new JScrollPane(recipeList);
+        scrollPane.setPreferredSize(recipeList.getPreferredScrollableViewportSize());
+        add(scrollPane);
+
+        // TODO fix the layout
+//        // Main panel with vertical BoxLayout
+//        final JPanel mainPanel = new JPanel();
+//        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+//        setContentPane(mainPanel);
+//
+//        // Add components to the main panel
+//        mainPanel.add(scrollPane);
 
         recipeList.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent event) {

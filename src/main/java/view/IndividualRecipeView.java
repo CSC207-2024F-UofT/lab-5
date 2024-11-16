@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
 
 import entity.*;
 import view.NutritionView;
@@ -11,16 +12,18 @@ import view.NutritionView;
 public class IndividualRecipeView extends JFrame implements ActionListener {
     private JButton nutritionButton;
     private JButton bookmarkButton;
-    private JList<Ingredient> ingredientJList;
+    private JList<String> ingredientJList;
     private Recipe recipe;
+    private URL imageUrl;
+    private ImageIcon imageIcon;
 
     public IndividualRecipeView(Recipe recipe) {
         this.recipe = recipe;
 
         // Initialize ingredient list
-        final DefaultListModel<Ingredient> listModel = new DefaultListModel<>();
+        final DefaultListModel<String> listModel = new DefaultListModel<>();
         for (Ingredient ingredient : recipe.getIngredients()) {
-            listModel.addElement(ingredient);
+            listModel.addElement(ingredient.getName());
         }
         ingredientJList = new JList<>(listModel);
         final JScrollPane scrollPane = new JScrollPane(ingredientJList);
@@ -38,6 +41,35 @@ public class IndividualRecipeView extends JFrame implements ActionListener {
         final JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         setContentPane(mainPanel);
+
+        // initializing image
+        try {
+            // Specify the image URL
+            this.imageUrl = new URL(recipe.getImage()); // Replace with your image URL
+
+            // Load the image
+            this.imageIcon = new ImageIcon(imageUrl);
+
+            // Scale the image
+            final Image scaledImage = imageIcon.getImage().getScaledInstance(200, 150, Image.SCALE_SMOOTH);
+            imageIcon = new ImageIcon(scaledImage);
+
+            // Add the image to a JLabel
+            final JLabel imageLabel = new JLabel(imageIcon);
+            imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
+            imageLabel.setVerticalAlignment(SwingConstants.CENTER);
+
+            // Add the label to the frame
+            mainPanel.add(imageLabel, BorderLayout.CENTER);
+
+        }
+        catch (Exception e) {
+            // Handle exceptions, e.g., invalid URL or connection error
+            final JLabel errorLabel = new JLabel("Failed to load image.");
+            errorLabel.setHorizontalAlignment(SwingConstants.CENTER);
+            mainPanel.add(errorLabel, BorderLayout.CENTER);
+            e.printStackTrace();
+        }
 
         // Add components to main panel
         mainPanel.add(scrollPane);

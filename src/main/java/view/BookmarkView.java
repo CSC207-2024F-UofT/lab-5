@@ -14,7 +14,6 @@ public class BookmarkView extends RecipeListView {
     public BookmarkView(User user) {
         super(user);
         setTitle(user.getUsername() + "'s Bookmarks");
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     }
 
     @Override

@@ -39,6 +39,15 @@ public class Recipe {
         return cuisineType;
     }
 
+    public String getImage() {
+        return image;
+    }
+
+    // temporary method
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     // Display the recipe as a string.
     @Override
     public String toString() {
