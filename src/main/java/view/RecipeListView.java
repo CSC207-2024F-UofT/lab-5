@@ -1,6 +1,8 @@
 package view;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
@@ -10,7 +12,7 @@ import javax.swing.*;
 import entity.Recipe;
 import entity.User;
 
-public abstract class RecipeListView extends JFrame {
+public abstract class RecipeListView extends JFrame implements ActionListener {
     // attributes for default view
     private final JList<Recipe> recipeList;
     private final DefaultListModel<Recipe> listModel;
@@ -67,6 +69,18 @@ public abstract class RecipeListView extends JFrame {
             }
         });
 
+        // Display search bar
+        searchField = new JTextField(20);
+        searchButton = new JButton("Search");
+
+        final JPanel panel = new JPanel();
+        panel.add(new JLabel("Enter ingredients (comma-separated):"));
+        panel.add(searchField);
+        // TODO add ActionListener for the search button
+        panel.add(searchButton);
+        searchButton.addActionListener(this);
+        add(panel, BorderLayout.NORTH);
+
         // TODO Search function - in progress
 //        ingredientInput = new JTextField(20);
 //        searchButton = new JButton("Find Recipes by Ingredients");
@@ -90,24 +104,15 @@ public abstract class RecipeListView extends JFrame {
 //            }
 //        });
 
-        // TODO Display search bar
-        /*
-        final JPanel panel = new JPanel();
-        panel.add(new JLabel("Enter ingredients (comma-separated):"));
-        panel.add(ingredientInput);
-        panel.add(searchButton);
-        add(panel, BorderLayout.NORTH);
-
-        // Button to view individual recipes
-        add(viewRecipeButton, BorderLayout.SOUTH);
-        */
-
         setVisible(true);
     }
-    // might not need this or the view recipe button altogether
-//    public void actionPerformed(ActionEvent event) {
-//        new IndividualRecipeView(recipe, nutrition);
-//    }
+
+    public void actionPerformed(ActionEvent event) {
+        // temporary display for search button
+        String userInput = searchField.getText();
+        // Display the input in the result label
+        JOptionPane.showMessageDialog(this, userInput);
+    }
 
     protected abstract List<Recipe> getRecipeList(User user1);
 }
