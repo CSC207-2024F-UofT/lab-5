@@ -1,18 +1,20 @@
 package data_access;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
+import entity.*;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import entity.User;
-import entity.UserFactory;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import use_case.change_password.ChangePasswordUserDataAccessInterface;
+import use_case.home_view.HomeDataAccessInterface;
 import use_case.login.LoginUserDataAccessInterface;
 import use_case.logout.LogoutUserDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
@@ -23,8 +25,10 @@ import use_case.signup.SignupUserDataAccessInterface;
 public class DBUserDataAccessObject implements SignupUserDataAccessInterface,
         LoginUserDataAccessInterface,
         ChangePasswordUserDataAccessInterface,
-        LogoutUserDataAccessInterface {
+        LogoutUserDataAccessInterface,
+        HomeDataAccessInterface {
     private static final int SUCCESS_CODE = 200;
+
     private static final String CONTENT_TYPE_LABEL = "Content-Type";
     private static final String CONTENT_TYPE_JSON = "application/json";
     private static final String STATUS_CODE_LABEL = "status_code";
@@ -32,10 +36,11 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface,
     private static final String PASSWORD = "password";
     private static final String MESSAGE = "message";
     private final UserFactory userFactory;
+    private final StockFactory stockFactory;
 
-    public DBUserDataAccessObject(UserFactory userFactory) {
+    public DBUserDataAccessObject(UserFactory userFactory, StockFactory stockFactory) {
         this.userFactory = userFactory;
-        // No need to do anything to reinitialize a user list! The data is the cloud that may be miles away.
+        this.stockFactory = stockFactory;
     }
 
     @Override
@@ -55,8 +60,11 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface,
                 final JSONObject userJSONObject = responseBody.getJSONObject("user");
                 final String name = userJSONObject.getString(USERNAME);
                 final String password = userJSONObject.getString(PASSWORD);
+                final ArrayList<String> emptyWatchList = new ArrayList<>();
+                final ArrayList<SimulatedHolding> emptyStockList = new ArrayList<>();
+                final User user = userFactory.create(name, password, emptyWatchList, emptyStockList);
 
-                return userFactory.create(name, password);
+                return user;
             }
             else {
                 throw new RuntimeException(responseBody.getString(MESSAGE));
@@ -152,6 +160,35 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface,
             else {
                 throw new RuntimeException(responseBody.getString(MESSAGE));
             }
+        }
+        catch (IOException | JSONException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    // Stock related APIs
+    @Override
+    public Stock getStock(String symbol) {
+        final OkHttpClient client = new OkHttpClient().newBuilder().build();
+        final Request request = new Request.Builder()
+                .url(String.format("https://api.marketstack.com/v1/eod?access_key=3847d86b56ca461a0da759024332c06a&symbols=%s", symbol))
+                .get()
+                .build();
+        try (Response response = client.newCall(request).execute()) {
+            if (!response.isSuccessful()) throw new RuntimeException("Request Failed: " + response);
+
+            final String responseBody = response.body().string();
+            final JSONObject json = new JSONObject(responseBody);
+            final JSONArray dataArray = json.getJSONArray("data");
+            final JSONObject stockData = dataArray.getJSONObject(0);
+
+            final double open = stockData.getDouble("open");
+            final double high = stockData.getDouble("high");
+            final double low = stockData.getDouble("low");
+            final double close = stockData.getDouble("close");
+            final double volume = stockData.getDouble("volume");
+
+            return stockFactory.create(symbol, open, close, volume, high, low);
         }
         catch (IOException | JSONException ex) {
             throw new RuntimeException(ex);
