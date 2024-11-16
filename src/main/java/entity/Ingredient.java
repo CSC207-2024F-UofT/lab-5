@@ -24,7 +24,20 @@ public class Ingredient {
         this.name = name;
     }
 
+    // getters (shouldn't need setters)
     public String getName() {
         return name;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getImage() {
+        return image;
     }
 }
