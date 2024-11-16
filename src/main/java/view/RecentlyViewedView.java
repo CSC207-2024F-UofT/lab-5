@@ -4,6 +4,8 @@ import java.util.List;
 
 import entity.Recipe;
 import entity.User;
+
+import javax.swing.*;
 // import interface_adapter.BookmarkController;
 
 // implements ActionListener removed for now

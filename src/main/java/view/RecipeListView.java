@@ -88,6 +88,7 @@ public abstract class RecipeListView extends JFrame {
         // Button to view individual recipes
         add(viewRecipeButton, BorderLayout.SOUTH);
         */
+
         setVisible(true);
     }
     // might not need this or the view recipe button altogether

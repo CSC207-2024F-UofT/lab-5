@@ -8,7 +8,7 @@ public class NutritionView extends JFrame {
     private Recipe recipe;
     private JList<String> nutritionList;
 
-    NutritionView(Recipe recipe) {
+    public NutritionView(Recipe recipe) {
         // TODO initialize nutritionList with Nutrition object
         this.nutritionList = new JList<>();
         add(nutritionList);

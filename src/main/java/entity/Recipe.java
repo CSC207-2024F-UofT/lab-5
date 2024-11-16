@@ -22,6 +22,7 @@ public class Recipe {
         this.ingredients = ingredients;
     }
 
+    // getters
     public String getName() {
         return name;
     }
@@ -43,4 +44,5 @@ public class Recipe {
     public String toString() {
         return this.name;
     }
+
 }
