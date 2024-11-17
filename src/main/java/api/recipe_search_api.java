@@ -57,6 +57,8 @@ public class recipe_search_api {
                 String name = recipeObj.getString("label");
                 int servings = recipeObj.optInt("yield", 1);
                 int calories = (int) Math.round(recipeObj.getDouble("calories") / servings);
+                String url = recipeObj.getString("url");
+                String image = recipeObj.getJSONObject("images").getJSONObject("THUMBNAIL").getString("url");
 
                 // Extract nutrients
                 Map<String, Integer> nutrients = new HashMap<>();
@@ -80,6 +82,8 @@ public class recipe_search_api {
                         .calories(calories)
                         .nutrients(nutrients)
                         .tags(tags)
+                        .url(url)
+                        .image(image)
                         .build();
 
                 recipes.add(recipe);
@@ -113,6 +117,8 @@ public class recipe_search_api {
             System.out.println("Calories: " + recipe.getCalories());
             System.out.println("Nutrients: " + recipe.getNutrients());
             System.out.println("Tags: " + recipe.getTags());
+            System.out.println("URL: " + recipe.getUrl());
+            System.out.println("Image: " + recipe.getImage());
             System.out.println("-----------------------------");
         }
     }
