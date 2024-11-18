@@ -1,10 +1,9 @@
-package use_case;
+package use_case.filter_recipes;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import data_access.RecipeDAO;
-import entity.DietaryPreference;
 import entity.Recipe;
 
 /**
