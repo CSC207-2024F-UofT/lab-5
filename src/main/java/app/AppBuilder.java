@@ -22,6 +22,9 @@ import interface_adapter.logout.LogoutPresenter;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
+import interface_adapter.survey_second_page.SurveySecondPageController;
+import interface_adapter.survey_second_page.SurveySecondPagePresenter;
+import interface_adapter.survey_second_page.SurveySecondPageViewModel;
 import interface_adapter.watchlists.WatchlistsController;
 import interface_adapter.watchlists.WatchlistsPresenter;
 import interface_adapter.watchlists.WatchlistsViewModel;
@@ -37,6 +40,9 @@ import use_case.logout.LogoutOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
+import use_case.survey_second_page.SurveySecondPageInputBoundary;
+import use_case.survey_second_page.SurveySecondPageInteractor;
+import use_case.survey_second_page.SurveySecondPageOutputBoundary;
 import use_case.watchlists.WatchlistsInputBoundary;
 import use_case.watchlists.WatchlistsInteractor;
 import use_case.watchlists.WatchlistsOutputBoundary;
@@ -72,6 +78,8 @@ public class AppBuilder {
     private HomeView loggedInView;
     private WatchlistsView watchlistsView;
     private WatchlistsViewModel watchlistsViewModel;
+    private SurveySecondPageView surveySecondPageView;
+    private SurveySecondPageViewModel surveySecondPageViewModel;
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -118,6 +126,17 @@ public class AppBuilder {
         watchlistsViewModel = new WatchlistsViewModel();
         watchlistsView = new WatchlistsView(watchlistsViewModel);
         cardPanel.add(watchlistsView, watchlistsView.getViewName());
+        return this;
+    }
+
+    /**
+     * Adds the Survey Second Page View to the application.
+     * @return this builder
+     */
+    public AppBuilder addSurvey2View() {
+        surveySecondPageViewModel = new SurveySecondPageViewModel();
+        surveySecondPageView = new SurveySecondPageView(surveySecondPageViewModel);
+        cardPanel.add(surveySecondPageView, surveySecondPageView.getViewName());
         return this;
     }
 

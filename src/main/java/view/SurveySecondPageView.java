@@ -22,6 +22,8 @@ public class SurveySecondPageView extends JPanel implements ActionListener, Prop
     private final String viewName = "survey page 2/2";
     private final SurveySecondPageViewModel surveySecondPageViewModel;
 
+    private SurveySecondPageController surveySecondPageController;
+
     private final JTextField firstMovie = new JTextField(15);
     private final JTextField secondMovie = new JTextField(15);
     private final JTextField thirdMovie = new JTextField(15);
@@ -34,8 +36,6 @@ public class SurveySecondPageView extends JPanel implements ActionListener, Prop
     private final JButton skip;
 
     private final JLabel searchInputErrorField = new JLabel();
-
-    private SurveySecondPageController surveySecondPageController;
 
     public SurveySecondPageView(SurveySecondPageViewModel surveySecondPageViewModel) {
         this.surveySecondPageViewModel = surveySecondPageViewModel;
@@ -138,7 +138,7 @@ public class SurveySecondPageView extends JPanel implements ActionListener, Prop
         return viewName;
     }
 
-    public void setSignupController(SurveySecondPageController controller) {
+    public void setSurveySecondPageController(SurveySecondPageController controller) {
         this.surveySecondPageController = controller;
     }
 }

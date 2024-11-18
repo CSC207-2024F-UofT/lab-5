@@ -13,7 +13,6 @@ public class SurveySecondPageOutputData {
     private final ArrayList<List<String>> favoriteGenres;
     private final ArrayList<CommonMovie> favoriteMovies;
 
-
     private final boolean useCaseFailed;
 
     public SurveySecondPageOutputData(String firstMovie, String secondMovie, String thirdMovie, boolean useCaseFailed) {

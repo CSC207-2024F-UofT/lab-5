@@ -1,11 +1,9 @@
 package entity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static com.mongodb.client.model.Filters.eq;
 
-
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple implementation of the User interface.
@@ -53,6 +51,5 @@ public class CommonUser implements User {
     public List<String> getWatchlists() {
         return this.watchlists;
     }
-
 
 }

@@ -34,6 +34,7 @@ public class SurveySecondPageInteractor implements SurveySecondPageInputBoundary
         }
         else {
             // TODO: implement add to playlist
+
             final SurveySecondPageOutputData surveySecondPageOutputData = new SurveySecondPageOutputData(firstMovie,
                     secondMovie, thirdMovie, false);
             surveySecondPagePresenter.prepareSuccessView(surveySecondPageOutputData);

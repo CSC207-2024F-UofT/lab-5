@@ -139,7 +139,7 @@ public class WatchlistsView extends JPanel implements ActionListener, PropertyCh
         final JLabel enterNameLabel = new JLabel("Enter List Name:");
         // final JTextField listNameField = new JTextField(40);
 
-        addListNameListener();
+        // addListNameListener();
         // not functioning currently, not a today problem
         final int x = listNameField.getText().length();
         final JLabel characterLimitLabel = new JLabel("Character Limit: " + x + "/100");
@@ -158,30 +158,30 @@ public class WatchlistsView extends JPanel implements ActionListener, PropertyCh
                 null, new Object[]{"Create List", "Cancel"}, null);
     }
 
-    private void addListNameListener() {
-        listNameField.getDocument().addDocumentListener(new DocumentListener() {
-            private void documentListenerHelper() {
-                final WatchlistsState currentState = watchlistsViewModel.getState();
-                currentState.setListName(listNameField.getText());
-                watchlistsViewModel.setState(currentState);
-            }
-
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                documentListenerHelper();
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                documentListenerHelper();
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                documentListenerHelper();
-            }
-        });
-    }
+//    private void addListNameListener() {
+//        listNameField.getDocument().addDocumentListener(new DocumentListener() {
+//            private void documentListenerHelper() {
+//                final WatchlistsState currentState = watchlistsViewModel.getState();
+//                currentState.setListName(listNameField.getText());
+//                watchlistsViewModel.setState(currentState);
+//            }
+//
+//            @Override
+//            public void insertUpdate(DocumentEvent e) {
+//                documentListenerHelper();
+//            }
+//
+//            @Override
+//            public void removeUpdate(DocumentEvent e) {
+//                documentListenerHelper();
+//            }
+//
+//            @Override
+//            public void changedUpdate(DocumentEvent e) {
+//                documentListenerHelper();
+//            }
+//        });
+//    }
 
     @Override
     public void actionPerformed(ActionEvent evt) {
