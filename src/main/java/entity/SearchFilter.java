@@ -4,20 +4,20 @@ package entity;
  * This class represents the criteria used to filter search results.
  */
 public class SearchFilter {
-    private String dietType;
-    private String cuisineType;
+    private final DietaryPreference dietPref;
+    private final CuisinePreference cuisinePref;
 
-    public SearchFilter(String dietType, String cuisineType) {
-        this.dietType = dietType;
-        this.cuisineType = cuisineType;
+    public SearchFilter(DietaryPreference dietPref, CuisinePreference cuisinePref) {
+        this.dietPref = dietPref;
+        this.cuisinePref = cuisinePref;
     }
 
-    public String getDietType() {
-        return dietType;
+    public DietaryPreference getDietPreference() {
+        return dietPref;
     }
 
-    public String getCuisineType() {
-        return cuisineType;
+    public CuisinePreference getCuisinePreference() {
+        return cuisinePref;
     }
 
     /**
@@ -25,7 +25,18 @@ public class SearchFilter {
      * @param recipe from user
      * @return a boolean value for whether selected cuisine type matches cuisine type of recipe
      */
-    public boolean matchesRecipe(Recipe recipe) {
-        return cuisineType.equals(recipe.getCuisineType());
+    public boolean matchesDietAndCuisine(Recipe recipe) {
+        boolean result = true;
+        if (dietPref != null) {
+            result = dietPref.matchesRecipe(recipe);
+            // result is False if recipe doesn't match dietary preference
+            // result stays True if it does match
+        }
+
+        if (cuisinePref != null) {
+            result = cuisinePref.matchesRecipe(recipe);
+            // result is False if recipe doesn't match cuisine preference
+        }
+        return result;
     }
 }
