@@ -50,6 +50,10 @@ public class Recipe {
         return cuisineType;
     }
 
+    public String getDietaryType() {
+        return dietaryType;
+    }
+
     public String getImage() {
         return image;
     }

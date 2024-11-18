@@ -34,8 +34,12 @@ public class RecipeDAOImpl implements RecipeDAO {
     @Override
     public List<Recipe> getAllRecipes() {
         // Mock data - replace this with actual data retrieval from a database or API
+        // Note: adding dietaryType and cuisineType to recipe constructor so need to add here too
         List<Recipe> recipes = new ArrayList<>();
         recipes.add(new Recipe("Pasta", "https://example.com/pasta", List.of(pasta, tomato)));
+        // fried rice example w/ cuisine and diet added
+        recipes.add(new Recipe("Fried Rice", "rice.com", List.of(onion, garlic),
+                "chinese", "vegetarian"));
         recipes.add(new Recipe("Salad", "https://example.com/salad", List.of(lettuce, tomato, cucumber)));
         recipes.add(new Recipe("Tomato Soup", "https://example.com/tomato_soup", List.of(tomato, onion, garlic)));
         return recipes;
