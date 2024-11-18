@@ -1,22 +1,22 @@
-package interface_adapter.change_password;
+package interface_adapter.profile;
 
 /**
  * The State information representing the logged-in user.
  */
-public class LoggedInState {
+public class ProfileState {
     private String username = "";
 
     private String password = "";
     private String passwordError;
 
-    public LoggedInState(LoggedInState copy) {
+    public ProfileState(ProfileState copy) {
         username = copy.username;
         password = copy.password;
         passwordError = copy.passwordError;
     }
 
     // Because of the previous copy constructor, the default constructor must be explicit.
-    public LoggedInState() {
+    public ProfileState() {
 
     }
 
