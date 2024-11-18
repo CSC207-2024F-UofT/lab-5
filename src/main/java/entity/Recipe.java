@@ -10,13 +10,17 @@ public class Recipe {
     private final int calories;
     private final Map<String, Integer> nutrients;
     private final Set<String> tags;
+    private final String url;
+    private final String image;
 
-    public Recipe(String name, int servings, int calories, Map<String, Integer> nutrients, Set<String> tags) {
+    public Recipe(String name, int servings, int calories, Map<String, Integer> nutrients, Set<String> tags, String url, String image) {
         this.name = name;
         this.servings = servings;
         this.calories = calories;
         this.nutrients = nutrients;
         this.tags = tags;
+        this.url = url;
+        this.image = image;
     }
 
     public String getName() {
@@ -43,12 +47,22 @@ public class Recipe {
         return new RecipeBuilder();
     }
 
+    public String getUrl() {
+        return url;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
     public static class RecipeBuilder {
         private String name;
         private int servings;
         private int calories;
         private Map<String, Integer> nutrients;
         private Set<String> tags;
+        private String url;
+        private String image;
 
         RecipeBuilder() {
         }
@@ -78,8 +92,18 @@ public class Recipe {
             return this;
         }
 
+        public RecipeBuilder url(String urlInput) {
+            this.url = urlInput;
+            return this;
+        }
+
+        public RecipeBuilder image(String imageInput) {
+            this.image = imageInput;
+            return this;
+        }
+
         public Recipe build() {
-            return new Recipe(name, servings, calories, nutrients, tags);
+            return new Recipe(name, servings, calories, nutrients, tags, url, image);
         }
     }
 }
