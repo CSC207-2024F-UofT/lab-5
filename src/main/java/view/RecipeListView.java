@@ -5,22 +5,29 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.*;
 
+import data_access.RecipeDAO;
+import data_access.SpoonacularRecipeDAO;
 import entity.Recipe;
 import entity.User;
+import interface_adapter.RecipeController;
+import interface_adapter.RecipeListController;
+import use_case.SearchRecipeListUseCase;
+import use_case.SearchRecipeUseCase;
 
 public abstract class RecipeListView extends JFrame implements ActionListener {
     // attributes for default view
     private final JList<Recipe> recipeList;
     private final DefaultListModel<Recipe> listModel;
+    private final RecipeListController controller;
 
     // TODO attributes for other functionalities...
     private JTextField searchField;
     private JButton searchButton;
-    // private BookmarkController controller;
 
     /*
     Generates the default view of a list of recipes associated with a User.
@@ -28,6 +35,7 @@ public abstract class RecipeListView extends JFrame implements ActionListener {
     public RecipeListView(User user) {
         this.recipeList = new JList<>();
         this.listModel = new DefaultListModel<>();
+        this.controller = new RecipeListController(new SearchRecipeListUseCase(getRecipeList(user)));
 
         setSize(800, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -109,9 +117,38 @@ public abstract class RecipeListView extends JFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent event) {
         // temporary display for search button
-        String userInput = searchField.getText();
+        final String userInput = searchField.getText();
         // Display the input in the result label
         JOptionPane.showMessageDialog(this, userInput);
+
+        // TODO complete search function...
+
+        final List<String> ingredients = Arrays.asList(userInput.split(","));
+        // ^ TODO need to convert user input to Ingredient objects!
+        // final List<Recipe> recipes = controller.getRecipes(ingredients);
+//
+//        final DefaultListModel<Recipe> listModel = new DefaultListModel<>();
+//        for (Recipe recipe : recipes) {
+//            listModel.addElement(recipe);
+//        }
+//        recipeList.setModel(listModel);
+//
+//        // Make the recipe list clickable
+//        recipeList.addMouseListener(new MouseAdapter() {
+//            public void mouseClicked(MouseEvent event) {
+//                if (event.getClickCount() == 2) {
+//                    // Get index of clicked item
+//                    final int index = recipeList.locationToIndex(event.getPoint());
+//                    // Ensure valid index
+//                    if (index >= 0) {
+//                        // Get selected item
+//                        final Recipe selectedItem = recipeList.getModel().getElementAt(index);
+//                        // Open a new window
+//                        new IndividualRecipeView(selectedItem);
+//                    }
+//                }
+//            }
+//        });
     }
 
     protected abstract List<Recipe> getRecipeList(User user1);
