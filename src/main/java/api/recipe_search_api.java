@@ -29,11 +29,83 @@ public class recipe_search_api {
         this.customTask = null;
     }
 
-    public List<Recipe> searchRecipebyName(String q) {
+    public List<Recipe> searchRecipebyName(String q, String cal_min, String cal_max, String carb_min, String carb_max, String protein_min, String protein_max, String fat_min, String fat_max) {
         final OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
+        String newq = "";
+        if (!"".equals(q)) {
+            newq = "&q=" + q;
+        }
+        String calories1 = "";
+        if (!"".equals(cal_min)) {
+            if (!"".equals(cal_max)) {
+                calories1 = "&calories=" + cal_min + "-" + cal_max;
+            }
+        }
+        if (!"".equals(cal_min)) {
+            if ("".equals(cal_max)) {
+                calories1 = "&calories=" + cal_min + "%2B";
+            }
+        }
+        if ("".equals(cal_min)) {
+            if (!"".equals(cal_max)) {
+                calories1 = "&calories=" + cal_max;
+            }
+        }
+
+        String carbs = "";
+        if (!"".equals(carb_min)) {
+            if (!"".equals(carb_max)) {
+                carbs = "&nutrients%5BCHOCDF%5D=" + carb_min + "-" + carb_max;
+            }
+        }
+        if (!"".equals(carb_min)) {
+            if ("".equals(carb_max)) {
+                carbs = "&nutrients%5BCHOCDF%5D=" + carb_min + "%2B";
+            }
+        }
+        if ("".equals(carb_min)) {
+            if (!"".equals(carb_max)) {
+                carbs = "&nutrients%5BCHOCDF%5D=" + carb_max;
+            }
+        }
+
+        String protein = "";
+        if (!"".equals(protein_min)) {
+            if (!"".equals(protein_max)) {
+                protein = "&nutrients%5BPROCNT%5D=" + protein_min + "-" + protein_max;
+            }
+        }
+        if (!"".equals(protein_min)) {
+            if ("".equals(protein_max)) {
+                protein = "&nutrients%5BPROCNT%5D=" + protein_min + "%2B";
+            }
+        }
+        if ("".equals(protein_min)) {
+            if (!"".equals(protein_max)) {
+                protein = "&nutrients%5BPROCNT%5D=" + protein_max;
+            }
+        }
+
+        String fat = "";
+        if (!"".equals(fat_min)) {
+            if (!"".equals(fat_max)) {
+                fat = "&nutrients%5BPROCNT%5D=" + fat_min + "-" + fat_max;
+            }
+        }
+        if (!"".equals(fat_min)) {
+            if ("".equals(fat_max)) {
+                fat = "&nutrients%5BPROCNT%5D=" + fat_min + "%2B";
+            }
+        }
+        if ("".equals(fat_min)) {
+            if (!"".equals(fat_max)) {
+                fat = "&nutrients%5BPROCNT%5D=" + fat_max;
+            }
+        }
+
         final Request request = new Request.Builder()
-                .url(String.format("%s?type=public&q=%s&app_id=%s&app_key=%s", API_URL, q, APP_ID, APP_KEY))
+                .url(String.format("%s?type=public%s&app_id=%s&app_key=%s%s%s%s%s", API_URL, newq, APP_ID, APP_KEY, calories1, carbs, fat, protein))
                 .build();
 
         try {
@@ -109,7 +181,7 @@ public class recipe_search_api {
 
         // Default usage without a task
         recipe_search_api api = new recipe_search_api();
-        List<Recipe> recipes = api.searchRecipebyName("burger");
+        List<Recipe> recipes = api.searchRecipebyName("chicken","100","200","","","","","","");
 
         for (Recipe recipe : recipes) {
             System.out.println("Name: " + recipe.getName());
