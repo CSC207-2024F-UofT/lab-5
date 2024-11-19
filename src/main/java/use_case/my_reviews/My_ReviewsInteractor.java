@@ -2,6 +2,8 @@ package use_case.my_reviews;
 
 import entity.MovieReview;
 import entity.User;
+
+import java.security.PublicKey;
 import java.util.List;
 
 public class My_ReviewsInteractor implements My_ReviewsInputBoundary{
@@ -22,13 +24,15 @@ public class My_ReviewsInteractor implements My_ReviewsInputBoundary{
 
         // Retrieve the list of reviews for the user
         List<MovieReview> reviews = myReviewsDataAccessObject.getReviews(user);
+        // turn this into a peice of My_ReviewsOutputDate
+        final My_ReviewsOutputData my_ReviewsOutputData = new My_ReviewsOutputData(reviews);
 
         if (reviews.isEmpty()) {
             // No reviews found for the user
             myReviewsPresenter.prepareNoReviewsView("No reviews yet.");
         } else {
             // Pass the retrieved reviews to the presenter
-            myReviewsPresenter.prepareMyReviewsView(reviews);
+            myReviewsPresenter.prepareMyReviewsView(my_ReviewsOutputData);
         }
     }
 }

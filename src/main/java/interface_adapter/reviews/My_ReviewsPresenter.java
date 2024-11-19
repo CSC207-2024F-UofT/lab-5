@@ -1,37 +1,56 @@
 package interface_adapter.reviews;
 
-import entity.MovieReview;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.home.HomeViewModel;
-import interface_adapter.signup.SignupViewModel;
 import use_case.my_reviews.My_ReviewsOutputBoundary;
-import view.HomeView;
-import view.My_ReviewsNoReviewsView;
-import view.My_ReviewsReviewsView;
-import view.ViewManager;
+import use_case.my_reviews.My_ReviewsOutputData;
+import view.My_ReviewsView;
 
-import javax.sound.midi.VoiceStatus;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class My_ReviewsPresenter implements My_ReviewsOutputBoundary {
-    private final My_ReviewsNoReviewsView myReviewsNoReviewsView;
-    private final My_ReviewsReviewsView myReviewsReviewsView;
+    private final My_ReviewsViewModel viewModel;
     private final ViewManagerModel viewManagerModel;
 
-    public My_ReviewsPresenter(My_ReviewsNoReviewsView myReviewsNoReviewsView, My_ReviewsReviewsView myReviewsReviewsView,
+    public My_ReviewsPresenter(My_ReviewsViewModel viewModel,
                                ViewManagerModel viewManagerModel) {
-        this.myReviewsNoReviewsView = myReviewsNoReviewsView;
-        this.myReviewsReviewsView = myReviewsReviewsView;
+        this.viewModel = viewModel;
         this.viewManagerModel = viewManagerModel;
-
     }
 
-    public void prepareMyReviewsView(List<MovieReview> my_reviews) {
-        // If they have at least one review switch to this screen
+    @Override
+    public void prepareMyReviewsView(My_ReviewsOutputData reviews) {
+        // Format each review into a separate string
+        List<String> formattedReviews = reviews.getReviews().stream()
+                .map(review -> {
+                    StringBuilder reviewString = new StringBuilder();
+                    reviewString.append("- Title: ").append(review.getMovie_Title()).append("\n")
+                            .append("  Date: ").append(review.getDate()).append("\n")
+                            .append("  Stars: ").append(review.getStarRating()).append("\n");
+                    if (review.getContent() != null) {
+                        reviewString.append("  Review: ").append(review.getContent()).append("\n");
+                    }
+                    reviewString.append("-----------------------------------\n");
+                    return reviewString.toString();
+                })
+                .collect(Collectors.toList());
 
+        // Update the ViewModel
+        viewModel.setReviews(formattedReviews);
     }
 
+    //// Switch the screen to the reviews screen
+//        viewManagerModel.setState("m")(myReviewsReviewsView);
+//    }
+//
+    @Override
     public void prepareNoReviewsView(String message) {
-        // If they do not have any reviews switch to this screen
+//        // Pass the message to the no-reviews view
+//        myReviewsNoReviewsView.displayMessage(message);
+//
+//        // Switch the screen to the no-reviews screen
+//        viewManagerModel.switchView(myReviewsNoReviewsView);
+//    }
     }
 }
+

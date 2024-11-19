@@ -17,13 +17,15 @@ public class Main {
                                             .addSignupView()
                                             .addLoggedInView()
                                             .addWatchlistsView()
-                                            .addSurvey2View()
+                                            .addSurvey1View()
+                                            .addMyReviewsView()
                                             .addSignupUseCase()
                                             .addLoginUseCase()
                                             // .addChangePasswordUseCase()
                                             .addLogoutUseCase()
                                             .addWatchlistsUseCase()
                                             .addHomeUseCase()
+                                            .addMy_ReviewsUseCase()
                                             .build();
         
         application.pack();

@@ -1,9 +1,11 @@
 package entity;
 
-import static com.mongodb.client.model.Filters.eq;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.mongodb.client.model.Filters.eq;
+
+
 
 /**
  * A simple implementation of the User interface.
@@ -52,4 +54,16 @@ public class CommonUser implements User {
         return this.watchlists;
     }
 
+    public List<String> getPreferredGenres() {
+        return this.preferredGenres;
+    }
+
+    /**
+     *  the user selects preferred genre.
+     *
+     * @param genre the genre to be added
+     */
+    public void addPreferredGenres(String genre) {
+        this.preferredGenres.add(genre);
+    }
 }

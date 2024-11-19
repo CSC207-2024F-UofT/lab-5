@@ -40,7 +40,7 @@ public class CommonMovieReview implements MovieReview {
     }
 
     public String getContent() {
-        return this.getContent();
+        return this.content;
     }
 
     public String getMovie_Title() {

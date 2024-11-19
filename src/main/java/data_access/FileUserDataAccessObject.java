@@ -108,10 +108,10 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface,
         return accounts.containsKey(identifier);
     }
 
-    @Override
-    public void changePassword(User user) {
-        // Replace the User object in the map
-        accounts.put(user.getName(), user);
-        save();
-    }
+//    @Override
+//    public void changePassword(User user) {
+//        // Replace the User object in the map
+//        accounts.put(user.getName(), user);
+//        save();
+//    }
 }

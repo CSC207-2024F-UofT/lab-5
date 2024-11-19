@@ -28,7 +28,6 @@ public class HomeView extends JPanel implements PropertyChangeListener {
     private final HomeViewModel homeViewModel;
     private HomeController homeController;
     private LogoutController logoutController;
-    private WatchlistsController watchlistsController;
 
     private final JLabel username;
 
@@ -69,6 +68,7 @@ public class HomeView extends JPanel implements PropertyChangeListener {
                     }
                 }
         );
+
         myReviews = new JButton("My Reviews");
         bottomButtons.add(recommendations);
         bottomButtons.add(myWatchlists);
@@ -122,19 +122,6 @@ public class HomeView extends JPanel implements PropertyChangeListener {
                         // 2. Execute the logout Controller.
                         final String uname = homeViewModel.getState().getUsername();
                         this.logoutController.execute(uname);
-                    }
-                }
-        );
-
-        myWatchlists.addActionListener(
-                // This creates an anonymous subclass of ActionListener and instantiates it.
-                evt -> {
-                    if (evt.getSource().equals(myWatchlists)) {
-                        // 1. get the state out of the loggedInViewModel. It contains the username.
-                        // 2. Execute the watchlist Controller.
-                        final String uname = homeViewModel.getState().getUsername();
-                        // TODO
-                        // this.watchlistsController.execute(uname);
                     }
                 }
         );

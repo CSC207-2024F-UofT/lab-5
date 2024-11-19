@@ -4,7 +4,7 @@ import java.util.Date;
 
 public interface MovieReview {
 
-
+    // Method to get the movie title
     String getMovie_Title();
 
     // Method to get the date of the review

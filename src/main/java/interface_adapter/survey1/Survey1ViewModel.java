@@ -7,8 +7,10 @@ import interface_adapter.ViewModel;
  */
 public class Survey1ViewModel extends ViewModel<Survey1State> {
 
-    public Survey1ViewModel(String viewName) {
-        super("survey step 1");
+    public static final String SUBMIT_LABEL = "Submit";
+
+    public Survey1ViewModel() {
+        super("survey step 1/2");
         setState(new Survey1State());
     }
 }

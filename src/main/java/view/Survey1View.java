@@ -49,6 +49,8 @@ public class Survey1View extends JPanel implements PropertyChangeListener {
         this.survey1ViewModel.addPropertyChangeListener(this);
 
         final JLabel surveyQuestion = new JLabel("Select 3 of your favorite genres:");
+        final JPanel surveyQuestionPanel = new JPanel();
+        surveyQuestionPanel.add(surveyQuestion);
 
         final JPanel firstRowGenresButtons = new JPanel();
         horrorButton = new JButton("Horror");
@@ -100,6 +102,8 @@ public class Survey1View extends JPanel implements PropertyChangeListener {
         submit = new JButton("Submit");
         // Disable submit initially
         submit.setEnabled(false);
+        final JPanel submitPanel = new JPanel();
+        submitPanel.add(submit);
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -113,12 +117,12 @@ public class Survey1View extends JPanel implements PropertyChangeListener {
 //                        this.submitController.execute(currentState);
 //                    }
 //                });
-        this.add(surveyQuestion);
+        this.add(surveyQuestionPanel);
         this.add(firstRowGenresButtons);
         this.add(secondRowGenresButtons);
         this.add(thirdRowGenresButtons);
         this.add(fourthRowGenresButtons);
-        this.add(submit);
+        this.add(submitPanel);
     }
 
     @Override

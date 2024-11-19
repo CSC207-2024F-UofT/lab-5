@@ -4,7 +4,7 @@ import entity.MovieReview;
 
 import java.util.List;
 
-public interface My_ReviewsOutputBoundary {
-    void prepareMyReviewsView(List<MovieReview> reviews);
-    void prepareNoReviewsView(String message);
-}
+    public interface My_ReviewsOutputBoundary {
+        void prepareMyReviewsView(My_ReviewsOutputData my_reviewsOutputData);
+        void prepareNoReviewsView(String message);
+    }

@@ -8,6 +8,10 @@ import entity.User;
 public class WatchlistsState {
     private User currentUser;
 
+    public WatchlistsState() {
+
+    }
+
     public User getCurrentUser() {
         return this.currentUser;
     }

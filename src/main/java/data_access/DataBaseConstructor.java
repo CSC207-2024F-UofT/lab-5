@@ -14,7 +14,6 @@ public class DataBaseConstructor {
 
     // Constructor
     public DataBaseConstructor() {
-        // Prevent instantiation
     }
 
     // Method to create or get a collection

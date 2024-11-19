@@ -7,10 +7,10 @@ public class My_ReviewsController {
     private final My_ReviewsInputBoundary interactor;
 
     public My_ReviewsController(My_ReviewsInputBoundary interactor) {
-        this.interactor = interactor; // Dependency injection of the use case interactor
+        this.interactor = interactor;
     }
 
-    public void handleGetReviews(User user) {
-        interactor.execute(user); // Calls the use case logic
+    public void getReviews(User user) {
+        interactor.execute(user);
     }
 }

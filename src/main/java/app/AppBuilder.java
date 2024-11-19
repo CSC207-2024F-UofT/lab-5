@@ -6,10 +6,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
+import interface_adapter.reviews.My_ReviewsController;
+import interface_adapter.reviews.My_ReviewsPresenter;
+import interface_adapter.reviews.My_ReviewsViewModel;
 import data_access.DBUserDataAccessObject;
-import data_access.InMemoryUserDataAccessObject;
 import entity.CommonUserFactory;
-import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.home.HomeController;
 import interface_adapter.home.HomePresenter;
@@ -22,9 +23,7 @@ import interface_adapter.logout.LogoutPresenter;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
-import interface_adapter.survey_second_page.SurveySecondPageController;
-import interface_adapter.survey_second_page.SurveySecondPagePresenter;
-import interface_adapter.survey_second_page.SurveySecondPageViewModel;
+import interface_adapter.survey1.Survey1ViewModel;
 import interface_adapter.watchlists.WatchlistsController;
 import interface_adapter.watchlists.WatchlistsPresenter;
 import interface_adapter.watchlists.WatchlistsViewModel;
@@ -37,12 +36,10 @@ import use_case.login.LoginOutputBoundary;
 import use_case.logout.LogoutInputBoundary;
 import use_case.logout.LogoutInteractor;
 import use_case.logout.LogoutOutputBoundary;
+import use_case.my_reviews.*;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
-import use_case.survey_second_page.SurveySecondPageInputBoundary;
-import use_case.survey_second_page.SurveySecondPageInteractor;
-import use_case.survey_second_page.SurveySecondPageOutputBoundary;
 import use_case.watchlists.WatchlistsInputBoundary;
 import use_case.watchlists.WatchlistsInteractor;
 import use_case.watchlists.WatchlistsOutputBoundary;
@@ -78,8 +75,11 @@ public class AppBuilder {
     private HomeView loggedInView;
     private WatchlistsView watchlistsView;
     private WatchlistsViewModel watchlistsViewModel;
-    private SurveySecondPageView surveySecondPageView;
-    private SurveySecondPageViewModel surveySecondPageViewModel;
+    private Survey1View survey1View;
+    private Survey1ViewModel survey1ViewModel;
+    private My_ReviewsViewModel my_ReviewsViewModel;
+    private My_ReviewsView my_ReviewsView;
+    private My_ReviewsDataAccessInterface my_ReviewsDataAccessObject;
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -118,6 +118,9 @@ public class AppBuilder {
         return this;
     }
 
+
+
+
     /**
      * Adds the Watchlists View to the application.
      * @return this builder
@@ -129,14 +132,49 @@ public class AppBuilder {
         return this;
     }
 
+    public AppBuilder addMyReviewsView() {
+        // Step 1: Initialize the ViewModel
+        my_ReviewsViewModel = new My_ReviewsViewModel();
+
+        // Step 2: Initialize the View and link it to the ViewModel
+        my_ReviewsView = new My_ReviewsView(my_ReviewsViewModel);
+
+        // Step 3: Add the View to the CardPanel with its unique name
+        cardPanel.add(my_ReviewsView, my_ReviewsView.getViewName());
+
+        // Step 4: Return the AppBuilder for chaining
+        return this;
+    }
+
+    public AppBuilder addMy_ReviewsUseCase() {
+
+        //   Create the Presenter and link it to the ViewModel
+        final My_ReviewsOutputBoundary my_ReviewsOutputBoundary = new My_ReviewsPresenter(my_ReviewsViewModel, viewManagerModel);
+
+        //  Create the Interactor
+        final My_ReviewsInputBoundary my_ReviewsInteractor = new My_ReviewsInteractor(
+                my_ReviewsDataAccessObject,
+                my_ReviewsOutputBoundary
+        );
+
+        // Create the Controller
+        final My_ReviewsController myReviewsController = new My_ReviewsController(my_ReviewsInteractor);
+
+        // Create the View and link it to the ViewModel and Controller
+        final My_ReviewsView myReviewsView = new My_ReviewsView(my_ReviewsViewModel);
+        myReviewsView.setMyReviewsController(myReviewsController);
+
+        // Return
+        return this;
+    }
     /**
-     * Adds the Survey Second Page View to the application.
+     * Adds the Survey1 View to the application.
      * @return this builder
      */
-    public AppBuilder addSurvey2View() {
-        surveySecondPageViewModel = new SurveySecondPageViewModel();
-        surveySecondPageView = new SurveySecondPageView(surveySecondPageViewModel);
-        cardPanel.add(surveySecondPageView, surveySecondPageView.getViewName());
+    public AppBuilder addSurvey1View() {
+        survey1ViewModel = new Survey1ViewModel();
+        survey1View = new Survey1View(survey1ViewModel);
+        cardPanel.add(survey1View, survey1View.getViewName());
         return this;
     }
 
