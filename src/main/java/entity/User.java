@@ -29,6 +29,6 @@ public interface User {
      * Returns the user created watchlists of the user.
      * @return list of watchlists of the user.
      */
-    List<String> getWatchlists();
+    List<Watchlist> getWatchlists();
 
 }

@@ -19,7 +19,7 @@ public class CommonUser implements User {
 
     private boolean loginStatus;
     private List<String> ratingsAndReviews = new ArrayList<>();
-    private List<String> watchlists = new ArrayList<>();
+    private List<Watchlist> watchlists;
     private List<String> preferredGenres;
 
     public CommonUser(String name, String password) {
@@ -27,6 +27,7 @@ public class CommonUser implements User {
         this.password = password;
         this.loginStatus = false;
         this.preferredGenres = new ArrayList<>();
+        this.watchlists = new ArrayList<>();
     }
 
     @Override
@@ -50,7 +51,7 @@ public class CommonUser implements User {
      * @return list of watchlists of the user.
      */
     @Override
-    public List<String> getWatchlists() {
+    public List<Watchlist> getWatchlists() {
         return this.watchlists;
     }
 
