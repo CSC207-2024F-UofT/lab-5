@@ -41,24 +41,39 @@ public class RecipeSearchView extends JPanel implements ActionListener, Property
 
     public RecipeSearchView(RecipeSearchViewModel recipeSearchViewModel) {
         this.recipeSearchViewModel = recipeSearchViewModel;
-        this.RecipeSearchViewModel = RecipeSearchViewModel;
-        // this.loginViewModel.addPropertyChangeListener(this);
+        this.recipeSearchViewModel.addPropertyChangeListener(this);
 
-        final JLabel title = new JLabel("Recipe Search");
+        final JLabel title = new JLabel(viewName);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         final LabelTextPanel recipeInfo = new LabelTextPanel(
                 new JLabel("Recipe Name:"), recipeInputField);
 
-        final LabelTextPanel calorieInfo = new LabelTextPanel(
-                calories, caloriesMinInputField);
-        final LabelTextPanel carbInfo = new LabelTextPanel(
-                carbs, carbsMinInputField);
-        final LabelTextPanel proteinInfo = new LabelTextPanel(
-                protein, proteinMinInputField);
-        final LabelTextPanel fatInfo = new LabelTextPanel(
-                fat, fatMinInputField);
+        // panel for calorie information
+        final JPanel calorieInfo = new JPanel();
+        calorieInfo.add(calories);
+        calorieInfo.add(caloriesMinInputField);
+        calorieInfo.add(caloriesMaxInputField);
 
+        // panel for carbohydrate information
+        final JPanel carbInfo = new JPanel();
+        carbInfo.add(carbs);
+        carbInfo.add(carbsMinInputField);
+        carbInfo.add(carbsMaxInputField);
+
+        // panel for protein information
+        final JPanel proteinInfo = new JPanel();
+        proteinInfo.add(protein);
+        proteinInfo.add(proteinMinInputField);
+        proteinInfo.add(proteinMaxInputField);
+
+        // panel for fat information
+        final JPanel fatInfo = new JPanel();
+        fatInfo.add(fat);
+        fatInfo.add(fatMinInputField);
+        fatInfo.add(fatMaxInputField);
+
+        // panel for buttons
         final JPanel buttons = new JPanel();
         search = new JButton("Search");
         buttons.add(search);
@@ -72,6 +87,7 @@ public class RecipeSearchView extends JPanel implements ActionListener, Property
         this.add(proteinInfo);
         this.add(fatInfo);
         this.add(buttons);
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     }
 
     /**
