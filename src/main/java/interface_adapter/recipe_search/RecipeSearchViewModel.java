@@ -1,14 +1,19 @@
 package interface_adapter.recipe_search;
 
+import interface_adapter.ViewModel;
 import view.RecipeSearchView;
 
 /**
  * The ViewModel for the RecipeSearch View.
  */
 
-public class RecipeSearchViewModel {
-    public void addPropertyChangeListener(RecipeSearchView recipeSearchView) {
+public class RecipeSearchViewModel extends ViewModel<RecipeSearchState> {
+
+    public RecipeSearchViewModel() {
+        super("recipe search");
+        setState(new RecipeSearchState());
     }
 
-    public static final String
+    public void addPropertyChangeListener(RecipeSearchView recipeSearchView) {
+    }
 }
