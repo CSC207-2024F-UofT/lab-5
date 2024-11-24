@@ -1,22 +1,4 @@
-[
-    {
-        "password": "a",
-        "username": "a"
-    },
-    {
-        "password": "test_password",
-        "username": "test_user"
-    },
-    {
-        "password": "abcd",
-        "username": "abc"
-    },
-    {
-        "password": "Test-password",
-        "username": "Test_username"
-    },
-    {
-        "password": "abcd",
-        "username": "abcd"
-    }
-]
+[{
+    "password": "csc207",
+    "username": "John_Smith"
+}]

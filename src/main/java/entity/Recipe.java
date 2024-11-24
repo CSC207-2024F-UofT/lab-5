@@ -6,7 +6,7 @@ import java.util.List;
  * This class returns a recipe from the API.
  */
 public class Recipe {
-    private String id;
+    private int id;
     private String name;
     private String url;
     private List<Ingredient> ingredients;
@@ -19,6 +19,7 @@ public class Recipe {
 
     // TODO update constructor to initialize all the attributes
     public Recipe(String name, String url, List<Ingredient> ingredients) {
+        this.id = id;
         this.name = name;
         this.url = url;
         this.ingredients = ingredients;
@@ -34,6 +35,10 @@ public class Recipe {
     }
 
     // getters
+    public int getId() {
+        return id;
+    }
+
     public String getName() {
         return name;
     }
