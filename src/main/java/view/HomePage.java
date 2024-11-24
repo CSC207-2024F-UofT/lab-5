@@ -13,6 +13,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+import interface_adapter.ShoppingListController;
+import use_case.ShoppingListUseCase;
+import data_access.SpoonacularAPI;
+
 public class HomePage extends JFrame {
     public HomePage() {
         setTitle("Welcome to the Recipe Finder");
@@ -31,6 +35,23 @@ public class HomePage extends JFrame {
             RecipeController controller = new RecipeController(new SearchRecipeUseCase(new SpoonacularRecipeDAO()));
             new RecipeView(controller);
             dispose(); // Would it be better to not close the main page?
+
+        });
+        // Shopping List Button
+        JButton shoppingListButton = new JButton("Shopping List");
+        shoppingListButton.setFont(new Font("Arial", Font.PLAIN, 16));
+
+// Action Listener for Shopping List Button
+        shoppingListButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Launch Shopping List GUI
+                SpoonacularAPI api = new SpoonacularAPI();
+                ShoppingListUseCase useCase = new ShoppingListUseCase(api);
+                ShoppingListController controller = new ShoppingListController(useCase);
+                ShoppingListGUI gui = new ShoppingListGUI(controller);
+                gui.run();
+            }
         });
 
         JButton bookmarksButton = new JButton("Bookmarks");
@@ -70,6 +91,7 @@ public class HomePage extends JFrame {
         panel.add(startButton);
         panel.add(bookmarksButton);
         panel.add(recentlyViewedButton);
+        panel.add(shoppingListButton);
         add(panel, BorderLayout.SOUTH);
 //        add(startButton, BorderLayout.SOUTH);
 //        add(bookmarksButton, BorderLayout.SOUTH);
