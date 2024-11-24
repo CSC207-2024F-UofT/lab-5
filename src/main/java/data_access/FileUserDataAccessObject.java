@@ -6,76 +6,76 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
-import entity.User;
-import entity.UserFactory;
+import entity.*;
 import use_case.change_password.ChangePasswordUserDataAccessInterface;
 import use_case.login.LoginUserDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
+import use_case.watchlist.WatchListDataAccessInterface;
+import use_case.watchlist.WatchListModifyDataAccessInterface;
 
 /**
  * DAO for user data implemented using a File to persist the data.
  */
-public class FileUserDataAccessObject implements SignupUserDataAccessInterface,
-                                                 LoginUserDataAccessInterface,
-                                                 ChangePasswordUserDataAccessInterface {
+public class FileUserDataAccessObject implements WatchListDataAccessInterface, WatchListModifyDataAccessInterface {
 
-    private static final String HEADER = "username,password";
+    private final ArrayList<String> watchList = new ArrayList<>();
+    private final ArrayList<SimulatedHolding> portfolioList = new ArrayList<>();
 
-    private final File csvFile;
-    private final Map<String, Integer> headers = new LinkedHashMap<>();
-    private final Map<String, User> accounts = new HashMap<>();
-    private String currentUsername;
+    private final String mainFilePath = "src/main/java/data_access/";
+    private final String watchListFilePath = "watchlist.txt";
+    private final String portfolioFilePath = "portfolio.txt";
 
-    public FileUserDataAccessObject(String csvPath, UserFactory userFactory) throws IOException {
+    private final SimulatedHoldingFactory simulatedHoldingFactory;
 
-        csvFile = new File(csvPath);
-        headers.put("username", 0);
-        headers.put("password", 1);
+    public FileUserDataAccessObject(SimulatedHoldingFactory simulatedHoldingFactory) {
+        this.simulatedHoldingFactory = simulatedHoldingFactory;
+    }
 
-        if (csvFile.length() == 0) {
-            save();
+    // Watch list related APIs
+    @Override
+    public ArrayList<String> getWatchList() {
+        // Check if watchlist.txt file exists
+        final Boolean isFileExisted = new File(mainFilePath + watchListFilePath).isFile();
+
+        if (isFileExisted) {
+            // Using FileReader and BufferedReader to read the file
+            try (BufferedReader reader = new BufferedReader(new FileReader(mainFilePath + watchListFilePath))) {
+                watchList.clear();
+                final String line = reader.readLine();
+                if (line != null) {
+                    Collections.addAll(watchList, line.split(","));
+                }
+
+                return watchList;
+            }
+            catch (IOException ex) {
+                // Normally, this means the file doesn't exist
+                throw new RuntimeException(ex);
+            }
         }
         else {
+            // If the watchlist file doesn't exist, we create a new one
+            this.watchList.add("AAPl");
+            this.watchList.add("NVDA");
+            this.watchList.add("AMD");
+            this.saveWatchList();
 
-            try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
-                final String header = reader.readLine();
-
-                if (!header.equals(HEADER)) {
-                    throw new RuntimeException(String.format("header should be%n: %s%but was:%n%s", HEADER, header));
-                }
-
-                String row;
-                while ((row = reader.readLine()) != null) {
-                    final String[] col = row.split(",");
-                    final String username = String.valueOf(col[headers.get("username")]);
-                    final String password = String.valueOf(col[headers.get("password")]);
-                    final User user = userFactory.create(username, password);
-                    accounts.put(username, user);
-                }
-            }
+            // Get watchlist data again
+            return this.getWatchList();
         }
     }
 
-    private void save() {
+    @Override
+    public void saveWatchList() {
         final BufferedWriter writer;
         try {
-            writer = new BufferedWriter(new FileWriter(csvFile));
-            writer.write(String.join(",", headers.keySet()));
-            writer.newLine();
-
-            for (User user : accounts.values()) {
-                final String line = String.format("%s,%s",
-                        user.getName(), user.getPassword());
-                writer.write(line);
-                writer.newLine();
-            }
+            // Override original file
+            writer = new BufferedWriter(new FileWriter(mainFilePath + watchListFilePath, false));
+            writer.write(String.join(",", watchList));
 
             writer.close();
-
         }
         catch (IOException ex) {
             throw new RuntimeException(ex);
@@ -83,35 +83,82 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface,
     }
 
     @Override
-    public void save(User user) {
-        accounts.put(user.getName(), user);
-        this.save();
+    public void addToWatchList(String symbol) {
+        watchList.add(symbol);
+        watchList.sort(String::compareTo);
+        saveWatchList();
     }
 
     @Override
-    public User get(String username) {
-        return accounts.get(username);
+    public void removeFromWatchList(String symbol) {
+        watchList.remove(symbol);
+        saveWatchList();
     }
 
-    @Override
-    public void setCurrentUsername(String name) {
-        this.currentUsername = name;
+    // Portfolio list related APIs
+    public ArrayList<SimulatedHolding> getPortfolioList() {
+        // Check if watchlist.txt file exists
+        final Boolean isFileExisted = new File(mainFilePath + watchListFilePath).isFile();
+
+        if (isFileExisted) {
+            // Using FileReader and BufferedReader to read the file
+            try (BufferedReader reader = new BufferedReader(new FileReader(mainFilePath + portfolioFilePath))) {
+                // Clear all data first
+                portfolioList.clear();
+
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    final String[] data = line.split(",");
+                    final String symbol = data[0];
+                    final double price = Double.parseDouble(data[1]);
+                    final int amount = Integer.parseInt(data[2]);
+                    final SimulatedHolding simulatedHolding = simulatedHoldingFactory.create(symbol, price, amount);
+
+                    portfolioList.add(simulatedHolding);
+                }
+
+                return portfolioList;
+            }
+            catch (IOException ex) {
+                // Normally, this means the file doesn't exist
+                throw new RuntimeException(ex);
+            }
+        }
+        else {
+            // If file doesn't exist, we create one first
+            savePortfolioList();
+
+            return this.getPortfolioList();
+        }
     }
 
-    @Override
-    public String getCurrentUsername() {
-        return this.currentUsername;
+    public void savePortfolioList() {
+        final BufferedWriter writer;
+        try {
+            // Override original file
+            writer = new BufferedWriter(new FileWriter(mainFilePath + watchListFilePath, false));
+            for (SimulatedHolding simulatedHolding : portfolioList) {
+                writer.write(simulatedHolding.getSymbol() + ",");
+                writer.write(simulatedHolding.getPurchasePrice() + ",");
+                writer.write(simulatedHolding.getPurchaseAmount() + ",");
+                writer.newLine();
+            }
+
+            writer.close();
+        }
+        catch (IOException ex) {
+            // Normally, this means the file doesn't exist
+            throw new RuntimeException(ex);
+        }
     }
 
-    @Override
-    public boolean existsByName(String identifier) {
-        return accounts.containsKey(identifier);
+    public void addToPortfolioList(SimulatedHolding simulatedHolding) {
+        portfolioList.add(simulatedHolding);
+        savePortfolioList();
     }
 
-    @Override
-    public void changePassword(User user) {
-        // Replace the User object in the map
-        accounts.put(user.getName(), user);
-        save();
+    public void removeFromPortfolioList(SimulatedHolding simulatedHolding) {
+        portfolioList.remove(simulatedHolding);
+        savePortfolioList();
     }
 }
