@@ -44,4 +44,20 @@ public class RecipeDAOImpl implements RecipeDAO {
         recipes.add(new Recipe("Tomato Soup", "https://example.com/tomato_soup", List.of(tomato, onion, garlic)));
         return recipes;
     }
+
+    @Override
+    public List<String> getAvailableDiets() {
+        final List<String> diets = new ArrayList<>();
+        diets.add("Vegetarian");
+        diets.add("Vegan");
+        return diets;
+    }
+
+    @Override
+    public List<String> getAvailableCuisines() {
+        final List<String> cuisines = new ArrayList<>();
+        cuisines.add("Chinese");
+        cuisines.add("Italian");
+        return cuisines;
+    }
 }

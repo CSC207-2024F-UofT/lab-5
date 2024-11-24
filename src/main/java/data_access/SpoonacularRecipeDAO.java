@@ -76,4 +76,19 @@ public class SpoonacularRecipeDAO implements RecipeDAO {
         }
         return recipes;
     }
+
+    @Override
+    public List<String> getAvailableDiets() {
+        final List<String> list = new ArrayList<>();
+        list.add("hi");
+        return list;
+    }
+
+    @Override
+    public List<String> getAvailableCuisines() {
+        final List<String> list = new ArrayList<>();
+        list.add("hi");
+        return list;
+    }
+
 }
