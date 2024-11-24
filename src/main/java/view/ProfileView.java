@@ -2,6 +2,8 @@ package view;
 
 import java.awt.Component;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -15,6 +17,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import interface_adapter.change_password.ChangePasswordController;
+import interface_adapter.profile.ProfileController;
 import interface_adapter.profile.ProfileState;
 import interface_adapter.profile.ProfileViewModel;
 import interface_adapter.logout.LogoutController;
@@ -29,6 +32,7 @@ public class ProfileView extends JPanel implements PropertyChangeListener {
     private final JLabel passwordErrorField = new JLabel();
     private ChangePasswordController changePasswordController;
     private LogoutController logoutController;
+    private ProfileController profileController;
 
     private final JLabel username;
 
@@ -138,6 +142,15 @@ public class ProfileView extends JPanel implements PropertyChangeListener {
                 }
         );
 
+        recipeSaved.addActionListener(
+
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        profileController.switchToSavedRecipesView();
+                    }
+                }
+        );
+
         this.add(title);
         this.add(usernamePanel);
         this.add(recipebuttons);
@@ -169,5 +182,9 @@ public class ProfileView extends JPanel implements PropertyChangeListener {
 
     public void setLogoutController(LogoutController logoutController) {
         this.logoutController = logoutController;
+    }
+
+    public void setProfileController(ProfileController profileController) {
+        this.profileController = profileController;
     }
 }

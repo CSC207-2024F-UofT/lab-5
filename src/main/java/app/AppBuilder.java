@@ -13,12 +13,15 @@ import interface_adapter.ForgotPassword.ForgotPasswordViewModel;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.ChangePasswordPresenter;
+import interface_adapter.profile.ProfileController;
+import interface_adapter.profile.ProfilePresenter;
 import interface_adapter.profile.ProfileViewModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.logout.LogoutPresenter;
+import interface_adapter.saved_recipes.SavedrecipesViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
@@ -31,6 +34,9 @@ import use_case.login.LoginOutputBoundary;
 import use_case.logout.LogoutInputBoundary;
 import use_case.logout.LogoutInteractor;
 import use_case.logout.LogoutOutputBoundary;
+import use_case.profile.ProfileInputBoundary;
+import use_case.profile.ProfileInteractor;
+import use_case.profile.ProfileOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
@@ -66,6 +72,8 @@ public class AppBuilder {
     private LoginView loginView;
     private ForgotPasswordViewModel forgotPasswordViewModel;
     private ForgotPasswordView forgotPasswordView;
+    private SavedrecipesViewModel savedrecipesViewModel;
+    private SavedrecipesView savedrecipesView;
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -111,6 +119,13 @@ public class AppBuilder {
         return this;
     }
 
+    public AppBuilder addSavedRecipesView() {
+        savedrecipesViewModel = new SavedrecipesViewModel();
+        savedrecipesView = new SavedrecipesView(savedrecipesViewModel);
+        cardPanel.add(savedrecipesView, savedrecipesView.getViewName());
+        return this;
+    }
+
     /**
      * Adds the Signup Use Case to the application.
      * @return this builder
@@ -123,6 +138,15 @@ public class AppBuilder {
 
         final SignupController controller = new SignupController(userSignupInteractor);
         signupView.setSignupController(controller);
+        return this;
+    }
+
+    public AppBuilder addProfileUseCase() {
+        final ProfileOutputBoundary profileOutputBoundary = new ProfilePresenter(savedrecipesViewModel, viewManagerModel);
+        final ProfileInputBoundary userProfileInteractor = new ProfileInteractor(profileOutputBoundary);
+
+        final ProfileController controller = new ProfileController(userProfileInteractor);
+        profileView.setProfileController(controller);
         return this;
     }
 

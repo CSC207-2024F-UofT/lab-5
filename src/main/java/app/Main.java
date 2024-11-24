@@ -17,9 +17,11 @@ public class Main {
                                                 .addSignupView()
                                                 .addProfileView()
                                                 .addForgotPasswordView()
+                                                .addSavedRecipesView()
                                                 .addSignupUseCase()
                                                 .addLoginUseCase()
                                                 .addChangePasswordUseCase()
+                                                .addProfileUseCase()
                                                 .addLogoutUseCase()
                                                 .build();
 
