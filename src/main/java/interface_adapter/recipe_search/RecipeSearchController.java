@@ -1,29 +1,24 @@
 package interface_adapter.recipe_search;
 
-import use_case.signup.SignupInputBoundary;
+import use_case.recipe_search.RecipeSearchInputBoundary;
+import use_case.recipe_search.RecipeSearchInputData;
 import use_case.signup.SignupInputData;
 
-/**
- * Controller for the Recipe Search Use Case.
- */
 public class RecipeSearchController {
 
-    public RecipeSearchController() {
+    private final RecipeSearchInputBoundary searchUseCaseInteractor;
 
+    public RecipeSearchController(RecipeSearchInputBoundary searchUseCaseInteractor) {
+        this.searchUseCaseInteractor = searchUseCaseInteractor;
     }
 
-    /**
-     * Executes the Recipe Search Use Case.
-     * @param title the recipe the user wants
-     * @param calorieInfo the user's calorie specifications
-     * @param carbInfo the user's carbohydrate specifications
-     * @param proteinInfo the user's protein specifications
-     * @param fatInfo the user's fat specifications
-     */
-    public void execute(String title, String calorieInfo, String carbInfo, String proteinInfo, String fatInfo) {
-        final RecipeSearchInputData recipeSearchInputData = new SignupInputData(
-                title, calorieInfo, carbInfo, proteinInfo, fatInfo);
+    public void execute(String recipeName, String calMin, String calMax, String carbMin, String carbMax, String proteinMin, String proteinMax, String fatMin, String fatMax) {
+        final RecipeSearchInputData recipeSearchInputData = new RecipeSearchInputData(
+                recipeName, calMin, calMax, carbMin, carbMax, proteinMin, proteinMax, fatMin, fatMax);
 
-        userSignupUseCaseInteractor.execute(signupInputData);
+        searchUseCaseInteractor.execute(recipeSearchInputData);
+    }
+    public void switchToLoginView() {
+        searchUseCaseInteractor.switchToSearchResultsView();
     }
 }

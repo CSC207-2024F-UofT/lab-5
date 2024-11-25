@@ -1,4 +1,4 @@
-package api;
+package data_access;
 
 import entity.Recipe;
 import okhttp3.OkHttpClient;
@@ -7,11 +7,12 @@ import okhttp3.Response;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import use_case.recipe_search.RecipeSearchDataAccessInterface;
 
 import java.io.IOException;
 import java.util.*;
 
-public class recipe_search_api {
+public class RecipeDataAccessObject implements RecipeSearchDataAccessInterface {
 
     private static final String API_URL = "https://api.edamam.com/api/recipes/v2";
     private static final String APP_ID = "bb181cd2";
@@ -20,16 +21,17 @@ public class recipe_search_api {
     private final Runnable customTask;
 
     // Constructor accepting a Runnable
-    public recipe_search_api(Runnable customTask) {
+    public RecipeDataAccessObject(Runnable customTask) {
         this.customTask = customTask;
     }
 
     // Default constructor for compatibility
-    public recipe_search_api() {
+    public RecipeDataAccessObject() {
         this.customTask = null;
     }
 
-    public List<Recipe> searchRecipebyName(String q, String cal_min, String cal_max, String carb_min, String carb_max, String protein_min, String protein_max, String fat_min, String fat_max) {
+    @Override
+    public List<Recipe> searchRecipe(String q, String cal_min, String cal_max, String carb_min, String carb_max, String protein_min, String protein_max, String fat_min, String fat_max) {
         final OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         String newq = "";
@@ -162,36 +164,9 @@ public class recipe_search_api {
             }
 
             return recipes;
-        } catch (IOException | JSONException event) {
+        }
+        catch (IOException | JSONException event) {
             throw new RuntimeException(event);
-        }
-    }
-
-    public static void main(String[] args) {
-        // Example: Pass a custom void task to the constructor
-        Runnable task = () -> System.out.println("Custom task is running...");
-
-        // Use the constructor with the custom task
-        recipe_search_api apiWithTask = new recipe_search_api(task);
-
-        // Run the custom task
-        if (apiWithTask.customTask != null) {
-            apiWithTask.customTask.run();
-        }
-
-        // Default usage without a task
-        recipe_search_api api = new recipe_search_api();
-        List<Recipe> recipes = api.searchRecipebyName("chicken","100","200","","","","","","");
-
-        for (Recipe recipe : recipes) {
-            System.out.println("Name: " + recipe.getName());
-            System.out.println("Servings: " + recipe.getServings());
-            System.out.println("Calories: " + recipe.getCalories());
-            System.out.println("Nutrients: " + recipe.getNutrients());
-            System.out.println("Tags: " + recipe.getTags());
-            System.out.println("URL: " + recipe.getUrl());
-            System.out.println("Image: " + recipe.getImage());
-            System.out.println("-----------------------------");
         }
     }
 }
