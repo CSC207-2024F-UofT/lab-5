@@ -16,13 +16,22 @@ public interface FilterRecipesDataAccessInterface {
      * @param diet the diet preference
      * @return a list of recipes with that diet
      */
-    List<Recipe> filterRecipesByDiet(DietaryPreference diet);
+    // List<Recipe> filterRecipesByDiet(DietaryPreference diet);
 
     /**
      * Filters recipes by cuisine.
      * @param cuisine the cuisine preference
      * @return a list of recipes with that cuisine
      */
-    List<Recipe> filterRecipesByCuisine(CuisinePreference cuisine);
+    // List<Recipe> filterRecipesByCuisine(CuisinePreference cuisine);
+
+    /**
+     * Filters recipes by ingredients, optional diet and cuisine.
+     * @param ingredients list of ingredients
+     * @param diet diet choice, optional
+     * @param cuisine cuisine choice, optional
+     * @return a list of filtered recipes
+     */
+    List<Recipe> filterSearchRecipes(List<String> ingredients, String diet, String cuisine);
 
 }
