@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.swing.*;
 
+import data_access.SpoonacularRecipeDAO;
 import entity.Recipe;
 import entity.User;
 
@@ -21,6 +22,10 @@ public abstract class RecipeListView extends JFrame implements ActionListener {
     private JTextField searchField;
     private JButton searchButton;
     // private BookmarkController controller;
+
+    private JComboBox<String> dietComboBox;
+    private JComboBox<String> cuisineComboBox;
+    private SpoonacularRecipeDAO spoonacularRecipeDAO;
 
     /*
     Generates the default view of a list of recipes associated with a User.
@@ -104,6 +109,34 @@ public abstract class RecipeListView extends JFrame implements ActionListener {
 //            }
 //        });
 
+        // search filters
+        final JPanel bottomPanel = new JPanel();
+        bottomPanel.setLayout(new FlowLayout());
+        dietComboBox = new JComboBox<>();
+        cuisineComboBox = new JComboBox<>();
+        bottomPanel.add(new JLabel("Diet:"));
+        bottomPanel.add(dietComboBox);
+        bottomPanel.add(new JLabel("Cuisine:"));
+        bottomPanel.add(cuisineComboBox);
+
+        add(bottomPanel, BorderLayout.SOUTH);
+
+        populateDropdowns();
+
+        dietComboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                applyFilters();
+            }
+        });
+
+        cuisineComboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                applyFilters();
+            }
+        });
+
         setVisible(true);
     }
 
@@ -112,6 +145,67 @@ public abstract class RecipeListView extends JFrame implements ActionListener {
         String userInput = searchField.getText();
         // Display the input in the result label
         JOptionPane.showMessageDialog(this, userInput);
+    }
+
+    // populating diet and cuisine dropdown menus
+    private void populateDropdowns() {
+        try {
+            final List<String> diets = spoonacularRecipeDAO.getAvailableDiets();
+            dietComboBox.addItem("Any");
+            for (String diet : diets) {
+                dietComboBox.addItem(diet);
+            }
+
+            final List<String> cuisines = spoonacularRecipeDAO.getAvailableCuisines();
+            cuisineComboBox.addItem("Any");
+            for (String cuisine : cuisines) {
+                cuisineComboBox.addItem(cuisine);
+            }
+        } catch (Exception exception) {
+            JOptionPane.showMessageDialog(this,
+                    "Error loading filters: " + exception.getMessage());
+        }
+    }
+
+    // applying the filters
+    private void applyFilters() {
+        final String enteredIngredients = searchField.getText();
+        final List<String> ingredients = List.of(enteredIngredients.split(","));
+        // if (ingredient.isEmpty()) {
+        // no initial search
+        // }
+
+        final String selectedDiet = dietComboBox.getSelectedItem().toString();
+        final String selectedCuisine = cuisineComboBox.getSelectedItem().toString();
+
+        // try {
+        //      if (("Any".equals(selectedDiet)) && ("Any".equals(selectedCuisine))) {
+        //          List<Recipe> recipesFiltered = spoonacularRecipeDAO.getRecipesByIngredients(ingredients);
+        //      } else if ("Any".equals(selectedDiet)) {
+        //          List<Recipe> recipesFiltered =
+        //                  spoonacularRecipeDAO.getRecipesByIngredientsDiets(ingredients, selectedDiet);
+        //      } else if ("Any".equals(selectedCuisine)) {
+        //          List<Recipe> recipesFiltered =
+        //                  spoonacularRecipeDAO.getRecipesByIngredientsCuisine(ingredients, selectedCuisine);
+        //      }
+        //
+        //      listModel.clear();
+        //      for (Recipe recipe : recipesFiltered) {
+        //          listModel.addElement(recipe);
+        //      }
+        //  }
+
+        // TODO try to make above implementation work
+        // final List<Recipe> recipes = spoonacularRecipeDAO.searchRecipes(ingredients,
+        //         "Any".equals(selectedDiet) ? null : selectedDiet,
+        //         "Any".equals(selectedCuisine) ? null : selectedCuisine
+        // );
+        // Update recipe list
+        // for (Recipe recipe : recipes) {
+        //     listModel.addElement(recipe);
+        // }
+        // recipeList.setModel(listModel);
+
     }
 
     protected abstract List<Recipe> getRecipeList(User user1);
