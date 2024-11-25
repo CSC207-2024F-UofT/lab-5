@@ -1,22 +1,13 @@
 package use_case.filter_recipes;
 
-import entity.CuisinePreference;
-import entity.DietaryPreference;
-
 /**
  * The filter recipes input boundary interface for calling the use case.
  */
 public interface FilterRecipesInputBoundary {
 
     /**
-     * Filters recipes by diet.
-     * @param diet the diet preference
+     * Execute the filter recipes use case.
+     * @param filterRecipesInputData the input data for this use case
      */
-    void filterRecipesByDiet(DietaryPreference diet);
-
-    /**
-     * Filters recipes by cuisine.
-     * @param cuisine the cuisine preference
-     */
-    void filterRecipesByCuisine(CuisinePreference cuisine);
+    void execute(FilterRecipesInputData filterRecipesInputData);
 }

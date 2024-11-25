@@ -2,8 +2,6 @@ package use_case.filter_recipes;
 
 import java.util.List;
 
-import entity.CuisinePreference;
-import entity.DietaryPreference;
 import entity.Recipe;
 
 /**
@@ -21,6 +19,22 @@ public class FilterRecipesInteractor implements FilterRecipesInputBoundary {
     }
 
     @Override
+    public void execute(FilterRecipesInputData filterRecipesInputData) {
+        try {
+            final String diet = filterRecipesInputData.getDietaryPreference().toString();
+            final String cuisine = filterRecipesInputData.getCuisinePreference().toString();
+            final List<String> ingredients = filterRecipesInputData.getIngredients();
+
+            final List<Recipe> recipes = userDataAccessObject.filterSearchRecipes(ingredients, diet, cuisine);
+            final FilterRecipesOutputData outputData = new FilterRecipesOutputData(recipes);
+            outputBoundary.prepareSuccessView(outputData);
+        }
+        catch (Exception exception) {
+            outputBoundary.prepareFailView("Failed to filter recipes: " + exception.getMessage());
+        }
+    }
+
+    /*    @Override
     public void filterRecipesByDiet(DietaryPreference diet) {
         try {
             final List<Recipe> recipes = userDataAccessObject.filterRecipesByDiet(diet);
@@ -43,6 +57,6 @@ public class FilterRecipesInteractor implements FilterRecipesInputBoundary {
             outputBoundary.prepareFailView("Failed to filter recipes by cuisine: "
                     + exception.getMessage());
         }
-    }
+    }*/
 
 }
