@@ -33,3 +33,8 @@ Shuxin (Kate) Zhou
 
 *	Member 5: Finally, the program offers a shopping list feature for adjacent recipes. When users are missing one or two ingredients for a recipe, the system will generate a shopping list with only the required items. This function can help users decide what to buy if they want to try new meals without doing extensive shopping. Export options, such as saving the list as a PDF or sharing it with other apps, enhance usability. The system will also need to distinguish between essential ingredients and common pantry staples to keep the lists concise.
 
+## Notes
+- should the bookmarks and recently viewed lists of a user be stored in the user.json file?
+- individual recipe view only displays one ingredient right now
+- add a find recipe by name search function in the main search page
+- for the ingredient list in individual recipe view, split it into "used ingredients", "unused ingredients" and "missed ingredients" (right now there's only "missed ingredients")
