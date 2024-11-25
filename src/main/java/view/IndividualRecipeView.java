@@ -17,10 +17,12 @@ public class IndividualRecipeView extends JFrame implements ActionListener {
     private final Recipe recipe;
     private URL imageUrl;
     private ImageIcon imageIcon;
+    private User user;
 
-    public IndividualRecipeView(Recipe recipe) {
+    public IndividualRecipeView(Recipe recipe, User user) {
         this.recipe = recipe;
         this.imageUrl = null;
+        this.user = user;
 
         // Initialize ingredient list
         final DefaultListModel<String> listModel = new DefaultListModel<>();
@@ -105,12 +107,12 @@ public class IndividualRecipeView extends JFrame implements ActionListener {
         }
         else if (event.getSource() == bookmarkButton) {
             // TODO complete bookmark function
-//            if (!recipe.isBookmarked()) {
-//                recipe.setBookmarked(true);
-//                JOptionPane.showMessageDialog(this, "Recipe added to bookmarks!");
-//            } else {
-//                JOptionPane.showMessageDialog(this, "Recipe is already bookmarked.");
-//            }
+            if (!user.getBookmarks().contains(recipe)) {
+                user.addBookmark(recipe);
+                JOptionPane.showMessageDialog(this, "Recipe added to bookmarks!");
+            } else {
+                JOptionPane.showMessageDialog(this, "Recipe is already bookmarked.");
+            }
 //        }
         }
     }
