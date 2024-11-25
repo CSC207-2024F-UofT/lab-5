@@ -139,10 +139,10 @@ public abstract class RecipeListView extends JFrame implements ActionListener {
         filterPanel.add(new JLabel("Cuisine:"));
         filterPanel.add(cuisineComboBox);
 
+        add(bottomPanel, BorderLayout.SOUTH);
+      
         dietComboBox.addActionListener(e -> applyFilters());
         cuisineComboBox.addActionListener(e -> applyFilters());
-
-        add(filterPanel, BorderLayout.SOUTH);
 
         populateDropdowns();
 
@@ -256,6 +256,7 @@ public abstract class RecipeListView extends JFrame implements ActionListener {
         }
 
         // recipeList.setModel(listModel);
+
 
         // try {
         //      if (("Any".equals(selectedDiet)) && ("Any".equals(selectedCuisine))) {
