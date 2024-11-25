@@ -129,25 +129,29 @@ public abstract class RecipeListView extends JFrame implements ActionListener {
 //        });
 
         // search filters
-        final JPanel bottomPanel = new JPanel();
-        bottomPanel.setLayout(new FlowLayout());
+        // final JPanel bottomPanel = new JPanel();
+        // bottomPanel.setLayout(new FlowLayout());
+        final JPanel filterPanel = new JPanel(new FlowLayout());
         dietComboBox = new JComboBox<>();
         cuisineComboBox = new JComboBox<>();
-        bottomPanel.add(new JLabel("Diet:"));
-        bottomPanel.add(dietComboBox);
-        bottomPanel.add(new JLabel("Cuisine:"));
-        bottomPanel.add(cuisineComboBox);
+        filterPanel.add(new JLabel("Diet:"));
+        filterPanel.add(dietComboBox);
+        filterPanel.add(new JLabel("Cuisine:"));
+        filterPanel.add(cuisineComboBox);
 
-        add(bottomPanel, BorderLayout.WEST);
+        dietComboBox.addActionListener(e -> applyFilters());
+        cuisineComboBox.addActionListener(e -> applyFilters());
+
+        add(filterPanel, BorderLayout.SOUTH);
 
         populateDropdowns();
 
-        dietComboBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                applyFilters();
-            }
-        });
+        // dietComboBox.addActionListener(new ActionListener() {
+        //     @Override
+        //     public void actionPerformed(ActionEvent e) {
+        //         applyFilters();
+        //     }
+        // });
 
         cuisineComboBox.addActionListener(new ActionListener() {
             @Override
@@ -195,6 +199,7 @@ public abstract class RecipeListView extends JFrame implements ActionListener {
 //            }
 //        });
         }
+
         if (event.getSource() == recipeSearchButton) {
             // TODO convert this into a use case
 
@@ -250,7 +255,7 @@ public abstract class RecipeListView extends JFrame implements ActionListener {
             listModel.addElement(recipe);
         }
 
-        recipeList.setModel(listModel);
+        // recipeList.setModel(listModel);
 
         // try {
         //      if (("Any".equals(selectedDiet)) && ("Any".equals(selectedCuisine))) {
