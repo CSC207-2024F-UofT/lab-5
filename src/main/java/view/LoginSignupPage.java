@@ -73,6 +73,7 @@ public class LoginSignupPage extends JFrame {
         if (userDAO.validateUser(username, password)) {
             JOptionPane.showMessageDialog(this, "Login successful!");
             openHomePage();
+            dispose();
         } else {
             JOptionPane.showMessageDialog(this, "Invalid credentials. Please try again.");
         }
