@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.net.URL;
 
 import data_access.GetRecipeId;
+import data_access.UserDAOImpl;
 import entity.*;
 
 public class IndividualRecipeView extends JFrame implements ActionListener {
@@ -18,11 +19,13 @@ public class IndividualRecipeView extends JFrame implements ActionListener {
     private URL imageUrl;
     private ImageIcon imageIcon;
     private User user;
+    private UserDAOImpl userDAO;
 
     public IndividualRecipeView(Recipe recipe, User user) {
         this.recipe = recipe;
         this.imageUrl = null;
         this.user = user;
+        this.userDAO = new UserDAOImpl();
 
         // Add this recipe to the user's recently viewed list
         user.addRecentlyViewed(this.recipe);
