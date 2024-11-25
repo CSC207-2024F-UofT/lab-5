@@ -88,6 +88,7 @@ public class HomePage extends JFrame {
         });
 
         final JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(2, 2, 10, 10));
         panel.add(startButton);
         panel.add(bookmarksButton);
         panel.add(recentlyViewedButton);
