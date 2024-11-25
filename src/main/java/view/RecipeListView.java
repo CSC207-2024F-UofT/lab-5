@@ -42,6 +42,7 @@ public abstract class RecipeListView extends JFrame implements ActionListener {
         this.recipeList = new JList<>();
         this.listModel = new DefaultListModel<>();
         this.controller = new RecipeListController(new SearchRecipeListUseCase(getRecipeList(user)));
+        this.spoonacularRecipeDAO = new SpoonacularRecipeDAO();
 
         setSize(800, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -135,7 +136,7 @@ public abstract class RecipeListView extends JFrame implements ActionListener {
         bottomPanel.add(new JLabel("Cuisine:"));
         bottomPanel.add(cuisineComboBox);
 
-        add(bottomPanel, BorderLayout.SOUTH);
+        add(bottomPanel, BorderLayout.WEST);
 
         populateDropdowns();
 
@@ -240,7 +241,7 @@ public abstract class RecipeListView extends JFrame implements ActionListener {
 
     // applying the filters
     private void applyFilters() {
-        final String enteredIngredients = searchField.getText();
+        final String enteredIngredients = ingredientSearchField.getText();
         final List<String> ingredients = List.of(enteredIngredients.split(","));
         // if (ingredient.isEmpty()) {
         // no initial search
