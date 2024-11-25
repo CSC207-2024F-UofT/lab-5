@@ -24,6 +24,9 @@ public class IndividualRecipeView extends JFrame implements ActionListener {
         this.imageUrl = null;
         this.user = user;
 
+        // Add this recipe to the user's recently viewed list
+        user.addRecentlyViewed(this.recipe);
+
         // Initialize ingredient list
         final DefaultListModel<String> listModel = new DefaultListModel<>();
         for (Ingredient ingredient : recipe.getIngredients()) {
