@@ -4,6 +4,7 @@ import java.util.List;
 
 import entity.Recipe;
 import entity.User;
+import interface_adapter.BookmarkController;
 
 import javax.swing.*;
 // import interface_adapter.BookmarkController;
