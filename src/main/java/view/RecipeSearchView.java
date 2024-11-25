@@ -10,6 +10,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import data_access.RecipeDataAccessObject;
+import interface_adapter.profile.ProfileController;
 import interface_adapter.recipe_search.RecipeSearchController;
 import interface_adapter.recipe_search.RecipeSearchPresenter;
 import interface_adapter.recipe_search.RecipeSearchState;
@@ -396,6 +397,10 @@ public class RecipeSearchView extends JPanel implements ActionListener, Property
         });
     }
 
+    public String getViewName() {
+        return viewName;
+    }
+
     /**
      * @param e the event to be processed
      */
@@ -411,6 +416,10 @@ public class RecipeSearchView extends JPanel implements ActionListener, Property
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
 
+    }
+
+    public void setSearchController(RecipeSearchController searchController) {
+        this.recipeSearchController = searchController;
     }
 
 }

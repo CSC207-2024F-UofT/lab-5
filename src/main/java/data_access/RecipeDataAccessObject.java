@@ -20,11 +20,6 @@ public class RecipeDataAccessObject implements RecipeSearchDataAccessInterface {
 
     private final Runnable customTask;
 
-    // Constructor accepting a Runnable
-    public RecipeDataAccessObject(Runnable customTask) {
-        this.customTask = customTask;
-    }
-
     // Default constructor for compatibility
     public RecipeDataAccessObject() {
         this.customTask = null;

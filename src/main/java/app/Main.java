@@ -18,11 +18,14 @@ public class Main {
                                                 .addProfileView()
                                                 .addForgotPasswordView()
                                                 .addSavedRecipesView()
+                                                .addRecipeSearchView()
+                                                .addSearchResultsView()
                                                 .addSignupUseCase()
                                                 .addLoginUseCase()
                                                 .addChangePasswordUseCase()
                                                 .addProfileUseCase()
                                                 .addLogoutUseCase()
+                                                .addSearchUseCase()
                                                 .build();
 
         application.pack();

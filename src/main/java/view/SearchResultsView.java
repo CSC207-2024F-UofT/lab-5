@@ -14,6 +14,7 @@ import java.util.List;
 public class SearchResultsView extends JPanel implements PropertyChangeListener {
 
     private final SearchResultsViewModel searchResultsViewModel;
+    private final String viewName = "Results";
 
     private final JButton backButton;
     private final JPanel resultsPanel;
@@ -149,5 +150,8 @@ public class SearchResultsView extends JPanel implements PropertyChangeListener 
 
         frame.add(searchResultsView);
         frame.setVisible(true);
+    }
+    public String getViewName() {
+        return viewName;
     }
 }

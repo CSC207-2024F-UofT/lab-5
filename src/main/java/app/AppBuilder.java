@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
 import data_access.InMemoryUserDataAccessObject;
+import data_access.RecipeDataAccessObject;
 import entity.CommonUserFactory;
 import entity.UserFactory;
 import interface_adapter.ForgotPassword.ForgotPasswordViewModel;
@@ -21,7 +22,11 @@ import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.logout.LogoutPresenter;
+import interface_adapter.recipe_search.RecipeSearchController;
+import interface_adapter.recipe_search.RecipeSearchPresenter;
+import interface_adapter.recipe_search.RecipeSearchViewModel;
 import interface_adapter.saved_recipes.SavedrecipesViewModel;
+import interface_adapter.search_results.SearchResultsViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
@@ -37,6 +42,9 @@ import use_case.logout.LogoutOutputBoundary;
 import use_case.profile.ProfileInputBoundary;
 import use_case.profile.ProfileInteractor;
 import use_case.profile.ProfileOutputBoundary;
+import use_case.recipe_search.RecipeSearchInputBoundary;
+import use_case.recipe_search.RecipeSearchInteractor;
+import use_case.recipe_search.RecipeSearchOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
@@ -61,6 +69,8 @@ public class AppBuilder {
     private final ViewManagerModel viewManagerModel = new ViewManagerModel();
     private final ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
 
+    private final RecipeDataAccessObject recipeDataAccessObject = new RecipeDataAccessObject();
+
     // thought question: is the hard dependency below a problem?
     private final InMemoryUserDataAccessObject userDataAccessObject = new InMemoryUserDataAccessObject();
 
@@ -69,6 +79,10 @@ public class AppBuilder {
     private LoginViewModel loginViewModel;
     private ProfileViewModel profileViewModel;
     private ProfileView profileView;
+    private RecipeSearchViewModel recipeSearchViewModel;
+    private RecipeSearchView recipeSearchView;
+    private SearchResultsView searchResultsView;
+    private SearchResultsViewModel searchResultsViewModel;
     private LoginView loginView;
     private ForgotPasswordViewModel forgotPasswordViewModel;
     private ForgotPasswordView forgotPasswordView;
@@ -123,6 +137,20 @@ public class AppBuilder {
         savedrecipesViewModel = new SavedrecipesViewModel();
         savedrecipesView = new SavedrecipesView(savedrecipesViewModel);
         cardPanel.add(savedrecipesView, savedrecipesView.getViewName());
+        return this;
+    }
+
+    public AppBuilder addRecipeSearchView() {
+        recipeSearchViewModel = new RecipeSearchViewModel();
+        recipeSearchView = new RecipeSearchView(recipeSearchViewModel);
+        cardPanel.add(recipeSearchView, recipeSearchView.getViewName());
+        return this;
+    }
+
+    public AppBuilder addSearchResultsView() {
+        searchResultsViewModel = new SearchResultsViewModel();
+        searchResultsView = new SearchResultsView(searchResultsViewModel);
+        cardPanel.add(searchResultsView, searchResultsView.getViewName());
         return this;
     }
 
@@ -197,6 +225,19 @@ public class AppBuilder {
         profileView.setLogoutController(logoutController);
         return this;
     }
+
+    public AppBuilder addSearchUseCase() {
+        final RecipeSearchOutputBoundary recipeSearchOutputBoundary = new RecipeSearchPresenter(
+                recipeSearchViewModel, searchResultsViewModel, viewManagerModel);
+        final RecipeSearchInputBoundary searchInteractor = new RecipeSearchInteractor(
+                recipeDataAccessObject, recipeSearchOutputBoundary);
+
+        final RecipeSearchController controller = new RecipeSearchController(searchInteractor);
+        recipeSearchView.setSearchController(controller);
+        return this;
+    }
+
+    // addSearchResultsUseCase()
 
     /**
      * Creates the JFrame for the application and initially sets the SignupView to be displayed.
