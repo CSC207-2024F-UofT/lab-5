@@ -60,6 +60,7 @@ public class RecipeView extends JFrame {
                                 // Get selected item
                                 final Recipe selectedItem = recipeList.getModel().getElementAt(index);
                                 // Open a new window
+
                                 new IndividualRecipeView(selectedItem);
                             }
                         }

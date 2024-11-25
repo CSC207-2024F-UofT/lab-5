@@ -4,21 +4,23 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import data_access.GetRecipeId;
 import entity.*;
 
 public class IndividualRecipeView extends JFrame implements ActionListener {
-    private JButton nutritionButton;
-    private JButton bookmarkButton;
+    private final JButton nutritionButton;
+    private final JButton bookmarkButton;
     private JList<String> ingredientJList;
-    private Recipe recipe;
+    private final Recipe recipe;
     private URL imageUrl;
     private ImageIcon imageIcon;
 
     public IndividualRecipeView(Recipe recipe) {
         this.recipe = recipe;
+        this.imageUrl = null;
 
         // Initialize ingredient list
         final DefaultListModel<String> listModel = new DefaultListModel<>();
@@ -90,18 +92,16 @@ public class IndividualRecipeView extends JFrame implements ActionListener {
         setVisible(true);
     }
 
-    GetRecipeId getGetRecipeId = new GetRecipeId();
+    GetRecipeId getRecipeId = new GetRecipeId();
 
     @Override
     public void actionPerformed(ActionEvent event) {
         if (event.getSource() == nutritionButton) {
-            int recipeId = getGetRecipeId.getRecipeIdByName(recipe.getName());
+            int recipeId = getRecipeId.getRecipeIdByName(recipe.getName());
             new NutritionView(recipeId);
         }
-    }
-}
-
-//        else if (event.getSource() == bookmarkButton) {
+        else if (event.getSource() == bookmarkButton) {
+            // TODO complete bookmark function
 //            if (!recipe.isBookmarked()) {
 //                recipe.setBookmarked(true);
 //                JOptionPane.showMessageDialog(this, "Recipe added to bookmarks!");
@@ -109,5 +109,6 @@ public class IndividualRecipeView extends JFrame implements ActionListener {
 //                JOptionPane.showMessageDialog(this, "Recipe is already bookmarked.");
 //            }
 //        }
-//    }
-//}
+        }
+    }
+}

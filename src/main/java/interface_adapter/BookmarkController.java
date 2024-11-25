@@ -1,7 +1,3 @@
-/*
-In progress; commented out everything for now so it doesn't crash the program.
- */
-
 package interface_adapter;
 
 import use_case.SearchRecipeListByIngredientUseCase;
