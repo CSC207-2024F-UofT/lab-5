@@ -6,8 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
 
+import data_access.GetRecipeId;
 import entity.*;
-import view.NutritionView;
 
 public class IndividualRecipeView extends JFrame implements ActionListener {
     private JButton nutritionButton;
@@ -62,8 +62,7 @@ public class IndividualRecipeView extends JFrame implements ActionListener {
             // Add the label to the frame
             mainPanel.add(imageLabel, BorderLayout.CENTER);
 
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             // Handle exceptions, e.g., invalid URL or connection error
             final JLabel errorLabel = new JLabel("Failed to load image.");
             errorLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -91,11 +90,18 @@ public class IndividualRecipeView extends JFrame implements ActionListener {
         setVisible(true);
     }
 
+    GetRecipeId getGetRecipeId = new GetRecipeId();
+
     @Override
     public void actionPerformed(ActionEvent event) {
-//        if (event.getSource() == nutritionButton) {
-//            new NutritionView(recipe);
-//        } else if (event.getSource() == bookmarkButton) {
+        if (event.getSource() == nutritionButton) {
+            int recipeId = getGetRecipeId.getRecipeIdByName(recipe.getName());
+            new NutritionView(recipeId);
+        }
+    }
+}
+
+//        else if (event.getSource() == bookmarkButton) {
 //            if (!recipe.isBookmarked()) {
 //                recipe.setBookmarked(true);
 //                JOptionPane.showMessageDialog(this, "Recipe added to bookmarks!");
@@ -103,5 +109,5 @@ public class IndividualRecipeView extends JFrame implements ActionListener {
 //                JOptionPane.showMessageDialog(this, "Recipe is already bookmarked.");
 //            }
 //        }
-    }
-}
+//    }
+//}
