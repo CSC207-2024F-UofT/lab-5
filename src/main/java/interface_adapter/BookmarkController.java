@@ -4,12 +4,12 @@ In progress; commented out everything for now so it doesn't crash the program.
 
 package interface_adapter;
 
-import use_case.SearchRecipeListUseCase;
+import use_case.SearchRecipeListByIngredientUseCase;
 
 public class BookmarkController extends RecipeListController {
 
-    public BookmarkController(SearchRecipeListUseCase searchRecipeListUseCase) {
-        super(searchRecipeListUseCase);
+    public BookmarkController(SearchRecipeListByIngredientUseCase searchRecipeListByIngredientUseCase) {
+        super(searchRecipeListByIngredientUseCase);
     }
 
 //    public addBookmark(Recipe recipe) {

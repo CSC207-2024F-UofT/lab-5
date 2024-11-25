@@ -15,7 +15,8 @@ import data_access.SpoonacularRecipeDAO;
 import entity.Recipe;
 import entity.User;
 import interface_adapter.RecipeListController;
-import use_case.SearchRecipeListUseCase;
+import use_case.SearchRecipeListByIngredientUseCase;
+import use_case.SearchRecipeListByNameUseCase;
 
 public abstract class RecipeListView extends JFrame implements ActionListener {
     // attributes for default view
@@ -41,7 +42,8 @@ public abstract class RecipeListView extends JFrame implements ActionListener {
         this.user = user;
         this.recipeList = new JList<>();
         this.listModel = new DefaultListModel<>();
-        this.controller = new RecipeListController(new SearchRecipeListUseCase(getRecipeList(user)));
+        this.controller = new RecipeListController(new SearchRecipeListByIngredientUseCase(getRecipeList(user)),
+                new SearchRecipeListByNameUseCase(getRecipeList(user)));
         this.spoonacularRecipeDAO = new SpoonacularRecipeDAO();
 
         setSize(800, 300);
@@ -195,17 +197,7 @@ public abstract class RecipeListView extends JFrame implements ActionListener {
         }
         if (event.getSource() == recipeSearchButton) {
             // TODO convert this into a use case
-            final String userInput = recipeSearchField.getText();
-            final List<Recipe> recipes = getRecipeList(user);
-            final List<Recipe> results = new ArrayList<>();
-            final DefaultListModel<Recipe> resultListModel = new DefaultListModel<>();
-            final JList<Recipe> resultList = new JList<>(listModel);
-            // TODO search by name function...
-            for (Recipe recipe : recipes) {
-                if (recipe.getName().contains(userInput)) {
-                    results.add(recipe);
-                }
-            }
+
             // temporary display
             JOptionPane.showMessageDialog(this, results);
 //            for (Recipe result : results) {
