@@ -199,7 +199,7 @@ public abstract class RecipeListView extends JFrame implements ActionListener {
             // TODO convert this into a use case
 
             // temporary display
-            JOptionPane.showMessageDialog(this, results);
+            // JOptionPane.showMessageDialog(this, results);
 //            for (Recipe result : results) {
 //                resultListModel.addElement(result);
 //            }
