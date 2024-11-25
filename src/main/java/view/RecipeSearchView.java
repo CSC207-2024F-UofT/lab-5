@@ -46,6 +46,12 @@ public class RecipeSearchView extends JPanel implements ActionListener, Property
     private final JTextField fatMaxInputField = new JTextField(15);
     private final JTextField fatMinInputField = new JTextField(15);
 
+    private final JLabel rating = new JLabel("Rating:");
+    private final JTextField ratingInputField = new JTextField(15);
+
+    private final JLabel comment = new JLabel("Comment:");
+    private final JTextField commentInputField = new JTextField(15);
+
     private final JButton search;
     private final JButton cancel;
 

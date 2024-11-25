@@ -11,4 +11,8 @@ public class SearchResultsState {
     public void setSearchResults(List<Recipe> searchResults) {
         this.searchResults = searchResults;
     }
+
+    public List<Recipe> getSearchResults() {
+        return searchResults;
+    }
 }
