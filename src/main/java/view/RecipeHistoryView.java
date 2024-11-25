@@ -33,7 +33,7 @@ public class RecipeHistoryView extends JPanel implements ActionListener, Propert
         final JLabel title = new JLabel(viewName);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // need to iterate through each saved recipe and display
+        // iterate through each saved recipe and display it
         final Map<Recipe, Integer> recipes = user.getRecipes();
         for (int i = 0; i <= recipes.size(); i++) {
             final JPanel recipe = new JPanel();

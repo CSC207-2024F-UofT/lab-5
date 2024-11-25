@@ -10,7 +10,7 @@ public interface RecipeReviewOutputBoundary {
      * Prepares the success view for the Recipe Review Use Case.
      * @param outputData the output data
      */
-    void prepareSuccessView(SignupOutputData outputData);
+    void prepareSuccessView(RecipeReviewOutputData outputData);
 
     /**
      * Prepares the failure view for the Recipe Review Use Case.

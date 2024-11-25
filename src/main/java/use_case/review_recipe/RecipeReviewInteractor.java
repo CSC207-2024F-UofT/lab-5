@@ -1,6 +1,6 @@
 package use_case.review_recipe;
 
-import use_case.signup.RecipeReviewOutputData;
+import use_case.review_recipe.RecipeReviewOutputData;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,21 +8,20 @@ import java.util.HashMap;
 /**
  * The Recipe Review Interactor.
  */
-public class RecipeReviewInteractor {
+public class RecipeReviewInteractor implements RecipeReviewInputBoundary {
     private RecipeReviewOutputBoundary reviewPresenter;
     private use_case.review_recipe.RecipeReviewOutputData recipeReviewOutputData;
 
+    public RecipeReviewInteractor(RecipeReviewOutputBoundary reviewPresenter) {
+        this.reviewPresenter = reviewPresenter;
+    }
 
     public void execute(RecipeReviewInputData recipeReviewInputData) {
         final String recipe = recipeReviewInputData.getName();
-        final String comment;
-        final int rating;
+        final String comment = recipeReviewInputData.getComment();
+        final int rating = recipeReviewInputData.getRating();
 
-        comment = "abc";
-        rating = 1;
-
-        this.userDataAccessObject = RecipeReviewDataAccessInterface;
-        RecipeReviewOutputBoundary recipeReviewOutputBoundary;
+        final RecipeReviewOutputBoundary recipeReviewOutputBoundary;
         this.reviewPresenter = recipeReviewOutputBoundary;
 
         reviewPresenter.prepareSuccessView(recipeReviewOutputData);

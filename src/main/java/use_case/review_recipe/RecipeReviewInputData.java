@@ -15,12 +15,18 @@ public class RecipeReviewInputData {
     private Map<String, Integer> nutrients;
     private Set<String> tags;
 
-    public RecipeReviewInputData(Recipe recipe) {
+    private String comment;
+    private int rating;
+
+    public RecipeReviewInputData(Recipe recipe, String comment, int rating) {
         this.name = recipe.getName();
         this.servings = recipe.getServings();
         this.calories = recipe.getCalories();
         this.nutrients = recipe.getNutrients();
         this.tags = recipe.getTags();
+
+        this.comment = comment;
+        this.rating = rating;
     }
 
     public String getName() {
@@ -41,5 +47,13 @@ public class RecipeReviewInputData {
 
     public Set<String> getTags() {
         return tags;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public int getRating() {
+        return rating;
     }
 }
