@@ -402,4 +402,5 @@ public class RecipeSearchView extends JPanel implements ActionListener, Property
     public void propertyChange(PropertyChangeEvent evt) {
 
     }
+
 }
