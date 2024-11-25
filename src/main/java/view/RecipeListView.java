@@ -139,7 +139,7 @@ public abstract class RecipeListView extends JFrame implements ActionListener {
         filterPanel.add(new JLabel("Cuisine:"));
         filterPanel.add(cuisineComboBox);
 
-        add(bottomPanel, BorderLayout.SOUTH);
+        add(filterPanel, BorderLayout.SOUTH);
       
         dietComboBox.addActionListener(e -> applyFilters());
         cuisineComboBox.addActionListener(e -> applyFilters());
