@@ -22,6 +22,27 @@ public class SpoonacularRecipeDAO implements RecipeDAO {
         this.client = new OkHttpClient();
     }
 
+    // Added these methods but probably won't need them
+//    private static void findArrays(Object object, ArrayList<JSONArray> arrays) {
+//        if (object instanceof JSONObject) {
+//            final JSONObject jsonObject = (JSONObject) object;
+//            for (String key : jsonObject.keySet()) {
+//                findArrays(jsonObject.get(key), arrays);
+//            }
+//        } else if (object instanceof JSONArray) {
+//            arrays.add((JSONArray) object);
+//        }
+//    }
+//
+//    public static ArrayList<JSONArray> extractJsonArrays(JSONObject jsonObject) {
+//        final ArrayList<JSONArray> arrays = new ArrayList<>();
+//
+//        // Helper method to recursively find arrays
+//        findArrays(jsonObject, arrays);
+//
+//        return arrays;
+//    }
+
     @Override
     public List<Recipe> getAllRecipes() {
         // If you need to fetch all recipes, you could use a default search (e.g., return popular recipes)
@@ -63,13 +84,17 @@ public class SpoonacularRecipeDAO implements RecipeDAO {
                 // Loop through the results and create Recipe objects
                 for (int i = 0; i < results.length(); i++) {
                     JSONObject recipeJson = results.getJSONObject(i);
+                    // for testing purposes
+                    System.out.println(recipeJson.keySet());
+                    System.out.println(recipeJson.getInt("missedIngredientCount"));
                     String title = recipeJson.getString("title");
                     String recipeUrl = BASE_URL + "/recipes/" + recipeJson.getInt("id") + "/information"; // URL to recipe details
-                    JSONArray ingredientsJson = recipeJson.getJSONArray("usedIngredients");
+                    final JSONArray ingredientsJson = recipeJson.getJSONArray("missedIngredients");
+                    System.out.println(ingredientsJson); // for testing
                     String image = recipeJson.getString("image");
 
                     // Collect ingredients from the JSON response
-                    List<Ingredient> recipeIngredients = new ArrayList<>();
+                    final List<Ingredient> recipeIngredients = new ArrayList<>();
                     for (int j = 0; j < ingredientsJson.length(); j++) {
                         recipeIngredients.add(new Ingredient(ingredientsJson.getJSONObject(j).getString("name")));
                     }

@@ -34,6 +34,7 @@ public class IndividualRecipeView extends JFrame implements ActionListener {
         }
         ingredientJList = new JList<>(listModel);
         final JScrollPane scrollPane = new JScrollPane(ingredientJList);
+        scrollPane.setPreferredSize(ingredientJList.getPreferredScrollableViewportSize());
 
         // Initialize buttons
         nutritionButton = new JButton("Nutrition");
