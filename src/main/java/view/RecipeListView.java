@@ -136,7 +136,7 @@ public abstract class RecipeListView extends JFrame implements ActionListener {
         bottomPanel.add(new JLabel("Cuisine:"));
         bottomPanel.add(cuisineComboBox);
 
-        add(bottomPanel, BorderLayout.WEST);
+        add(bottomPanel, BorderLayout.SOUTH);
 
         populateDropdowns();
 
@@ -249,6 +249,16 @@ public abstract class RecipeListView extends JFrame implements ActionListener {
 
         final String selectedDiet = dietComboBox.getSelectedItem().toString();
         final String selectedCuisine = cuisineComboBox.getSelectedItem().toString();
+
+        final List<Recipe> recipesFiltered =
+                spoonacularRecipeDAO.filterSearchRecipes(ingredients, selectedDiet, selectedCuisine);
+
+        listModel.clear();
+        for (Recipe recipe : recipesFiltered) {
+            listModel.addElement(recipe);
+        }
+
+        recipeList.setModel(listModel);
 
         // try {
         //      if (("Any".equals(selectedDiet)) && ("Any".equals(selectedCuisine))) {
