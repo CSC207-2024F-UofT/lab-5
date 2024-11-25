@@ -10,7 +10,7 @@ import view.RecipeSearchView;
 public class RecipeSearchViewModel extends ViewModel<RecipeSearchState> {
 
     public RecipeSearchViewModel() {
-        super("recipe search");
+        super("Recipe Search");
         setState(new RecipeSearchState());
     }
 
