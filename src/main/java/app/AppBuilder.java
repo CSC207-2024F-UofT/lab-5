@@ -170,7 +170,7 @@ public class AppBuilder {
     }
 
     public AppBuilder addProfileUseCase() {
-        final ProfileOutputBoundary profileOutputBoundary = new ProfilePresenter(savedrecipesViewModel, viewManagerModel);
+        final ProfileOutputBoundary profileOutputBoundary = new ProfilePresenter(savedrecipesViewModel, viewManagerModel, recipeSearchViewModel);
         final ProfileInputBoundary userProfileInteractor = new ProfileInteractor(profileOutputBoundary);
 
         final ProfileController controller = new ProfileController(userProfileInteractor);

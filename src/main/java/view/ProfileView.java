@@ -151,6 +151,16 @@ public class ProfileView extends JPanel implements PropertyChangeListener {
                 }
         );
 
+        recipeSearch.addActionListener(
+
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        profileController.switchToRecipeSearchView();
+
+                    }
+                }
+        );
+
         this.add(title);
         this.add(usernamePanel);
         this.add(recipebuttons);

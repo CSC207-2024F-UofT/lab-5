@@ -21,4 +21,8 @@ public class ProfileInteractor implements ProfileInputBoundary {
     public void switchToSavedRecipesView() {
         userPresenter.switchtoSavedrecipeView();
     }
+
+    public void switchToRecipeSearchView() {
+        userPresenter.switchToRecipeSearchView();
+    }
 }
