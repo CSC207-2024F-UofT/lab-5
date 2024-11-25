@@ -6,7 +6,8 @@ package use_case.review_recipe;
 public class RecipeReviewInteractor {
     private RecipeReviewOutputBoundary userPresenter;
     public void execute() {
-
+        this.userDataAccessObject = RecipeReviewDataAccessInterface;
+        this.userPresenter = RecipeReviewOutputBoundary;
     }
 
     public void switchToRecipeHistoryViewView() {

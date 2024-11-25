@@ -15,20 +15,14 @@ public class RecipeSearchController {
     /**
      * Executes the Recipe Search Use Case.
      * @param title the recipe the user wants
-     * @param calorieInfo the password
-     * @param carbInfo the password
-     * @param password2 the password repeated
-     *
-     *                          this.add(title);
-     *         this.add(recipeInfo);
-     *         this.add(calorieInfo);
-     *         this.add(carbInfo);
-     *         this.add(proteinInfo);
-     *         this.add(fatInfo);
+     * @param calorieInfo the user's calorie specifications
+     * @param carbInfo the user's carbohydrate specifications
+     * @param proteinInfo the user's protein specifications
+     * @param fatInfo the user's fat specifications
      */
-    public void execute(String title, String password1, String password2) {
-        final SignupInputData signupInputData = new SignupInputData(
-                username, password1, password2);
+    public void execute(String title, String calorieInfo, String carbInfo, String proteinInfo, String fatInfo) {
+        final RecipeSearchInputData recipeSearchInputData = new SignupInputData(
+                title, calorieInfo, carbInfo, proteinInfo, fatInfo);
 
         userSignupUseCaseInteractor.execute(signupInputData);
     }

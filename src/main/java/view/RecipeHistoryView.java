@@ -1,11 +1,16 @@
 package view;
 
+import entity.CommonUser;
+import entity.Recipe;
+import entity.User;
+
 import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Map;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -24,10 +29,12 @@ public class RecipeHistoryView extends Jpanel implements ActionListener, Propert
 
     private final String viewName = "Recipe History";
 
-    public RecipeHistoryView() {
+    public RecipeHistoryView(CommonUser user) {
         final JLabel title = new JLabel(viewName);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
         // need to iterate through each saved recipe and display
+
+        final Map<Recipe, Integer> recipes = user.getRecipes();
         for (int i = 0; i <= len(recipes); i++) {
             final JPanel recipe = new JPanel();
             final JLabel name = new JLabel("Recipe Name");
