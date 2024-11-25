@@ -1,6 +1,7 @@
 package view;
 
 import entity.Recipe;
+import entity.User;
 import interface_adapter.RecipeController;
 
 import javax.swing.*;
@@ -18,9 +19,11 @@ public class RecipeView extends JFrame {
     // private JList<String> recipeList; - commented out for now to make the double click function work
     private JList <Recipe> recipeList;
     private RecipeController controller;
+    private User user;
 
-    public RecipeView(RecipeController controller) {
+    public RecipeView(RecipeController controller, User user) {
         this.controller = controller;
+        this.user = user;
         setTitle("Recipe Generator");
         setSize(800, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -60,7 +63,8 @@ public class RecipeView extends JFrame {
                                 // Get selected item
                                 final Recipe selectedItem = recipeList.getModel().getElementAt(index);
                                 // Open a new window
-                                new IndividualRecipeView(selectedItem);
+
+                                new IndividualRecipeView(selectedItem, user);
                             }
                         }
                     }

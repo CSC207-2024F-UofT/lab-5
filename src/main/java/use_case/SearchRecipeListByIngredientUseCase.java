@@ -6,10 +6,10 @@ import entity.Recipe;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchRecipeListUseCase {
+public class SearchRecipeListByIngredientUseCase {
     private final List<Recipe> recipeList;
 
-    public SearchRecipeListUseCase(List<Recipe> recipeList) {
+    public SearchRecipeListByIngredientUseCase(List<Recipe> recipeList) {
         this.recipeList = recipeList;
     }
 

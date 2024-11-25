@@ -15,7 +15,8 @@ import data_access.SpoonacularRecipeDAO;
 import entity.Recipe;
 import entity.User;
 import interface_adapter.RecipeListController;
-import use_case.SearchRecipeListUseCase;
+import use_case.SearchRecipeListByIngredientUseCase;
+import use_case.SearchRecipeListByNameUseCase;
 
 public abstract class RecipeListView extends JFrame implements ActionListener {
     // attributes for default view
@@ -41,7 +42,8 @@ public abstract class RecipeListView extends JFrame implements ActionListener {
         this.user = user;
         this.recipeList = new JList<>();
         this.listModel = new DefaultListModel<>();
-        this.controller = new RecipeListController(new SearchRecipeListUseCase(getRecipeList(user)));
+        this.controller = new RecipeListController(new SearchRecipeListByIngredientUseCase(getRecipeList(user)),
+                new SearchRecipeListByNameUseCase(getRecipeList(user)));
         this.spoonacularRecipeDAO = new SpoonacularRecipeDAO();
 
         setSize(800, 300);
@@ -78,7 +80,7 @@ public abstract class RecipeListView extends JFrame implements ActionListener {
                         // Get selected item
                         final Recipe selectedItem = recipeList.getModel().getElementAt(index);
                         // Open a new window
-                        new IndividualRecipeView(selectedItem);
+                        new IndividualRecipeView(selectedItem, user);
                     }
                 }
             }
@@ -127,25 +129,29 @@ public abstract class RecipeListView extends JFrame implements ActionListener {
 //        });
 
         // search filters
-        final JPanel bottomPanel = new JPanel();
-        bottomPanel.setLayout(new FlowLayout());
+        // final JPanel bottomPanel = new JPanel();
+        // bottomPanel.setLayout(new FlowLayout());
+        final JPanel filterPanel = new JPanel(new FlowLayout());
         dietComboBox = new JComboBox<>();
         cuisineComboBox = new JComboBox<>();
-        bottomPanel.add(new JLabel("Diet:"));
-        bottomPanel.add(dietComboBox);
-        bottomPanel.add(new JLabel("Cuisine:"));
-        bottomPanel.add(cuisineComboBox);
+        filterPanel.add(new JLabel("Diet:"));
+        filterPanel.add(dietComboBox);
+        filterPanel.add(new JLabel("Cuisine:"));
+        filterPanel.add(cuisineComboBox);
 
         add(bottomPanel, BorderLayout.SOUTH);
+      
+        dietComboBox.addActionListener(e -> applyFilters());
+        cuisineComboBox.addActionListener(e -> applyFilters());
 
         populateDropdowns();
 
-        dietComboBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                applyFilters();
-            }
-        });
+        // dietComboBox.addActionListener(new ActionListener() {
+        //     @Override
+        //     public void actionPerformed(ActionEvent e) {
+        //         applyFilters();
+        //     }
+        // });
 
         cuisineComboBox.addActionListener(new ActionListener() {
             @Override
@@ -193,21 +199,12 @@ public abstract class RecipeListView extends JFrame implements ActionListener {
 //            }
 //        });
         }
+
         if (event.getSource() == recipeSearchButton) {
             // TODO convert this into a use case
-            final String userInput = recipeSearchField.getText();
-            final List<Recipe> recipes = getRecipeList(user);
-            final List<Recipe> results = new ArrayList<>();
-            final DefaultListModel<Recipe> resultListModel = new DefaultListModel<>();
-            final JList<Recipe> resultList = new JList<>(listModel);
-            // TODO search by name function...
-            for (Recipe recipe : recipes) {
-                if (recipe.getName().contains(userInput)) {
-                    results.add(recipe);
-                }
-            }
+
             // temporary display
-            JOptionPane.showMessageDialog(this, results);
+            // JOptionPane.showMessageDialog(this, results);
 //            for (Recipe result : results) {
 //                resultListModel.addElement(result);
 //            }
@@ -258,7 +255,8 @@ public abstract class RecipeListView extends JFrame implements ActionListener {
             listModel.addElement(recipe);
         }
 
-        recipeList.setModel(listModel);
+        // recipeList.setModel(listModel);
+
 
         // try {
         //      if (("Any".equals(selectedDiet)) && ("Any".equals(selectedCuisine))) {

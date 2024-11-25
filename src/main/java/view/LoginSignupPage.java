@@ -72,7 +72,7 @@ public class LoginSignupPage extends JFrame {
 
         if (userDAO.validateUser(username, password)) {
             JOptionPane.showMessageDialog(this, "Login successful!");
-            openHomePage();
+            openHomePage(userDAO.findUserByUsername(username));
             dispose();
         } else {
             JOptionPane.showMessageDialog(this, "Invalid credentials. Please try again.");
@@ -102,8 +102,8 @@ public class LoginSignupPage extends JFrame {
         }
     }
 
-    private void openHomePage() {
-        new HomePage(); // Open the HomePage
+    private void openHomePage(User user) {
+        new HomePage(user); // Open the HomePage
         dispose(); // Close the LoginSignupPage
     }
 }

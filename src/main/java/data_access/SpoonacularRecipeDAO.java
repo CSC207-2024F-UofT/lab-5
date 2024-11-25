@@ -66,6 +66,7 @@ public class SpoonacularRecipeDAO implements RecipeDAO {
                     String title = recipeJson.getString("title");
                     String recipeUrl = BASE_URL + "/recipes/" + recipeJson.getInt("id") + "/information"; // URL to recipe details
                     JSONArray ingredientsJson = recipeJson.getJSONArray("usedIngredients");
+                    String image = recipeJson.getString("image");
 
                     // Collect ingredients from the JSON response
                     List<Ingredient> recipeIngredients = new ArrayList<>();
@@ -74,7 +75,7 @@ public class SpoonacularRecipeDAO implements RecipeDAO {
                     }
 
                     // Create and add Recipe object to the list
-                    Recipe recipe = new Recipe(title, recipeUrl, recipeIngredients);
+                    Recipe recipe = new Recipe(title, recipeUrl, recipeIngredients, image);
                     recipes.add(recipe);
                 }
             } else {
@@ -125,6 +126,7 @@ public class SpoonacularRecipeDAO implements RecipeDAO {
                     final String title = recipeJson.getString("title");
                     final String recipeUrl = BASE_URL + "/recipes/" + recipeJson.getInt("id") + "/information"; // URL to recipe details
                     final JSONArray ingredientsJson = recipeJson.getJSONArray("usedIngredients");
+                    final String image = recipeJson.getString("image");
 
                     // Collect ingredients from the JSON response
                     final List<Ingredient> recipeIngredients = new ArrayList<>();
@@ -133,7 +135,7 @@ public class SpoonacularRecipeDAO implements RecipeDAO {
                     }
 
                     // Create and add Recipe object to the list
-                    final Recipe recipe = new Recipe(title, recipeUrl, recipeIngredients);
+                    final Recipe recipe = new Recipe(title, recipeUrl, recipeIngredients, image);
                     recipes.add(recipe);
                 }
             }

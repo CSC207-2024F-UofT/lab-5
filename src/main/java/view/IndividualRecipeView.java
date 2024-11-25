@@ -4,21 +4,25 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import data_access.GetRecipeId;
 import entity.*;
 
 public class IndividualRecipeView extends JFrame implements ActionListener {
-    private JButton nutritionButton;
-    private JButton bookmarkButton;
+    private final JButton nutritionButton;
+    private final JButton bookmarkButton;
     private JList<String> ingredientJList;
-    private Recipe recipe;
+    private final Recipe recipe;
     private URL imageUrl;
     private ImageIcon imageIcon;
+    private User user;
 
-    public IndividualRecipeView(Recipe recipe) {
+    public IndividualRecipeView(Recipe recipe, User user) {
         this.recipe = recipe;
+        this.imageUrl = null;
+        this.user = user;
 
         // Initialize ingredient list
         final DefaultListModel<String> listModel = new DefaultListModel<>();
@@ -45,6 +49,9 @@ public class IndividualRecipeView extends JFrame implements ActionListener {
         // initializing image
         try {
             // Specify the image URL
+            if (recipe.getImage() == null) {
+                throw new IllegalArgumentException("URL string cannot be null");
+            }
             this.imageUrl = new URL(recipe.getImage()); // Replace with your image URL
 
             // Load the image
@@ -90,24 +97,23 @@ public class IndividualRecipeView extends JFrame implements ActionListener {
         setVisible(true);
     }
 
-    GetRecipeId getGetRecipeId = new GetRecipeId();
+    GetRecipeId getRecipeId = new GetRecipeId();
 
     @Override
     public void actionPerformed(ActionEvent event) {
         if (event.getSource() == nutritionButton) {
-            int recipeId = getGetRecipeId.getRecipeIdByName(recipe.getName());
+            int recipeId = getRecipeId.getRecipeIdByName(recipe.getName());
             new NutritionView(recipeId);
+        }
+        else if (event.getSource() == bookmarkButton) {
+            // TODO complete bookmark function
+            if (!user.getBookmarks().contains(recipe)) {
+                user.addBookmark(recipe);
+                JOptionPane.showMessageDialog(this, "Recipe added to bookmarks!");
+            } else {
+                JOptionPane.showMessageDialog(this, "Recipe is already bookmarked.");
+            }
+//        }
         }
     }
 }
-
-//        else if (event.getSource() == bookmarkButton) {
-//            if (!recipe.isBookmarked()) {
-//                recipe.setBookmarked(true);
-//                JOptionPane.showMessageDialog(this, "Recipe added to bookmarks!");
-//            } else {
-//                JOptionPane.showMessageDialog(this, "Recipe is already bookmarked.");
-//            }
-//        }
-//    }
-//}

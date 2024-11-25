@@ -1,6 +1,7 @@
 package entity;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * This class returns a recipe from the API.
@@ -10,26 +11,26 @@ public class Recipe {
     private String name;
     private String url;
     private List<Ingredient> ingredients;
+    private String image;
     private String cuisineType;
     // should correspond to "cuisines" in API recipes
     private String dietaryType;
 
-    // Other attributes based on API documentation
-    private String image;
-
     // TODO update constructor to initialize all the attributes
-    public Recipe(String name, String url, List<Ingredient> ingredients) {
+    public Recipe(String name, String url, List<Ingredient> ingredients, String image) {
         this.id = id;
         this.name = name;
         this.url = url;
         this.ingredients = ingredients;
+        this.image = image;
     }
 
     // overloading the constructor
-    public Recipe(String name, String url, List<Ingredient> ingredients, String cuisineType, String dietaryType) {
+    public Recipe(String name, String url, List<Ingredient> ingredients, String image, String cuisineType, String dietaryType) {
         this.name = name;
         this.url = url;
         this.ingredients = ingredients;
+        this.image = image;
         this.cuisineType = cuisineType;
         this.dietaryType = dietaryType;
     }
@@ -61,11 +62,6 @@ public class Recipe {
 
     public String getImage() {
         return image;
-    }
-
-    // temporary method
-    public void setImage(String image) {
-        this.image = image;
     }
 
     // Display the recipe as a string.
