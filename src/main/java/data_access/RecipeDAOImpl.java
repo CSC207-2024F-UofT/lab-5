@@ -14,6 +14,7 @@ public class RecipeDAOImpl implements RecipeDAO {
     private Ingredient cucumber;
     private Ingredient onion;
     private Ingredient garlic;
+    private String imageURL;
 
     @Override
     public List<Recipe> getRecipesByIngredients(List<String> ingredients) {
@@ -25,9 +26,10 @@ public class RecipeDAOImpl implements RecipeDAO {
         this.cucumber = new Ingredient("cucumber");
         this.onion = new Ingredient("onion");
         this.garlic = new Ingredient("garlic");
-        recipes.add(new Recipe("Pasta", "https://example.com/pasta", List.of(pasta, tomatoSauce)));
-        recipes.add(new Recipe("Salad", "https://example.com/salad", List.of(lettuce, tomato, cucumber)));
-        recipes.add(new Recipe("Tomato Soup", "https://example.com/tomato_soup", List.of(tomato, onion, garlic)));
+        this.imageURL = "https://img.spoonacular.com/recipes/716429-556x370.jpg";
+        recipes.add(new Recipe("Pasta", "https://example.com/pasta", List.of(pasta, tomatoSauce), imageURL));
+        recipes.add(new Recipe("Salad", "https://example.com/salad", List.of(lettuce, tomato, cucumber), imageURL));
+        recipes.add(new Recipe("Tomato Soup", "https://example.com/tomato_soup", List.of(tomato, onion, garlic), imageURL));
         return recipes;
     }
 
@@ -36,12 +38,12 @@ public class RecipeDAOImpl implements RecipeDAO {
         // Mock data - replace this with actual data retrieval from a database or API
         // Note: adding dietaryType and cuisineType to recipe constructor so need to add here too
         List<Recipe> recipes = new ArrayList<>();
-        recipes.add(new Recipe("Pasta", "https://example.com/pasta", List.of(pasta, tomato)));
+        recipes.add(new Recipe("Pasta", "https://example.com/pasta", List.of(pasta, tomato), imageURL));
         // fried rice example w/ cuisine and diet added
         recipes.add(new Recipe("Fried Rice", "rice.com", List.of(onion, garlic),
-                "chinese", "vegetarian"));
-        recipes.add(new Recipe("Salad", "https://example.com/salad", List.of(lettuce, tomato, cucumber)));
-        recipes.add(new Recipe("Tomato Soup", "https://example.com/tomato_soup", List.of(tomato, onion, garlic)));
+                "chinese", "vegetarian", imageURL));
+        recipes.add(new Recipe("Salad", "https://example.com/salad", List.of(lettuce, tomato, cucumber), imageURL));
+        recipes.add(new Recipe("Tomato Soup", "https://example.com/tomato_soup", List.of(tomato, onion, garlic), imageURL));
         return recipes;
     }
 

@@ -47,6 +47,9 @@ public class IndividualRecipeView extends JFrame implements ActionListener {
         // initializing image
         try {
             // Specify the image URL
+            if (recipe.getImage() == null) {
+                throw new IllegalArgumentException("URL string cannot be null");
+            }
             this.imageUrl = new URL(recipe.getImage()); // Replace with your image URL
 
             // Load the image
