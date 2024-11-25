@@ -80,7 +80,7 @@ public abstract class RecipeListView extends JFrame implements ActionListener {
                         // Get selected item
                         final Recipe selectedItem = recipeList.getModel().getElementAt(index);
                         // Open a new window
-                        new IndividualRecipeView(selectedItem);
+                        new IndividualRecipeView(selectedItem, user);
                     }
                 }
             }

@@ -11,12 +11,10 @@ public class Recipe {
     private String name;
     private String url;
     private List<Ingredient> ingredients;
+    private String image;
     private String cuisineType;
     // should correspond to "cuisines" in API recipes
     private String dietaryType;
-
-    // Other attributes based on API documentation
-    private String image;
 
     // TODO update constructor to initialize all the attributes
     public Recipe(String name, String url, List<Ingredient> ingredients, String image) {
@@ -64,11 +62,6 @@ public class Recipe {
 
     public String getImage() {
         return image;
-    }
-
-    // temporary method
-    public void setImage(String image) {
-        this.image = Objects.requireNonNullElse(image, "URL not found");
     }
 
     // Display the recipe as a string.
