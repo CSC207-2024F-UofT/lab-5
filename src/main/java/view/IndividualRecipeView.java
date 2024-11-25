@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import data_access.GetRecipeId;
@@ -13,7 +12,8 @@ import entity.*;
 public class IndividualRecipeView extends JFrame implements ActionListener {
     private final JButton nutritionButton;
     private final JButton bookmarkButton;
-    private JList<String> ingredientJList;
+    private JList<String> ingredientsJLIst;
+    // if we want to display the used and missed ingredients separately... private JList<String> usedIngredientsJList;
     private final Recipe recipe;
     private URL imageUrl;
     private ImageIcon imageIcon;
@@ -32,9 +32,9 @@ public class IndividualRecipeView extends JFrame implements ActionListener {
         for (Ingredient ingredient : recipe.getIngredients()) {
             listModel.addElement(ingredient.getName());
         }
-        ingredientJList = new JList<>(listModel);
-        final JScrollPane scrollPane = new JScrollPane(ingredientJList);
-        scrollPane.setPreferredSize(ingredientJList.getPreferredScrollableViewportSize());
+        ingredientsJLIst = new JList<>(listModel);
+        final JScrollPane scrollPane = new JScrollPane(ingredientsJLIst);
+        scrollPane.setPreferredSize(ingredientsJLIst.getPreferredScrollableViewportSize());
 
         // Initialize buttons
         nutritionButton = new JButton("Nutrition");

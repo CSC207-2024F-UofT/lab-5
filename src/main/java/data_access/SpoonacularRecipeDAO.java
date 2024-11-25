@@ -89,14 +89,19 @@ public class SpoonacularRecipeDAO implements RecipeDAO {
                     System.out.println(recipeJson.getInt("missedIngredientCount"));
                     String title = recipeJson.getString("title");
                     String recipeUrl = BASE_URL + "/recipes/" + recipeJson.getInt("id") + "/information"; // URL to recipe details
-                    final JSONArray ingredientsJson = recipeJson.getJSONArray("missedIngredients");
-                    System.out.println(ingredientsJson); // for testing
+                    final JSONArray missedIngredientsJson = recipeJson.getJSONArray("missedIngredients");
+                    final JSONArray usedIngredientsJson = recipeJson.getJSONArray("usedIngredients");
+                    final JSONArray unusedIngredientsJson = recipeJson.getJSONArray("unusedIngredients");
+                    System.out.println(missedIngredientsJson); // for testing
                     String image = recipeJson.getString("image");
 
                     // Collect ingredients from the JSON response
                     final List<Ingredient> recipeIngredients = new ArrayList<>();
-                    for (int j = 0; j < ingredientsJson.length(); j++) {
-                        recipeIngredients.add(new Ingredient(ingredientsJson.getJSONObject(j).getString("name")));
+                    for (int j = 0; j < usedIngredientsJson.length(); j++) {
+                        recipeIngredients.add(new Ingredient(usedIngredientsJson.getJSONObject(j).getString("name")));
+                    }
+                    for (int j = 0; j < missedIngredientsJson.length(); j++) {
+                        recipeIngredients.add(new Ingredient(missedIngredientsJson.getJSONObject(j).getString("name")));
                     }
 
                     // Create and add Recipe object to the list
