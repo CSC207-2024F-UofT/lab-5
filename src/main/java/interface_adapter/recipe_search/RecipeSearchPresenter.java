@@ -37,7 +37,7 @@ public class RecipeSearchPresenter implements RecipeSearchOutputBoundary {
     }
 
     @Override
-    public void switchToLoginView() {
+    public void switchToResultsView() {
         viewManagerModel.setState(searchResultsViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }

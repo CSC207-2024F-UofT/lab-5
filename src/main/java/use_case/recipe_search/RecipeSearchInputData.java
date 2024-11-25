@@ -23,4 +23,41 @@ public class RecipeSearchInputData {
         this.fatMin = fatMin;
         this.fatMax = fatMax;
     }
+
+    public String getRecipeName() {
+        return recipeName;
+    }
+
+    public String getCalMin() {
+        return calMin;
+    }
+
+    public String getCalMax() {
+        return calMax;
+    }
+
+    public String getCarbMin() {
+        return carbMin;
+    }
+
+    public String getCarbMax() {
+        return carbMax;
+    }
+
+    public String getProteinMin() {
+        return proteinMin;
+    }
+
+    public String getProteinMax() {
+        return proteinMax;
+    }
+
+    public String getfatMin() {
+        return fatMin;
+    }
+
+    public String getfatMax() {
+        return fatMax;
+    }
 }
+
