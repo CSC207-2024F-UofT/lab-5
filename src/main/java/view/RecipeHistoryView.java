@@ -25,30 +25,23 @@ import javax.swing.event.DocumentListener;
  * The View for the user's recipe history.
  */
 
-public class RecipeHistoryView extends Jpanel implements ActionListener, PropertyChangeListener {
+public class RecipeHistoryView extends JPanel implements ActionListener, PropertyChangeListener {
 
     private final String viewName = "Recipe History";
 
     public RecipeHistoryView(CommonUser user) {
         final JLabel title = new JLabel(viewName);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
-        // need to iterate through each saved recipe and display
 
+        // need to iterate through each saved recipe and display
         final Map<Recipe, Integer> recipes = user.getRecipes();
-        for (int i = 0; i <= len(recipes); i++) {
+        for (int i = 0; i <= recipes.size(); i++) {
             final JPanel recipe = new JPanel();
             final JLabel name = new JLabel("Recipe Name");
             final JButton link;
             link = new JButton("Click to view");
             recipe.add(name);
             recipe.add(link);
-            // final JLabel image = new JLabel("image");
-            // final JLabel rating = new JLabel("5");
-            // final JLabel review = new JLabel("good");
-
-            // recipe.add(image);
-            // recipe.add(rating);
-            // recipe.add(review);
         }
     }
 
@@ -67,5 +60,9 @@ public class RecipeHistoryView extends Jpanel implements ActionListener, Propert
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
 
+    }
+
+    public String getViewName() {
+        return viewName;
     }
 }
