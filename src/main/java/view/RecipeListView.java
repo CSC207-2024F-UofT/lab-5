@@ -27,11 +27,11 @@ public abstract class RecipeListView extends JFrame implements ActionListener {
     private final DefaultListModel<Recipe> listModel;
     private final RecipeListController controller;
 
-    // TODO attributes for other functionalities...
     private JTextField ingredientSearchField;
     private JButton ingredientSearchButton;
     private JTextField recipeSearchField;
     private JButton recipeSearchButton;
+    private JButton clearSearchButton;
 
     private JComboBox<String> dietComboBox;
     private JComboBox<String> cuisineComboBox;
@@ -108,6 +108,11 @@ public abstract class RecipeListView extends JFrame implements ActionListener {
         recipeSearchButton.addActionListener(this);
         add(recipeSearchPanel, BorderLayout.CENTER);
 
+        // Clear search
+        clearSearchButton = new JButton("Clear Search");
+        clearSearchButton.addActionListener(this);
+        add(clearSearchButton, BorderLayout.WEST);
+
         // TODO Search function - in progress
 //        ingredientInput = new JTextField(20);
 //        searchButton = new JButton("Find Recipes by Ingredients");
@@ -167,55 +172,27 @@ public abstract class RecipeListView extends JFrame implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent event) {
-        // temporary display for search button
         if (event.getSource() == ingredientSearchButton) {
             final String userInput = ingredientSearchField.getText();
-            // TODO - replace: Display the input in the result label
-            JOptionPane.showMessageDialog(this, userInput);
-
-            // TODO complete search function...
-
-            final List<String> ingredients = Arrays.asList(userInput.split(","));
-            // ^ TODO need to convert user input to Ingredient objects!
-            // final List<Recipe> recipes = controller.getRecipes(ingredients);
-//
-//        final DefaultListModel<Recipe> listModel = new DefaultListModel<>();
-//        for (Recipe recipe : recipes) {
-//            listModel.addElement(recipe);
-//        }
-//        recipeList.setModel(listModel);
-//
-//        // Make the recipe list clickable
-//        recipeList.addMouseListener(new MouseAdapter() {
-//            public void mouseClicked(MouseEvent event) {
-//                if (event.getClickCount() == 2) {
-//                    // Get index of clicked item
-//                    final int index = recipeList.locationToIndex(event.getPoint());
-//                    // Ensure valid index
-//                    if (index >= 0) {
-//                        // Get selected item
-//                        final Recipe selectedItem = recipeList.getModel().getElementAt(index);
-//                        // Open a new window
-//                        new IndividualRecipeView(selectedItem);
-//                    }
-//                }
-//            }
-//        });
+            List<String> ingredients = Arrays.asList(userInput.split(","));
+            List<Recipe> recipes = controller.getRecipesByIngredients(ingredients);
+            final DefaultListModel<Recipe> ingredientSearchListModel = new DefaultListModel<>();
+            for (Recipe recipe : recipes) {
+                ingredientSearchListModel.addElement(recipe);
+            }
+            recipeList.setModel(ingredientSearchListModel);
         }
-
         if (event.getSource() == recipeSearchButton) {
-            // TODO convert this into a use case
-
-            // temporary display
-            // JOptionPane.showMessageDialog(this, results);
-//            for (Recipe result : results) {
-//                resultListModel.addElement(result);
-//            }
-//            resultList.setModel(resultListModel);
-//            final JFrame resultFrame = new JFrame();
-//            resultFrame.setTitle("Search results");
-//            resultFrame.add(resultList);
-//            setVisible(true);
+            final String userInput = recipeSearchField.getText();
+            List<Recipe> recipes = controller.getRecipesByName(userInput);
+            final DefaultListModel<Recipe> recipeSearchListModel = new DefaultListModel<>();
+            for (Recipe recipe : recipes) {
+                recipeSearchListModel.addElement(recipe);
+            }
+            recipeList.setModel(recipeSearchListModel);
+        }
+        if (event.getSource() == clearSearchButton) {
+            recipeList.setModel(listModel);
         }
     }
 

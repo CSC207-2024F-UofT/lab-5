@@ -4,6 +4,7 @@ import entity.Ingredient;
 import entity.Recipe;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class SearchRecipeListByIngredientUseCase {
@@ -13,13 +14,20 @@ public class SearchRecipeListByIngredientUseCase {
         this.recipeList = recipeList;
     }
 
-    public List<Recipe> searchRecipes(List<Ingredient> ingredients) {
+    public List<Recipe> searchRecipes(List<String> enteredIngredients) {
         final List<Recipe> results = new ArrayList<>();
         for (Recipe recipe : recipeList) {
-            final List<Ingredient> targetIngredients = recipe.getIngredients();
-            for (Ingredient ingredient : ingredients) {
-                if (targetIngredients.contains(ingredient)) {
-                    results.add(recipe);
+            final List<Ingredient> recipeIngredients = recipe.getIngredients();
+            final List<String> recipeIngredientsString = new ArrayList<>();
+            for (Ingredient ingredient : recipeIngredients) {
+                final String[] words = ingredient.getName().split(" ");
+                recipeIngredientsString.addAll(Arrays.asList(words));
+            }
+            for (String recipeIngredient : recipeIngredientsString) {
+                for (String enteredIngredient : enteredIngredients) {
+                    if (recipeIngredient.equalsIgnoreCase(enteredIngredient)) {
+                        results.add(recipe);
+                    }
                 }
             }
         }

@@ -18,7 +18,7 @@ public class RecipeListController {
     }
 
     // getters
-    public List<Recipe> getRecipesByIngredients(List<Ingredient> ingredients) {
+    public List<Recipe> getRecipesByIngredients(List<String> ingredients) {
         return searchRecipeListByIngredientUseCase.searchRecipes(ingredients);
     }
 

@@ -17,8 +17,11 @@ public class SearchRecipeListByNameUseCase {
     public List<Recipe> searchRecipes(String name) {
         final List<Recipe> results = new ArrayList<>();
         for (Recipe recipe : recipeList) {
-            if (recipe.getName().contains(name)) {
-                results.add(recipe);
+            final String[] words = recipe.getName().split(" ");
+            for (String word : words) {
+                if (word.equalsIgnoreCase(name)) {
+                    results.add(recipe);
+                }
             }
         }
         return results;
