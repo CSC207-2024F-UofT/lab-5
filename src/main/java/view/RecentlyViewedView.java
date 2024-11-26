@@ -14,6 +14,12 @@ public class RecentlyViewedView extends RecipeListView {
     public RecentlyViewedView(User user) {
         super(user);
         setTitle(user.getUsername() + "'s Recently Viewed");
+        final JButton clearButton = new JButton("Clear Recently Viewed");
+        clearButton.addActionListener(e -> {
+            userDAO.clearRecentlyViewed(user.getUsername());
+            recipeList.setModel(listModel);
+        });
+        add(clearButton);
     }
 
     @Override

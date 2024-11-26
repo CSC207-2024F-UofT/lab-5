@@ -190,4 +190,13 @@ public class UserDAOImpl implements UserDAO {
         System.out.println(user);
         return user.getRecentlyViewed();
     }
+
+    public void clearRecentlyViewed(String username) {
+        final Map<String, User> users = loadUsersFromFile();
+        final User user = users.get(username);
+        user.clearRecentlyViewed();
+        usersDatabase.put(user.getUsername(), user);
+        saveUsersToFile();
+        System.out.println("RecentlyViewed cleared successfully");
+    }
 }

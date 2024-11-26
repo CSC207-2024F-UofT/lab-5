@@ -62,4 +62,8 @@ public class User {
     public void addRecentlyViewed(Recipe recipe) {
         this.recentlyViewed.add(recipe);
     }
+
+    public void clearRecentlyViewed() {
+        this.recentlyViewed.clear();
+    }
 }

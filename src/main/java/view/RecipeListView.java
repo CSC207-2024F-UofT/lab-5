@@ -23,8 +23,8 @@ public abstract class RecipeListView extends JFrame implements ActionListener {
     // attributes for default view
     private static User user;
     protected static UserDAOImpl userDAO;
-    private final JList<Recipe> recipeList;
-    private final DefaultListModel<Recipe> listModel;
+    protected final JList<Recipe> recipeList;
+    protected final DefaultListModel<Recipe> listModel;
     private final RecipeListController controller;
 
     private JTextField ingredientSearchField;
