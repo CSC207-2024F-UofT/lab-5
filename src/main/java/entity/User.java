@@ -12,8 +12,16 @@ public class User {
     public User(String username, String password) {
         this.username = username;
         this.password = password;
-        this.bookmarks = new ArrayList<>();
-        this.recentlyViewed = new ArrayList<>();
+        this.bookmarks = List.of();
+        this.recentlyViewed = List.of();
+    }
+
+    // Overloaded constructor for user with bookmarks and recentlyViewed
+    public User(String username, String password, List<Recipe> bookmarks, List<Recipe> recentlyViewed) {
+        this.username = username;
+        this.password = password;
+        this.bookmarks = bookmarks;
+        this.recentlyViewed = recentlyViewed;
     }
 
     // Getters and Setters

@@ -1,5 +1,7 @@
 package data_access;
 
+import entity.Ingredient;
+import entity.Recipe;
 import entity.User;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -8,7 +10,9 @@ import org.json.JSONTokener;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class UserDAOImpl implements UserDAO {
@@ -69,7 +73,52 @@ public class UserDAOImpl implements UserDAO {
                 JSONObject userObject = usersArray.getJSONObject(i);
                 String username = userObject.getString("username");
                 String password = userObject.getString("password");
-                users.put(username, new User(username, password));
+
+                // reconstructing bookmarks as a list of recipes
+                JSONArray bookmarksArray = userObject.getJSONArray("bookmarks");
+                List<Recipe> recipeBookmarks = new ArrayList<>();
+                for (int k = 0; k < bookmarksArray.length(); k++) {
+                    JSONObject recipeJson = bookmarksArray.getJSONObject(k);
+                    JSONArray ingredientsJson = recipeJson.getJSONArray("ingredients");
+                    List<Ingredient> ingredients = new ArrayList<>();
+                    for (int j = 0; j < ingredientsJson.length(); j++) {
+                        JSONObject ingredientJson = ingredientsJson.getJSONObject(j);
+                        Ingredient ingredient = new Ingredient(ingredientJson.getString("name"));
+                        ingredients.add(ingredient);
+                    }
+                    Recipe recipe = new Recipe(
+                            recipeJson.getString("name"),
+                            recipeJson.getString("url"),
+                            ingredients,
+                            recipeJson.getString("image"));
+                    // ^ didn't add cuisineType and dietaryType
+                    recipeBookmarks.add(recipe);
+                }
+
+                // reconstructing recentlyViewed as a list of recipes
+                JSONArray recentlyViewed = userObject.getJSONArray("recentlyViewed");
+                JSONArray recentlyViewedArray = userObject.getJSONArray("recentlyViewed");
+                List<Recipe> recipeRecentlyViewed = new ArrayList<>();
+                for (int m = 0; m < recentlyViewedArray.length(); m++) {
+                    JSONObject recipeJson = recentlyViewedArray.getJSONObject(m);
+                    JSONArray ingredientsJson = recipeJson.getJSONArray("ingredients");
+                    List<Ingredient> ingredients = new ArrayList<>();
+                    for (int j = 0; j < ingredientsJson.length(); j++) {
+                        JSONObject ingredientJson = ingredientsJson.getJSONObject(j);
+                        Ingredient ingredient = new Ingredient(ingredientJson.getString("name"));
+                        ingredients.add(ingredient);
+                    }
+                    Recipe recipe = new Recipe(
+                            recipeJson.getString("name"),
+                            recipeJson.getString("url"),
+                            ingredients,
+                            recipeJson.getString("image"));
+                    // ^ didn't add cuisineType and dietaryType
+                    recipeRecentlyViewed.add(recipe);
+                }
+
+                // putting the new user object in the list of users to be returned
+                users.put(username, new User(username, password, recipeBookmarks, recipeRecentlyViewed));
                 System.out.println("Loaded user: " + username); // Debugging output
             }
         } catch (IOException e) {
@@ -86,6 +135,8 @@ public class UserDAOImpl implements UserDAO {
             JSONObject userObject = new JSONObject();
             userObject.put("username", user.getUsername());
             userObject.put("password", user.getPassword());
+            userObject.put("bookmarks", user.getBookmarks());
+            userObject.put("recentlyViewed", user.getRecentlyViewed());
             usersArray.put(userObject);
         }
         try (FileWriter writer = new FileWriter(FILE_PATH)) {
@@ -93,5 +144,50 @@ public class UserDAOImpl implements UserDAO {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    // TODO lots of duplicate code in the following methods...
+    // Add a recipe to a user's list of bookmarks
+    public void addBookmarkToFile(String username, Recipe recipe) {
+        final Map<String, User> users = loadUsersFromFile();
+        final User user = users.get(username);
+        user.addBookmark(recipe);
+        usersDatabase.put(user.getUsername(), user);
+        saveUsersToFile();
+        System.out.println("Bookmark added successfully for: " + user.getUsername());
+    }
+
+    // Returns a user's list of bookmarks
+    // TODO double check
+    public List<Recipe> getBookmarksFromFile(String username) {
+        final Map<String, User> users = loadUsersFromFile();
+        final User user = users.get(username);
+        System.out.println("Loaded user: " + user.getUsername());
+        System.out.println("Password: " + user.getPassword());
+        System.out.println("Bookmarks: " + user.getBookmarks());
+        System.out.println("RecentlyViewed: " + user.getRecentlyViewed());
+        System.out.println(user);
+        return user.getBookmarks();
+    }
+
+    // Add a recipe to a user's list of recentlyViewed
+    public void addRecentlyViewedToFile(String username, Recipe recipe) {
+        final Map<String, User> users = loadUsersFromFile();
+        final User user = users.get(username);
+        user.addRecentlyViewed(recipe);
+        usersDatabase.put(user.getUsername(), user);
+        saveUsersToFile();
+        System.out.println("RecentlyViewed added successfully for: " + user.getUsername());
+    }
+
+    public List<Recipe> getRecentlyViewedFromFile(String username) {
+        final Map<String, User> users = loadUsersFromFile();
+        final User user = users.get(username);
+        System.out.println("Loaded user: " + user.getUsername());
+        System.out.println("Password: " + user.getPassword());
+        System.out.println("Bookmarks: " + user.getBookmarks());
+        System.out.println("RecentlyViewed: " + user.getRecentlyViewed());
+        System.out.println(user);
+        return user.getRecentlyViewed();
     }
 }

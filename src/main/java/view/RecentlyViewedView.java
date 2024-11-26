@@ -18,6 +18,6 @@ public class RecentlyViewedView extends RecipeListView {
 
     @Override
     protected List<Recipe> getRecipeList(User user1) {
-        return user1.getRecentlyViewed();
+        return userDAO.getRecentlyViewedFromFile(user1.getUsername());
     }
 }
