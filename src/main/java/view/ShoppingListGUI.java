@@ -1,11 +1,14 @@
 package view;
 
+import entity.Recipe;
 import interface_adapter.ShoppingListController;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Arrays;
 import java.util.List;
 
@@ -40,6 +43,27 @@ public class ShoppingListGUI {
         JList<String> recipeList = new JList<>(recipeListModel);
         JScrollPane recipeScrollPane = new JScrollPane(recipeList);
         recipeScrollPane.setBorder(BorderFactory.createTitledBorder("Select Recipes"));
+
+        // TODO Make the recipe list clickable - will be complicated...
+//        recipeList.addMouseListener(new MouseAdapter() {
+//            public void mouseClicked(MouseEvent event) {
+//                if (event.getClickCount() == 2) {
+//                    // Get index of clicked item
+//                    final int index = recipeList.locationToIndex(event.getPoint());
+//                    // Ensure valid index
+//                    if (index >= 0) {
+//                        // Get selected item
+//                        final String selectedItem = recipeList.getModel().getElementAt(index);
+//
+//                        // Convert it to a Recipe object
+//                        final Recipe selectedRecipe = api.nameToRecipe(selectedItem);
+//
+//                        // Open a new window
+//                        new IndividualRecipeView(selectedRecipe, user);
+//                    }
+//                }
+//            }
+//        });
 
         // Bottom Generate Section
         JButton generateButton = new JButton("Generate Shopping List");
