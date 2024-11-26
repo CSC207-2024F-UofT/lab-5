@@ -12,6 +12,7 @@ import java.util.List;
 import javax.swing.*;
 
 import data_access.SpoonacularRecipeDAO;
+import data_access.UserDAOImpl;
 import entity.Recipe;
 import entity.User;
 import interface_adapter.RecipeListController;
@@ -21,6 +22,7 @@ import use_case.SearchRecipeListByNameUseCase;
 public abstract class RecipeListView extends JFrame implements ActionListener {
     // attributes for default view
     private static User user;
+    protected static UserDAOImpl userDAO;
     private final JList<Recipe> recipeList;
     private final DefaultListModel<Recipe> listModel;
     private final RecipeListController controller;
@@ -40,6 +42,7 @@ public abstract class RecipeListView extends JFrame implements ActionListener {
      */
     public RecipeListView(User user) {
         this.user = user;
+        this.userDAO = new UserDAOImpl();
         this.recipeList = new JList<>();
         this.listModel = new DefaultListModel<>();
         this.controller = new RecipeListController(new SearchRecipeListByIngredientUseCase(getRecipeList(user)),

@@ -19,6 +19,6 @@ public class BookmarkView extends RecipeListView {
 
     @Override
     protected List<Recipe> getRecipeList(User user1) {
-        return user1.getBookmarks();
+        return userDAO.getBookmarksFromFile(user1.getUsername());
     }
 }

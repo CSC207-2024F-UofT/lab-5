@@ -35,6 +35,8 @@ Shuxin (Kate) Zhou
 
 ## Notes
 - should the bookmarks and recently viewed lists of a user be stored in the user.json file?
-- individual recipe view only displays one ingredient right now
+~~- individual recipe view only displays one ingredient right now~~ - fixed
 - add a find recipe by name search function in the main search page
 - for the ingredient list in individual recipe view, split it into "used ingredients", "unused ingredients" and "missed ingredients" (right now there's only "missed ingredients")
+- when you double click on the recipes in the search view, you somehow get two copies of the individual recipe view??
+- ^ doesn't happen all the time tho

@@ -28,7 +28,7 @@ public class IndividualRecipeView extends JFrame implements ActionListener {
         this.userDAO = new UserDAOImpl();
 
         // Add this recipe to the user's recently viewed list
-        user.addRecentlyViewed(this.recipe);
+        userDAO.addRecentlyViewedToFile(this.user.getUsername(), this.recipe);
 
         // Initialize ingredient list
         final DefaultListModel<String> listModel = new DefaultListModel<>();
@@ -115,12 +115,12 @@ public class IndividualRecipeView extends JFrame implements ActionListener {
         else if (event.getSource() == bookmarkButton) {
             // TODO complete bookmark function
             if (!user.getBookmarks().contains(recipe)) {
-                user.addBookmark(recipe);
+                // user.addBookmark(recipe);
+                userDAO.addBookmarkToFile(user.getUsername(), recipe);
                 JOptionPane.showMessageDialog(this, "Recipe added to bookmarks!");
             } else {
                 JOptionPane.showMessageDialog(this, "Recipe is already bookmarked.");
             }
-//        }
         }
     }
 }
