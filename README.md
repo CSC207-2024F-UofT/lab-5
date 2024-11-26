@@ -34,9 +34,23 @@ Shuxin (Kate) Zhou
 *	Member 5: Finally, the program offers a shopping list feature for adjacent recipes. When users are missing one or two ingredients for a recipe, the system will generate a shopping list with only the required items. This function can help users decide what to buy if they want to try new meals without doing extensive shopping. Export options, such as saving the list as a PDF or sharing it with other apps, enhance usability. The system will also need to distinguish between essential ingredients and common pantry staples to keep the lists concise.
 
 ## Notes
-- should the bookmarks and recently viewed lists of a user be stored in the user.json file?
-~~- individual recipe view only displays one ingredient right now~~ - fixed
+- ~~should the bookmarks and recently viewed lists of a user be stored in the user.json file?~~ - implemented
+- ~~individual recipe view only displays one ingredient right now~~ - fixed
 - add a find recipe by name search function in the main search page
+- make ingredients clickable in individual recipe view? Or at least display the amounts
 - for the ingredient list in individual recipe view, split it into "used ingredients", "unused ingredients" and "missed ingredients" (right now there's only "missed ingredients")
+- ^ might be too complicated to do
 - when you double click on the recipes in the search view, you somehow get two copies of the individual recipe view??
 - ^ doesn't happen all the time tho
+- allow the user to choose how many recipes they want to see? Page flipping feature?
+- show random recipes feature?
+- allow users to create custom folders???
+- allow users to press enter instead of using the search button?
+- *add clickable url to individual recipe view*
+- allow users to select ingredients from individual recipe view and add them to their shopping list?
+- ^ would be difficult to implement
+- have an ingredient list where users can record the ingredients they have in their fridge
+- change background colour?
+- *make the recipes in shopping list view clickable*
+- display no recipes found in search view
+- add clear recently viewed button
