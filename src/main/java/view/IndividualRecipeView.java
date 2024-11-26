@@ -37,7 +37,7 @@ public class IndividualRecipeView extends JFrame implements ActionListener {
         // Initialize ingredient list
         final DefaultListModel<String> listModel = new DefaultListModel<>();
         for (Ingredient ingredient : recipe.getIngredients()) {
-            listModel.addElement(ingredient.getName());
+            listModel.addElement(ingredient.getName() + ", Amount: " + ingredient.getAmount() + " " + ingredient.getUnit());
         }
         ingredientsJLIst = new JList<>(listModel);
         final JScrollPane scrollPane = new JScrollPane(ingredientsJLIst);
@@ -68,9 +68,13 @@ public class IndividualRecipeView extends JFrame implements ActionListener {
 
             // Load the image
             this.imageIcon = new ImageIcon(imageUrl);
+            int originalWidth = this.imageIcon.getIconWidth();
+            int originalHeight = this.imageIcon.getIconHeight();
+            int desiredHeight = 200;
+            int scaledWidth = (desiredHeight * originalWidth) / originalHeight;
 
             // Scale the image
-            final Image scaledImage = imageIcon.getImage().getScaledInstance(200, 150, Image.SCALE_SMOOTH);
+            final Image scaledImage = imageIcon.getImage().getScaledInstance(scaledWidth, desiredHeight, Image.SCALE_SMOOTH);
             imageIcon = new ImageIcon(scaledImage);
 
             // Add the image to a JLabel

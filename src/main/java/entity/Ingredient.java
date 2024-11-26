@@ -9,8 +9,10 @@ public class Ingredient {
     private int id;
     private String image;
 
-    // TODO implement the Measures class
+    // TODO implement the Measures class?
     // private Measures measures;
+
+    private String unit;
 
     private String name;
 
@@ -19,9 +21,11 @@ public class Ingredient {
 //    private String originalName;
 //    private String unit;
 
-    public Ingredient(String name) {
+    public Ingredient(String name, double amount, String unit) {
         // TODO parse the original JSONArray representation of ingredients into our format
         this.name = name;
+        this.amount = amount;
+        this.unit = unit;
     }
 
     // getters (shouldn't need setters)
@@ -31,6 +35,10 @@ public class Ingredient {
 
     public double getAmount() {
         return amount;
+    }
+
+    public String getUnit() {
+        return unit;
     }
 
     public int getId() {

@@ -83,7 +83,10 @@ public class UserDAOImpl implements UserDAO {
                     List<Ingredient> ingredients = new ArrayList<>();
                     for (int j = 0; j < ingredientsJson.length(); j++) {
                         JSONObject ingredientJson = ingredientsJson.getJSONObject(j);
-                        Ingredient ingredient = new Ingredient(ingredientJson.getString("name"));
+                        Ingredient ingredient = new Ingredient(
+                                ingredientJson.getString("name"),
+                                ingredientJson.getDouble("amount"),
+                                ingredientJson.getString("unit"));
                         ingredients.add(ingredient);
                     }
                     Recipe recipe = new Recipe(
@@ -105,7 +108,11 @@ public class UserDAOImpl implements UserDAO {
                     List<Ingredient> ingredients = new ArrayList<>();
                     for (int j = 0; j < ingredientsJson.length(); j++) {
                         JSONObject ingredientJson = ingredientsJson.getJSONObject(j);
-                        Ingredient ingredient = new Ingredient(ingredientJson.getString("name"));
+                        System.out.println(ingredientJson.keys());
+                        Ingredient ingredient = new Ingredient(
+                                ingredientJson.getString("name"),
+                                ingredientJson.getDouble("amount"),
+                                ingredientJson.getString("unit"));
                         ingredients.add(ingredient);
                     }
                     Recipe recipe = new Recipe(

@@ -97,10 +97,14 @@ public class SpoonacularRecipeDAO implements RecipeDAO {
                     // Collect ingredients from the JSON response
                     final List<Ingredient> recipeIngredients = new ArrayList<>();
                     for (int j = 0; j < usedIngredientsJson.length(); j++) {
-                        recipeIngredients.add(new Ingredient(usedIngredientsJson.getJSONObject(j).getString("name")));
+                        recipeIngredients.add(new Ingredient(usedIngredientsJson.getJSONObject(j).getString("name"),
+                                usedIngredientsJson.getJSONObject(j).getDouble("amount"),
+                                usedIngredientsJson.getJSONObject(j).getString("unit")));
                     }
                     for (int j = 0; j < missedIngredientsJson.length(); j++) {
-                        recipeIngredients.add(new Ingredient(missedIngredientsJson.getJSONObject(j).getString("name")));
+                        recipeIngredients.add(new Ingredient(missedIngredientsJson.getJSONObject(j).getString("name"),
+                                missedIngredientsJson.getJSONObject(j).getDouble("amount"),
+                                missedIngredientsJson.getJSONObject(j).getString("unit")));
                     }
 
                     // Create and add Recipe object to the list
@@ -180,7 +184,9 @@ public class SpoonacularRecipeDAO implements RecipeDAO {
                     // Collect ingredients from the JSON response
                     final List<Ingredient> recipeIngredients = new ArrayList<>();
                     for (int j = 0; j < ingredientsJson.length(); j++) {
-                        recipeIngredients.add(new Ingredient(ingredientsJson.getJSONObject(j).getString("name")));
+                        recipeIngredients.add(new Ingredient(ingredientsJson.getJSONObject(j).getString("name"),
+                                ingredientsJson.getJSONObject(j).getDouble("amount"),
+                                ingredientsJson.getJSONObject(j).getString("unit")));
                     }
 
                     // Create and add Recipe object to the list
