@@ -22,27 +22,6 @@ public class SpoonacularRecipeDAO implements RecipeDAO {
         this.client = new OkHttpClient();
     }
 
-    // Added these methods but probably won't need them
-//    private static void findArrays(Object object, ArrayList<JSONArray> arrays) {
-//        if (object instanceof JSONObject) {
-//            final JSONObject jsonObject = (JSONObject) object;
-//            for (String key : jsonObject.keySet()) {
-//                findArrays(jsonObject.get(key), arrays);
-//            }
-//        } else if (object instanceof JSONArray) {
-//            arrays.add((JSONArray) object);
-//        }
-//    }
-//
-//    public static ArrayList<JSONArray> extractJsonArrays(JSONObject jsonObject) {
-//        final ArrayList<JSONArray> arrays = new ArrayList<>();
-//
-//        // Helper method to recursively find arrays
-//        findArrays(jsonObject, arrays);
-//
-//        return arrays;
-//    }
-
     @Override
     public List<Recipe> getAllRecipes() {
         // If you need to fetch all recipes, you could use a default search (e.g., return popular recipes)
@@ -84,11 +63,31 @@ public class SpoonacularRecipeDAO implements RecipeDAO {
                 // Loop through the results and create Recipe objects
                 for (int i = 0; i < results.length(); i++) {
                     JSONObject recipeJson = results.getJSONObject(i);
+
+                    // call the API again to retrieve the full recipe object
+                    int id = recipeJson.getInt("id");
+                    // String recipeApiUrl = BASE_URL + "/recipes/" + "?apiKey=" + API_KEY + "/" + Integer.toString(id) + "/information";
+                    // String recipeApiUrl = "https://api.spoonacular.com/recipes/716429/information?includeNutrition=false";
+                    String recipeApiUrl = BASE_URL + "/recipes/" + id + "/information?apiKey=" + API_KEY + "&includeNutrition=false";
+                    Request recipeRequest = new Request.Builder()
+                            .url(recipeApiUrl)
+                            .build();
+                    Response recipeResponse = client.newCall(recipeRequest).execute();
+                    JSONObject completeRecipe = null;
+                    if (recipeResponse.isSuccessful() && recipeResponse.body() != null) {
+                        String jsonRecipeResponse = recipeResponse.body().string();
+                        completeRecipe = new JSONObject(jsonRecipeResponse);
+                    }
+                    else {
+                        System.out.println("Request failed with code: " + response.code());
+                    }
+
                     // for testing purposes
                     System.out.println(recipeJson.keySet());
                     System.out.println(recipeJson.getInt("missedIngredientCount"));
                     String title = recipeJson.getString("title");
-                    String recipeUrl = BASE_URL + "/recipes/" + recipeJson.getInt("id") + "/information"; // URL to recipe details
+                    // String recipeUrl = BASE_URL + "/recipes/" + recipeJson.getInt("id") + "/information"; // URL to recipe details
+                    final String recipeUrl = completeRecipe.getString("spoonacularSourceUrl");
                     final JSONArray missedIngredientsJson = recipeJson.getJSONArray("missedIngredients");
                     final JSONArray usedIngredientsJson = recipeJson.getJSONArray("usedIngredients");
                     final JSONArray unusedIngredientsJson = recipeJson.getJSONArray("unusedIngredients");
@@ -153,8 +152,28 @@ public class SpoonacularRecipeDAO implements RecipeDAO {
                 // Loop through the results and create Recipe objects
                 for (int i = 0; i < results.length(); i++) {
                     final JSONObject recipeJson = results.getJSONObject(i);
+
+                    // call the API again to retrieve the full recipe object
+                    int id = recipeJson.getInt("id");
+                    //String recipeApiUrl = BASE_URL + "/recipes/" + "?apiKey=" + API_KEY + "/" + Integer.toString(id) + "/information";
+                    String recipeApiUrl = BASE_URL + "/recipes/" + id + "/information?apiKey=" + API_KEY + "&includeNutrition=false";
+                    // String recipeApiUrl = "https://api.spoonacular.com/recipes/716429/information?includeNutrition=false";
+                    Request recipeRequest = new Request.Builder()
+                            .url(recipeApiUrl)
+                            .build();
+                    JSONObject completeRecipe = null;
+                    Response recipeResponse = client.newCall(recipeRequest).execute();
+                    if (recipeResponse.isSuccessful() && recipeResponse.body() != null) {
+                        String jsonRecipeResponse = recipeResponse.body().string();
+                        completeRecipe = new JSONObject(jsonRecipeResponse);
+                    }
+                    else {
+                        System.out.println("Request failed with code: " + response.code());
+                    }
+
                     final String title = recipeJson.getString("title");
-                    final String recipeUrl = BASE_URL + "/recipes/" + recipeJson.getInt("id") + "/information"; // URL to recipe details
+                    // final String recipeUrl = BASE_URL + "/recipes/" + recipeJson.getInt("id") + "/information"; // URL to recipe details
+                    final String recipeUrl = recipeJson.getString("spoonacularSourceUrl");
                     final JSONArray ingredientsJson = recipeJson.getJSONArray("usedIngredients");
                     final String image = recipeJson.getString("image");
 

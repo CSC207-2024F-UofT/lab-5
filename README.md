@@ -46,7 +46,7 @@ Shuxin (Kate) Zhou
 - show random recipes feature?
 - allow users to create custom folders???
 - allow users to press enter instead of using the search button?
-- *add clickable url to individual recipe view*
+- ~~*add clickable url to individual recipe view*~~
 - allow users to select ingredients from individual recipe view and add them to their shopping list?
 - ^ would be difficult to implement
 - have an ingredient list where users can record the ingredients they have in their fridge

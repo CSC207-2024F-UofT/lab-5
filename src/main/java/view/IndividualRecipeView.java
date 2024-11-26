@@ -4,6 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 
 import data_access.GetRecipeId;
@@ -13,6 +16,7 @@ import entity.*;
 public class IndividualRecipeView extends JFrame implements ActionListener {
     private final JButton nutritionButton;
     private final JButton bookmarkButton;
+    private final JButton urlButton;
     private JList<String> ingredientsJLIst;
     // if we want to display the used and missed ingredients separately... private JList<String> usedIngredientsJList;
     private final Recipe recipe;
@@ -42,6 +46,7 @@ public class IndividualRecipeView extends JFrame implements ActionListener {
         // Initialize buttons
         nutritionButton = new JButton("Nutrition");
         bookmarkButton = new JButton("Bookmark");
+        urlButton = new JButton("Open Recipe in Browser");
 
         // Set up JFrame properties
         setTitle(recipe.getName());
@@ -93,12 +98,15 @@ public class IndividualRecipeView extends JFrame implements ActionListener {
         buttonPanel.add(nutritionButton);
         buttonPanel.add(Box.createRigidArea(new Dimension(10, 0))); // Add spacing
         buttonPanel.add(bookmarkButton);
+        buttonPanel.add(Box.createRigidArea(new Dimension(10, 0)));
+        buttonPanel.add(urlButton);
 
         mainPanel.add(buttonPanel);
 
         // Add action listeners
         nutritionButton.addActionListener(this);
         bookmarkButton.addActionListener(this);
+        urlButton.addActionListener(this);
 
         // Display the frame
         setVisible(true);
@@ -120,6 +128,21 @@ public class IndividualRecipeView extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(this, "Recipe added to bookmarks!");
             } else {
                 JOptionPane.showMessageDialog(this, "Recipe is already bookmarked.");
+            }
+        }
+        else if (event.getSource() == urlButton) {
+            try {
+                // Create a URI for the URL
+                URI uri = new URI(recipe.getUrl());
+                // Use the Desktop class to open the default browser
+                if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+                    Desktop.getDesktop().browse(uri);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Desktop browsing is not supported on your system.");
+                }
+            } catch (URISyntaxException | IOException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Failed to open the URL: " + ex.getMessage());
             }
         }
     }
