@@ -20,7 +20,12 @@ public class UserDAOImpl implements UserDAO {
     private Map<String, User> usersDatabase;
 
     public UserDAOImpl() {
-        usersDatabase = loadUsersFromFile();
+        if (usersDatabase == null) {
+            usersDatabase = new HashMap<>();
+        }
+        else {
+            usersDatabase = loadUsersFromFile();
+        }
     }
 
     @Override
@@ -60,9 +65,6 @@ public class UserDAOImpl implements UserDAO {
         System.out.println("User validated successfully: " + username); // Debugging output
         return true; // User exists and password matches
     }
-
-
-
 
     // Load users from JSON file using org.json
     private Map<String, User> loadUsersFromFile() {
@@ -130,6 +132,7 @@ public class UserDAOImpl implements UserDAO {
             }
         } catch (IOException e) {
             e.printStackTrace();
+            saveUsersToFile();
         }
         return users;
     }
@@ -150,6 +153,7 @@ public class UserDAOImpl implements UserDAO {
             writer.write(usersArray.toString(4)); // Indent for readability
         } catch (IOException e) {
             e.printStackTrace();
+            saveUsersToFile();
         }
     }
 

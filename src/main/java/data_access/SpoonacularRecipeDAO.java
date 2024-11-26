@@ -69,6 +69,9 @@ public class SpoonacularRecipeDAO implements RecipeDAO {
                     // String recipeApiUrl = BASE_URL + "/recipes/" + "?apiKey=" + API_KEY + "/" + Integer.toString(id) + "/information";
                     // String recipeApiUrl = "https://api.spoonacular.com/recipes/716429/information?includeNutrition=false";
                     String recipeApiUrl = BASE_URL + "/recipes/" + id + "/information?apiKey=" + API_KEY + "&includeNutrition=false";
+//                    String recipeApiUrl = "https://api.spoonacular.com/recipes/findByIngredients?apiKey="
+//                            + API_KEY
+//                            + "&ingredients=chicken,cheese&number=1";
                     Request recipeRequest = new Request.Builder()
                             .url(recipeApiUrl)
                             .build();
