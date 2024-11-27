@@ -7,13 +7,14 @@ import okhttp3.Request;
 import okhttp3.Response;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import use_case.filter_recipes.FilterRecipesDataAccessInterface;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class SpoonacularRecipeDAO implements RecipeDAO {
+public class SpoonacularRecipeDAO implements RecipeDAO, FilterRecipesDataAccessInterface {
     private static final String API_KEY = "5d06ae7be18746aaa4d1f1e5877f4450"; // Replace with your Spoonacular API key
     private static final String BASE_URL = "https://api.spoonacular.com";
     private final OkHttpClient client;
@@ -130,6 +131,7 @@ public class SpoonacularRecipeDAO implements RecipeDAO {
      * @param cuisine cuisine choice obtained from user; if none selected, cuisine will be "Any"
      * @return a list of recipes that match filters
      */
+    @Override
     public List<Recipe> filterSearchRecipes(List<String> ingredients, String diet, String cuisine) {
         final String ingredientsQuery = ingredientsToString(ingredients);
         final String endpoint = BASE_URL + "/recipes/complexSearch";

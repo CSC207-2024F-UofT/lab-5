@@ -34,4 +34,16 @@ public interface FilterRecipesDataAccessInterface {
      */
     List<Recipe> filterSearchRecipes(List<String> ingredients, String diet, String cuisine);
 
+    /**
+     * Get available diets.
+     * @return list of diets
+     */
+    List<String> getAvailableDiets();
+
+    /**
+     * Get available cuisines.
+     * @return list of cuisines
+     */
+    List<String> getAvailableCuisines();
+
 }
