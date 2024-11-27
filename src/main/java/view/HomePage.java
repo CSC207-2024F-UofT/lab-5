@@ -5,6 +5,7 @@ import entity.Ingredient;
 import entity.Recipe;
 import entity.User;
 import interface_adapter.RecipeController;
+import interface_adapter.filter_recipes.FilterRecipesController;
 import use_case.SearchRecipeUseCase;
 
 import javax.swing.*;
@@ -16,6 +17,7 @@ import java.util.List;
 import interface_adapter.ShoppingListController;
 import use_case.ShoppingListUseCase;
 import data_access.SpoonacularAPI;
+import use_case.filter_recipes.FilterRecipesInteractor;
 
 public class HomePage extends JFrame {
     private final User user;
@@ -36,7 +38,10 @@ public class HomePage extends JFrame {
         startButton.addActionListener(e -> {
             // Open RecipeView and close HomePage
             RecipeController controller = new RecipeController(new SearchRecipeUseCase(new SpoonacularRecipeDAO()));
-            new RecipeView(controller, user);
+            // new RecipeView(controller, user);
+            FilterRecipesController frController = new FilterRecipesController(
+                    new FilterRecipesInteractor(new SpoonacularRecipeDAO()));
+            new RecipeView(controller, user, frController);
             //dispose(); // Would it be better to not close the main page?
         });
         // Shopping List Button
