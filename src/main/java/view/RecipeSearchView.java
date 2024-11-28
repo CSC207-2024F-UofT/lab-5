@@ -47,12 +47,6 @@ public class RecipeSearchView extends JPanel implements ActionListener, Property
     private final JTextField fatMaxInputField = new JTextField(15);
     private final JTextField fatMinInputField = new JTextField(15);
 
-    private final JLabel rating = new JLabel("Rating:");
-    private final JTextField ratingInputField = new JTextField(15);
-
-    private final JLabel comment = new JLabel("Comment:");
-    private final JTextField commentInputField = new JTextField(15);
-
     private final JButton search;
     private final JButton cancel;
 
@@ -220,7 +214,7 @@ public class RecipeSearchView extends JPanel implements ActionListener, Property
 
             private void documentListenerHelper() {
                 final RecipeSearchState currentState = recipeSearchViewModel.getState();
-                currentState.setCalMin(caloriesMaxInputField.getText());
+                currentState.setCalMax(caloriesMaxInputField.getText());
                 recipeSearchViewModel.setState(currentState);
             }
 
@@ -246,7 +240,7 @@ public class RecipeSearchView extends JPanel implements ActionListener, Property
 
             private void documentListenerHelper() {
                 final RecipeSearchState currentState = recipeSearchViewModel.getState();
-                currentState.setCalMin(carbsMinInputField.getText());
+                currentState.setCarbMin(carbsMinInputField.getText());
                 recipeSearchViewModel.setState(currentState);
             }
 
@@ -272,7 +266,7 @@ public class RecipeSearchView extends JPanel implements ActionListener, Property
 
             private void documentListenerHelper() {
                 final RecipeSearchState currentState = recipeSearchViewModel.getState();
-                currentState.setCalMin(carbsMaxInputField.getText());
+                currentState.setCarbMax(carbsMaxInputField.getText());
                 recipeSearchViewModel.setState(currentState);
             }
 
@@ -298,7 +292,7 @@ public class RecipeSearchView extends JPanel implements ActionListener, Property
 
             private void documentListenerHelper() {
                 final RecipeSearchState currentState = recipeSearchViewModel.getState();
-                currentState.setCalMin(proteinMinInputField.getText());
+                currentState.setProteinMin(proteinMinInputField.getText());
                 recipeSearchViewModel.setState(currentState);
             }
 
@@ -324,7 +318,7 @@ public class RecipeSearchView extends JPanel implements ActionListener, Property
 
             private void documentListenerHelper() {
                 final RecipeSearchState currentState = recipeSearchViewModel.getState();
-                currentState.setCalMin(proteinMaxInputField.getText());
+                currentState.setProteinMax(proteinMaxInputField.getText());
                 recipeSearchViewModel.setState(currentState);
             }
 
@@ -350,7 +344,7 @@ public class RecipeSearchView extends JPanel implements ActionListener, Property
 
             private void documentListenerHelper() {
                 final RecipeSearchState currentState = recipeSearchViewModel.getState();
-                currentState.setCalMin(fatMinInputField.getText());
+                currentState.setFatMin(fatMinInputField.getText());
                 recipeSearchViewModel.setState(currentState);
             }
 
@@ -376,7 +370,7 @@ public class RecipeSearchView extends JPanel implements ActionListener, Property
 
             private void documentListenerHelper() {
                 final RecipeSearchState currentState = recipeSearchViewModel.getState();
-                currentState.setCalMin(fatMaxInputField.getText());
+                currentState.setFatMax(fatMaxInputField.getText());
                 recipeSearchViewModel.setState(currentState);
             }
 
@@ -415,7 +409,7 @@ public class RecipeSearchView extends JPanel implements ActionListener, Property
      */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-
+    //handle search errors
     }
 
     public void setSearchController(RecipeSearchController searchController) {

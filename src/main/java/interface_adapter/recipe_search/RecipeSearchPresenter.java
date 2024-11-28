@@ -21,19 +21,17 @@ public class RecipeSearchPresenter implements RecipeSearchOutputBoundary {
 
     @Override
     public void prepareSuccessView(RecipeSearchOutputData outputData) {
-        // On success, switch to the login view.
         final SearchResultsState searchResultsState = searchResultsViewModel.getState();
         searchResultsState.setSearchResults(outputData.getSearchResults());
         this.searchResultsViewModel.setState(searchResultsState);
-        searchResultsViewModel.firePropertyChanged();
+        this.searchResultsViewModel.firePropertyChanged();
 
-        viewManagerModel.setState(searchResultsViewModel.getViewName());
-        viewManagerModel.firePropertyChanged();
+        this.viewManagerModel.setState(searchResultsViewModel.getViewName());
+        this.viewManagerModel.firePropertyChanged();
     }
 
     @Override
-    public void prepareFailView(String errorMessage) {
-
+    public void prepareFailView(String error) {
     }
 
     @Override

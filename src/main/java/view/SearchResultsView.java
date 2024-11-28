@@ -1,11 +1,14 @@
 package view;
 
 import entity.Recipe;
+import interface_adapter.search_results.SearchResultsController;
 import interface_adapter.search_results.SearchResultsState;
 import interface_adapter.search_results.SearchResultsViewModel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.*;
@@ -21,6 +24,8 @@ public class SearchResultsView extends JPanel implements PropertyChangeListener 
 
     private final JScrollPane resultsScrollPane;
 
+    private SearchResultsController searchResultsController;
+
     public SearchResultsView(SearchResultsViewModel searchResultsViewModel) {
         this.searchResultsViewModel = searchResultsViewModel;
         this.searchResultsViewModel.addPropertyChangeListener(this);
@@ -31,6 +36,15 @@ public class SearchResultsView extends JPanel implements PropertyChangeListener 
         final JPanel backButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         backButton = new JButton("Back");
         backButtonPanel.add(backButton);
+
+        backButton.addActionListener(
+
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        searchResultsController.switchtoRecipeSearchView();
+                    }
+                }
+        );
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(title);
@@ -87,71 +101,11 @@ public class SearchResultsView extends JPanel implements PropertyChangeListener 
 
     }
 
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("Search Results");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 600);
-
-        // Create ViewModel (dummy in this case)
-        SearchResultsViewModel viewModel = new SearchResultsViewModel();
-
-        // Create SearchResultsView
-        SearchResultsView searchResultsView = new SearchResultsView(viewModel);
-
-        // Sample recipes
-        List<Recipe> recipes = new ArrayList<>();
-        Map<String, Integer> pastaNutrients = new HashMap<>();
-        pastaNutrients.put("Carbs", 100);
-        pastaNutrients.put("Protein", 20);
-        Set<String> pastaTags = new HashSet<>();
-        pastaTags.add("Dinner");
-        Recipe pasta = new Recipe(
-                "Pasta",
-                2,
-                500,
-                pastaNutrients,
-                pastaTags,
-                "https://example.com/pasta",
-                "pasta_image"
-        );
-        Map<String, Integer> saladNutrients = new HashMap<>();
-        saladNutrients.put("Fiber", 20);
-        saladNutrients.put("Vitamins", 10);
-        Set<String> saladTags = new HashSet<>();
-        saladTags.add("Healthy");
-        Recipe salad = new Recipe(
-                "Salad",
-                1,
-                200,
-                saladNutrients,
-                saladTags,
-                "https://example.com/salad",
-                "salad_image"
-        );
-        Map<String, Integer> smoothieNutrients = new HashMap<>();
-        smoothieNutrients.put("Sugar", 15);
-        smoothieNutrients.put("Protein", 5);
-        Set<String> smoothieTags = new HashSet<>();
-        smoothieTags.add("Breakfast");
-        smoothieTags.add("Healthy");
-        Recipe smoothie = new Recipe(
-                "Smoothie",
-                1,
-                150,
-                smoothieNutrients,
-                smoothieTags,
-                "https://example.com/smoothie",
-                "smoothie_image"
-        );
-        recipes.add(pasta);
-        recipes.add(salad);
-        recipes.add(smoothie);
-        searchResultsView.populateRecipeList(recipes);
-
-        frame.add(searchResultsView);
-        frame.setVisible(true);
-    }
     public String getViewName() {
         return viewName;
+    }
+
+    public void setSearchResultsController(SearchResultsController searchResultsController) {
+        this.searchResultsController = searchResultsController;
     }
 }
