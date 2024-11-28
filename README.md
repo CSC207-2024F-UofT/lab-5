@@ -109,8 +109,8 @@ The TODOs are summarized below (by file) to help your team decide how to split t
 
 - `LogoutController.java` (tip: refer to the other controllers for similar code)
 
-  - [ ] TODO: Save the interactor in the instance variable.
-  - [ ] TODO: run the use case interactor for the logout use case
+  - [X] TODO: Save the interactor in the instance variable.
+  - [X] TODO: run the use case interactor for the logout use case
 
 * * *
 
@@ -127,7 +127,7 @@ The TODOs are summarized below (by file) to help your team decide how to split t
 
 - `LogoutOutputData.java`
 
-  - [ ] TODO: save the parameters in the instance variables.
+  - [X] TODO: save the parameters in the instance variables.
 
 * * *
 
