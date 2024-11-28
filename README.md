@@ -109,25 +109,25 @@ The TODOs are summarized below (by file) to help your team decide how to split t
 
 - `LogoutController.java` (tip: refer to the other controllers for similar code)
 
-  - [ ] TODO: Save the interactor in the instance variable.
-  - [ ] TODO: run the use case interactor for the logout use case
+  - [x] TODO: Save the interactor in the instance variable.
+  - [x] TODO: run the use case interactor for the logout use case
 
 * * *
 
 - `LogoutInputData.java` (should be done with the LogoutInteractor TODOs below)
 
-  - [ ] TODO: save the current username in an instance variable and add a getter.
+  - [x] TODO: save the current username in an instance variable and add a getter.
 
 - `LogoutInteractor.java` (tip: refer to `ChangePasswordInteractor.java` for similar code)
 
-  - [ ] TODO: save the DAO and Presenter in the instance variables.
-  - [ ] TODO: implement the logic of the Logout Use Case
+  - [x] TODO: save the DAO and Presenter in the instance variables.
+  - [x] TODO: implement the logic of the Logout Use Case
 
 * * *
 
 - `LogoutOutputData.java`
 
-  - [ ] TODO: save the parameters in the instance variables.
+  - [x] TODO: save the parameters in the instance variables.
 
 * * *
 
