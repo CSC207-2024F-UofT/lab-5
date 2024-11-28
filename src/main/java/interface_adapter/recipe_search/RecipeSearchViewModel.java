@@ -13,7 +13,4 @@ public class RecipeSearchViewModel extends ViewModel<RecipeSearchState> {
         super("Recipe Search");
         setState(new RecipeSearchState());
     }
-
-    public void addPropertyChangeListener(RecipeSearchView recipeSearchView) {
-    }
 }

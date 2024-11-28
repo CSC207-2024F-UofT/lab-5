@@ -10,7 +10,4 @@ public class SearchResultsViewModel extends ViewModel<SearchResultsState> {
         setState(new SearchResultsState());
     }
 
-    public void addPropertyChangeListener(SearchResultsView recipeSearchView) {
-    }
-
 }
