@@ -30,7 +30,7 @@ public class RecipeView extends JFrame {
     private final JComboBox<String> dietComboBox;
     private final JComboBox<String> cuisineComboBox;
 
-    public RecipeView(RecipeController controller, User user, FilterRecipesController filterRecipesController) {
+    public RecipeView(RecipeController controller, User user) {
         this.controller = controller;
         this.user = user;
         // this.filterRecipesController = filterRecipesController;

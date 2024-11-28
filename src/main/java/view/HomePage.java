@@ -39,9 +39,9 @@ public class HomePage extends JFrame {
             // Open RecipeView and close HomePage
             RecipeController controller = new RecipeController(new SearchRecipeUseCase(new SpoonacularRecipeDAO()));
             // new RecipeView(controller, user);
-            final FilterRecipesController frController = new FilterRecipesController(
-                    new FilterRecipesInteractor(new SpoonacularRecipeDAO()));
-            new RecipeView(controller, user, frController);
+            // final FilterRecipesController frController = new FilterRecipesController(
+            //         new FilterRecipesInteractor(new SpoonacularRecipeDAO()));
+            new RecipeView(controller, user);
             //dispose(); // Would it be better to not close the main page?
         });
         // Shopping List Button
