@@ -20,9 +20,12 @@ public class Main {
                                             .addSignupUseCase()
                                             .addLoginUseCase()
                                             .addChangePasswordUseCase()
+                                            .addLogoutUseCase()
                                             .build();
 
         application.pack();
         application.setVisible(true);
     }
 }
+
+// updated by Cindy
