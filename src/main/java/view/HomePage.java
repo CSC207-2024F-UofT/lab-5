@@ -39,7 +39,7 @@ public class HomePage extends JFrame {
             // Open RecipeView and close HomePage
             RecipeController controller = new RecipeController(new SearchRecipeUseCase(new SpoonacularRecipeDAO()));
             // new RecipeView(controller, user);
-            FilterRecipesController frController = new FilterRecipesController(
+            final FilterRecipesController frController = new FilterRecipesController(
                     new FilterRecipesInteractor(new SpoonacularRecipeDAO()));
             new RecipeView(controller, user, frController);
             //dispose(); // Would it be better to not close the main page?

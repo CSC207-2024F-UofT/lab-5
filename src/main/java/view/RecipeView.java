@@ -20,13 +20,13 @@ public class RecipeView extends JFrame {
     private JTextField ingredientInput;
     private JButton searchButton;
     // private JList<String> recipeList; - commented out for now to make the double click function work
-    private JList <Recipe> recipeList;
+    private JList<Recipe> recipeList;
     private final DefaultListModel<Recipe> listModel;
     private RecipeController controller;
     private User user;
 
     // private final FilterRecipesController filterRecipesController;
-    private SpoonacularRecipeDAO spoonacularRecipeDAO;
+    private final SpoonacularRecipeDAO spoonacularRecipeDAO;
     private final JComboBox<String> dietComboBox;
     private final JComboBox<String> cuisineComboBox;
 
@@ -118,7 +118,7 @@ public class RecipeView extends JFrame {
     private void populateDropdowns() {
         try {
             // final List<String> diets = filterRecipesController.getAvailableDiets();
-            List<String> diets = spoonacularRecipeDAO.getAvailableDiets();
+            final List<String> diets = spoonacularRecipeDAO.getAvailableDiets();
             dietComboBox.addItem("Any");
             for (String diet : diets) {
                 dietComboBox.addItem(diet);

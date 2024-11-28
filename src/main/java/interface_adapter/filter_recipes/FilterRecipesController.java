@@ -13,16 +13,10 @@ import use_case.filter_recipes.FilterRecipesInteractor;
  * Controller for the filter recipes use case.
  */
 public class FilterRecipesController {
-    private FilterRecipesInputBoundary filterRecipesUseCaseInteractor;
-    private FilterRecipesInteractor filterRecipesInteractor;
+    private FilterRecipesInputBoundary filterRecipesInputBoundary;
 
-    // overloading for now
-    public FilterRecipesController(FilterRecipesInteractor filterRecipesInteractor) {
-        this.filterRecipesInteractor = filterRecipesInteractor;
-    }
-
-    public FilterRecipesController(FilterRecipesInputBoundary filterRecipesUseCaseInteractor) {
-        this.filterRecipesUseCaseInteractor = filterRecipesUseCaseInteractor;
+    public FilterRecipesController(FilterRecipesInputBoundary filterRecipesInputBoundary) {
+        this.filterRecipesInputBoundary = filterRecipesInputBoundary;
     }
 
     // /**
@@ -38,12 +32,12 @@ public class FilterRecipesController {
     // }
 
     public List<String> getAvailableDiets() {
-        return filterRecipesInteractor.getAvailableDiets();
+        return filterRecipesInputBoundary.getAvailableDiets();
     }
 
     public List<String> getAvailableCuisines() {
         // return filterRecipesUseCaseInteractor.getAvailableCuisines();
-        return filterRecipesInteractor.getAvailableCuisines();
+        return filterRecipesInputBoundary.getAvailableCuisines();
     }
 
     /**
@@ -51,9 +45,10 @@ public class FilterRecipesController {
      * @param ingredients list of ingredients
      * @param selectedDiet diet choice
      * @param selectedCuisine cuisine choice
-     * @return list of recipes
      */
-    public List<Recipe> filterSearchRecipes(List<String> ingredients, String selectedDiet, String selectedCuisine) {
-        return filterRecipesInteractor.filterSearchRecipes(ingredients, selectedDiet, selectedCuisine);
+    public void filterSearchRecipes(List<String> ingredients, String selectedDiet, String selectedCuisine) {
+        final FilterRecipesInputData filterRecipesInputData =
+                new FilterRecipesInputData(ingredients, selectedDiet, selectedCuisine);
+        filterRecipesInputBoundary.filterSearchRecipes(filterRecipesInputData);
     }
 }
