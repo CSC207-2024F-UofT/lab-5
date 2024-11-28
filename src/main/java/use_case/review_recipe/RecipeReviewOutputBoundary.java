@@ -1,7 +1,5 @@
 package use_case.review_recipe;
 
-import use_case.signup.SignupOutputData;
-
 /**
  * The output boundary for the Recipe Review Use Case.
  */

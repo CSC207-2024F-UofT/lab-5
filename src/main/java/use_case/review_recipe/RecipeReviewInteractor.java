@@ -10,39 +10,42 @@ import java.util.HashMap;
  * The Recipe Review Interactor.
  */
 public class RecipeReviewInteractor implements RecipeReviewInputBoundary {
-    private RecipeReviewOutputBoundary reviewPresenter;
-    private RecipeReviewOutputData recipeReviewOutputData;
+    private final RecipeReviewOutputBoundary reviewPresenter;
     private CommonUser user;
 
-    public RecipeReviewInteractor(RecipeReviewOutputBoundary reviewPresenter) {
+    public RecipeReviewInteractor(RecipeReviewOutputBoundary reviewPresenter, CommonUser user) {
         this.reviewPresenter = reviewPresenter;
+        this.user = user;
     }
 
     /**
-     * Executes the recipe review use case
+     * Executes the recipe review use case.
      * @param recipeReviewInputData the input data
      */
     public void execute(RecipeReviewInputData recipeReviewInputData) {
-
         final Recipe recipe = recipeReviewInputData.getRecipe();
-        // final String comment = recipeReviewInputData.getComment();
         final int rating = recipeReviewInputData.getRating();
+        // final String comment = recipeReviewInputData.getComment();
+
+        RecipeReviewOutputData recipeReviewOutputData;
 
         try {
-            user.reviewRecipe(recipe, rating);
+            user.reviewRecipe(recipe, rating, //comment);
             recipeReviewOutputData = new RecipeReviewOutputData(
                     recipe.getName(),
                     rating,
+                    // comment,
                     "Review added."
-            );
+            ),
             reviewPresenter.prepareSuccessView(recipeReviewOutputData);
         } catch (IllegalArgumentException e) {
             recipeReviewOutputData = new RecipeReviewOutputData(
                     recipe.getName(),
                     rating,
-                    "Failure in adding review."
+                    // comment,
+                    "Failure in adding review." + e.getMessage()
             );
-            reviewPresenter.prepareFailView("Failure in adding review.");
+            reviewPresenter.prepareFailView("Review could not be added.");
         }
     }
 

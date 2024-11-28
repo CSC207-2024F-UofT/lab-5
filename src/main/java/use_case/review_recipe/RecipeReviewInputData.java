@@ -11,16 +11,14 @@ import java.util.Set;
 public class RecipeReviewInputData {
     private final Recipe recipe;
     private final String name;
-
-    private final String comment;
     private final int rating;
+    private final String comment;
 
     public RecipeReviewInputData(Recipe recipe, String comment, int rating) {
         this.recipe = recipe;
         this.name = recipe.getName();
-
-        this.comment = comment;
         this.rating = rating;
+        this.comment = comment;
     }
 
     public Recipe getRecipe() {
@@ -31,11 +29,11 @@ public class RecipeReviewInputData {
         return name;
     }
 
-    public String getComment() {
-        return comment;
-    }
-
     public int getRating() {
         return rating;
+    }
+
+    public String getComment() {
+        return comment;
     }
 }
