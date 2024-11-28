@@ -21,6 +21,13 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import interface_adapter.recipe_review.RecipeReviewController;
+import interface_adapter.recipe_review.RecipeReviewPresenter;
+import interface_adapter.recipe_review.RecipeReviewState;
+import interface_adapter.recipe_review.RecipeReviewViewModel;
+import use_case.review_recipe.RecipeReviewInteractor;
+import use_case.review_recipe.RecipeReviewOutputBoundary;
+
 /**
  * The View for the user's recipe history.
  */

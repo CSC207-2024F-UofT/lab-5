@@ -2,10 +2,7 @@ package interface_adapter.recipe_review;
 
 
 import interface_adapter.ViewModel;
-import interface_adapter.recipe_search.RecipeSearchState;
-import view.RecipeHistoryView;
-
-import java.beans.PropertyChangeListener;
+import interface_adapter.recipe_review.RecipeReviewState;
 
 public class RecipeReviewViewModel extends ViewModel<RecipeReviewState> {
     public RecipeReviewViewModel() {
@@ -13,8 +10,11 @@ public class RecipeReviewViewModel extends ViewModel<RecipeReviewState> {
         setState(new RecipeReviewState());
     }
 
-    @Override
-    public void addPropertyChangeListener(RecipeHistoryView recipeHistoryView) {
-        super.addPropertyChangeListener(recipeHistoryView);
+    public RecipeReviewState getState() {
+        return (RecipeReviewState) super.getState();
+    }
+
+    public void setState(RecipeReviewState state) {
+        super.setState(state);
     }
 }

@@ -14,12 +14,12 @@ public class RecipeReviewPresenter implements RecipeReviewOutputBoundary {
     }
 
     /**
-     * @param outputData the output data
+     * @param outputData the output data.
      */
     @Override
     public void prepareSuccessView(RecipeReviewOutputData outputData) {
         final RecipeReviewState recipeReviewState = recipeReviewViewModel.getState();
-        recipeReviewState.setRecipeReview(recipeReviewViewModel.setState(recipeReviewState));
+        recipeReviewViewModel.setState(recipeReviewState);
     }
 
     /**
