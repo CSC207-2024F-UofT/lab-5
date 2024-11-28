@@ -9,44 +9,26 @@ import java.util.Set;
  */
 
 public class RecipeReviewInputData {
-    private String name;
-    private int servings;
-    private int calories;
-    private Map<String, Integer> nutrients;
-    private Set<String> tags;
+    private final Recipe recipe;
+    private final String name;
 
-    private String comment;
-    private int rating;
+    private final String comment;
+    private final int rating;
 
     public RecipeReviewInputData(Recipe recipe, String comment, int rating) {
+        this.recipe = recipe;
         this.name = recipe.getName();
-        this.servings = recipe.getServings();
-        this.calories = recipe.getCalories();
-        this.nutrients = recipe.getNutrients();
-        this.tags = recipe.getTags();
 
         this.comment = comment;
         this.rating = rating;
     }
 
+    public Recipe getRecipe() {
+        return recipe;
+    }
+
     public String getName() {
         return name;
-    }
-
-    public int getServings() {
-        return servings;
-    }
-
-    public int getCalories() {
-        return calories;
-    }
-
-    public Map<String, Integer> getNutrients() {
-        return nutrients;
-    }
-
-    public Set<String> getTags() {
-        return tags;
     }
 
     public String getComment() {

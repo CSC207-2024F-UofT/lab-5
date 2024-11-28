@@ -30,18 +30,23 @@ public class RecipeHistoryView extends JPanel implements ActionListener, Propert
     private final String viewName = "Recipe History";
 
     public RecipeHistoryView(CommonUser user) {
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         final JLabel title = new JLabel(viewName);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        this.add(title);
 
         // iterate through each saved recipe and display it
         final Map<Recipe, Integer> recipes = user.getRecipes();
-        for (int i = 0; i <= recipes.size(); i++) {
-            final JPanel recipe = new JPanel();
-            final JLabel name = new JLabel("Recipe Name");
-            final JButton link;
-            link = new JButton("Click to view");
-            recipe.add(name);
-            recipe.add(link);
+        for (Map.Entry<Recipe, Integer> entry : recipes.entrySet()) {
+            final Recipe recipeKey = entry.getKey();
+
+            final JPanel recipePanel = new JPanel();
+            recipePanel.setLayout(new BoxLayout(recipePanel, BoxLayout.Y_AXIS));
+
+            final JLabel name = new JLabel(recipeKey.getName());
+            final JButton link = new JButton("View Recipe");
+            recipePanel.add(name);
+            recipePanel.add(link);
         }
     }
 

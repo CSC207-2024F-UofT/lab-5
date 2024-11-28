@@ -36,4 +36,13 @@ public class CommonUser implements User {
         recipes.put(recipe, amount);
     }
 
+    public void reviewRecipe(Recipe recipe, int rating) {
+        if (recipes.containsKey(recipe)) {
+            recipes.put(recipe, rating);
+        }
+        else {
+            throw new IllegalArgumentException("Recipe not found");
+        }
+    }
 }
+
