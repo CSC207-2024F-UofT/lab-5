@@ -22,10 +22,13 @@ import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.logout.LogoutPresenter;
+import interface_adapter.recipe_details.RecipeDetailsViewModel;
 import interface_adapter.recipe_search.RecipeSearchController;
 import interface_adapter.recipe_search.RecipeSearchPresenter;
 import interface_adapter.recipe_search.RecipeSearchViewModel;
 import interface_adapter.saved_recipes.SavedrecipesViewModel;
+import interface_adapter.search_results.SearchResultsController;
+import interface_adapter.search_results.SearchResultsPresenter;
 import interface_adapter.search_results.SearchResultsViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
@@ -45,6 +48,9 @@ import use_case.profile.ProfileOutputBoundary;
 import use_case.recipe_search.RecipeSearchInputBoundary;
 import use_case.recipe_search.RecipeSearchInteractor;
 import use_case.recipe_search.RecipeSearchOutputBoundary;
+import use_case.search_results.SearchResultsInputBoundary;
+import use_case.search_results.SearchResultsInteractor;
+import use_case.search_results.SearchResultsOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
@@ -87,6 +93,7 @@ public class AppBuilder {
     private ForgotPasswordViewModel forgotPasswordViewModel;
     private ForgotPasswordView forgotPasswordView;
     private SavedrecipesViewModel savedrecipesViewModel;
+    private RecipeDetailsViewModel recipeDetailsViewModel;
     private SavedrecipesView savedrecipesView;
 
     public AppBuilder() {
@@ -237,7 +244,16 @@ public class AppBuilder {
         return this;
     }
 
-    // addSearchResultsUseCase()
+    public AppBuilder addSearchResultsUseCase() {
+        final SearchResultsOutputBoundary searchResultsOutputBoundary = new SearchResultsPresenter(
+                searchResultsViewModel, recipeDetailsViewModel, viewManagerModel, recipeSearchViewModel);
+        final SearchResultsInputBoundary resultsInteractor = new SearchResultsInteractor(
+                searchResultsOutputBoundary);
+
+        final SearchResultsController controller = new SearchResultsController(resultsInteractor);
+        searchResultsView.setSearchResultsController(controller);
+        return this;
+    }
 
     /**
      * Creates the JFrame for the application and initially sets the SignupView to be displayed.
