@@ -3,7 +3,7 @@ package app;
 import javax.swing.JFrame;
 
 /**
- * The Main class of our application.
+ * The Main class of our applicatioon.
  */
 public class Main {
     /**
@@ -14,14 +14,14 @@ public class Main {
         final AppBuilder appBuilder = new AppBuilder();
         // TODO: add the Logout Use Case to the app using the appBuilder
         final JFrame application = appBuilder
-                                            .addLoginView()
-                                            .addSignupView()
                                             .addLoggedInView()
+                                            .addSignupView()
+                                            .addLoginView()
                                             .addSignupUseCase()
                                             .addLoginUseCase()
                                             .addChangePasswordUseCase()
+                                            .addLogoutUseCase()
                                             .build();
-
         application.pack();
         application.setVisible(true);
     }
