@@ -27,7 +27,9 @@ public class RecipeReviewPresenter implements RecipeReviewOutputBoundary {
      * */
     @Override
     public void prepareFailView(String errorMessage) {
-
+        final RecipeReviewState recipeReviewState = recipeReviewViewModel.getState();
+        recipeReviewState.setError(errorMessage);
+        recipeReviewViewModel.firePropertyChanged();
     }
 
     /**

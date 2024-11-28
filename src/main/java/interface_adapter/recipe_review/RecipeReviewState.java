@@ -9,6 +9,7 @@ public class RecipeReviewState {
     private Recipe recipe;
     private String name;
     private int rating;
+    private String error;
 
     public Recipe getRecipe() {
         return recipe;
@@ -34,4 +35,11 @@ public class RecipeReviewState {
         this.rating = rating;
     }
 
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
+    }
 }

@@ -25,17 +25,14 @@ public class RecipeDetailsView extends JPanel implements ActionListener, Propert
     private final JLabel rating = new JLabel("Rating:");
     private final JTextField ratingInputField = new JTextField(15);
 
-    private final JLabel comment = new JLabel("Comment:");
-    private final JTextField commentInputField = new JTextField(15);
-
     private final JButton saveButton = new JButton("Save");
 
     public RecipeDetailsView(RecipeDetailsViewModel recipeDetailsViewModel) {
         this.recipeDetailsViewModel = recipeDetailsViewModel;
         recipeDetailsViewModel.addPropertyChangeListener(this);
 
-        //final JLabel title = new JLabel(RecipeDetailsViewModel.TITLE_LABEL);
-        //title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        // final JLabel title = new JLabel(RecipeDetailsViewModel.TITLE_LABEL);
+        // title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // Title
         final JLabel title = new JLabel("Recipe Details");
@@ -76,16 +73,10 @@ public class RecipeDetailsView extends JPanel implements ActionListener, Propert
         nutrientsPanel.setLayout(new BoxLayout(nutrientsPanel, BoxLayout.Y_AXIS));
         nutrientsPanel.setBorder(BorderFactory.createTitledBorder("Nutrients"));
 
-
         // panel for rating
         final JPanel ratingInfo = new JPanel();
         ratingInfo.add(rating);
         ratingInfo.add(ratingInputField);
-
-        // panel for comment
-        final JPanel commentInfo = new JPanel();
-        commentInfo.add(comment);
-        commentInfo.add(commentInputField);
 
         // Set Layout
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -98,7 +89,6 @@ public class RecipeDetailsView extends JPanel implements ActionListener, Propert
         this.add(urlLabel);
         this.add(nutrientsPanel);
         this.add(ratingInfo);
-        this.add(commentInfo);
         this.add(saveButton);
     }
 
@@ -130,5 +120,4 @@ public class RecipeDetailsView extends JPanel implements ActionListener, Propert
         // Make the frame visible
         frame.setVisible(true);
     }
-
 }
