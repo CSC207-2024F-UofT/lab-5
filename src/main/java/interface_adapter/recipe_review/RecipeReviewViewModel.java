@@ -1,8 +1,6 @@
 package interface_adapter.recipe_review;
 
-
 import interface_adapter.ViewModel;
-import interface_adapter.recipe_review.RecipeReviewState;
 
 public class RecipeReviewViewModel extends ViewModel<RecipeReviewState> {
     public RecipeReviewViewModel() {

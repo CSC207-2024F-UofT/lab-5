@@ -13,7 +13,7 @@ public class RecipeReviewInputData {
     private final String name;
     private final int rating;
 
-    public RecipeReviewInputData(Recipe recipe, String comment, int rating) {
+    public RecipeReviewInputData(Recipe recipe, int rating) {
         this.recipe = recipe;
         this.name = recipe.getName();
         this.rating = rating;

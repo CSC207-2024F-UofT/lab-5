@@ -5,8 +5,8 @@ import use_case.review_recipe.RecipeReviewOutputBoundary;
 import use_case.review_recipe.RecipeReviewOutputData;
 
 public class RecipeReviewPresenter implements RecipeReviewOutputBoundary {
-    private RecipeReviewViewModel recipeReviewViewModel;
-    private ViewManagerModel viewManagerModel;
+    private final RecipeReviewViewModel recipeReviewViewModel;
+    private final ViewManagerModel viewManagerModel;
 
     public RecipeReviewPresenter(RecipeReviewViewModel recipeReviewViewModel, ViewManagerModel viewManagerModel) {
         this.recipeReviewViewModel = recipeReviewViewModel;
@@ -24,7 +24,7 @@ public class RecipeReviewPresenter implements RecipeReviewOutputBoundary {
 
     /**
      * @param errorMessage the explanation of the failure
-     */
+     * */
     @Override
     public void prepareFailView(String errorMessage) {
 
