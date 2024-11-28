@@ -1,7 +1,9 @@
 package interface_adapter.logout;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.change_password.LoggedInState;
 import interface_adapter.change_password.LoggedInViewModel;
+import interface_adapter.login.LoginState;
 import interface_adapter.login.LoginViewModel;
 import use_case.logout.LogoutOutputBoundary;
 import use_case.logout.LogoutOutputData;
@@ -11,18 +13,32 @@ import use_case.logout.LogoutOutputData;
  */
 public class LogoutPresenter implements LogoutOutputBoundary {
 
-    private LoggedInViewModel loggedInViewModel;
-    private ViewManagerModel viewManagerModel;
-    private LoginViewModel loginViewModel;
+    private final LoggedInViewModel loggedInViewModel;
+    private final ViewManagerModel viewManagerModel;
+    private final LoginViewModel loginViewModel;
 
     public LogoutPresenter(ViewManagerModel viewManagerModel,
                           LoggedInViewModel loggedInViewModel,
                            LoginViewModel loginViewModel) {
         // TODO: assign to the three instance variables.
+        this.loggedInViewModel = loggedInViewModel;
+        this.viewManagerModel = viewManagerModel;
+        this.loginViewModel = loginViewModel;
     }
 
     @Override
     public void prepareSuccessView(LogoutOutputData response) {
+        final LoggedInState loggedInState = this.loggedInViewModel.getState();
+        loggedInState.setUsername("");
+        this.loggedInViewModel.setState(loggedInState);
+        this.loggedInViewModel.firePropertyChanged();
+
+        final LoginState loginState = this.loginViewModel.getState();
+        loginState.setUsername("");
+        loginState.setPassword("");
+        this.loginViewModel.setState(loginState);
+        this.loginViewModel.firePropertyChanged();
+
         // We need to switch to the login view, which should have
         // an empty username and password.
 
