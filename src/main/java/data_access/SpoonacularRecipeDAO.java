@@ -176,6 +176,7 @@ public class SpoonacularRecipeDAO implements RecipeDAO, FilterRecipesDataAccessI
         final StringBuilder urlBuilder = new StringBuilder(endpoint);
         urlBuilder.append("?apiKey=" + API_KEY);
         urlBuilder.append("&includeIngredients=").append(ingredientsQuery);
+        urlBuilder.append("&fillIngredients=true");
 
         if (!"Any".equals(diet)) {
             urlBuilder.append("&diet=").append(diet);
@@ -204,22 +205,10 @@ public class SpoonacularRecipeDAO implements RecipeDAO, FilterRecipesDataAccessI
                     // call the API again to retrieve the full recipe object
                     final int id = recipeJson.getInt("id");
                     final JSONObject completeRecipe = getCompleteRecipe(id);
-//                    String recipeApiUrl = BASE_URL + "/recipes/" + id + "/information?apiKey=" + API_KEY + "&includeNutrition=false";
-//                    Request recipeRequest = new Request.Builder()
-//                            .url(recipeApiUrl)
-//                            .build();
-//                    Response recipeResponse = client.newCall(recipeRequest).execute();
-//                    JSONObject completeRecipe = null;
-//                    if (recipeResponse.isSuccessful() && recipeResponse.body() != null) {
-//                        String jsonRecipeResponse = recipeResponse.body().string();
-//                        completeRecipe = new JSONObject(jsonRecipeResponse);
-//                    } else {
-//                        System.out.println("Request failed with code: " + response.code());
-//                    }
 
                     // for testing purposes
                     System.out.println(recipeJson.keySet());
-                    System.out.println(completeRecipe.keySet());
+                    // System.out.println(completeRecipe.keySet());
                     System.out.println(recipeJson.getInt("missedIngredientCount"));
                     String title = recipeJson.getString("title");
                     // String recipeUrl = BASE_URL + "/recipes/" + recipeJson.getInt("id") + "/information"; // URL to recipe details

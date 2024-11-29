@@ -56,8 +56,8 @@ public class RecipeView extends JFrame {
                 String ingredientsText = ingredientInput.getText();
                 List<String> ingredients = Arrays.asList(ingredientsText.split(","));
 
-                final List<Recipe> recipes = controller.getRecipes(ingredients);
-                // final List<Recipe> recipes = applyFilters();
+                // final List<Recipe> recipes = controller.getRecipes(ingredients);
+                final List<Recipe> recipes = applyFilters();
 
                 // I commented this out for now and instantiated the list of recipes differently to make it clickable;
                 // feel free to change it as needed
