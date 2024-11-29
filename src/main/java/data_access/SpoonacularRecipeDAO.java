@@ -125,6 +125,43 @@ public class SpoonacularRecipeDAO implements RecipeDAO, FilterRecipesDataAccessI
         return recipes;
     }
 
+/*    private JSONArray searchByIngredients(List<String> ingredients) {
+        final String ingredientsQuery = ingredientsToString(ingredients);
+        String endpoint = "/recipes/findByIngredients";
+        String url = BASE_URL + endpoint + "?apiKey=" + API_KEY + "&ingredients=" + ingredientsQuery + "&number=5";
+
+    }*/
+
+    private JSONObject getCompleteRecipe(int id) {
+        String recipeApiUrl = BASE_URL + "/recipes/" + id + "/information?apiKey=" + API_KEY + "&includeNutrition=false";
+        Request recipeRequest = new Request.Builder()
+                .url(recipeApiUrl)
+                .build();
+        final Response recipeResponse;
+        try {
+            recipeResponse = client.newCall(recipeRequest).execute();
+        }
+        catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        JSONObject completeRecipe = null;
+        if (recipeResponse.isSuccessful() && recipeResponse.body() != null) {
+            final String jsonRecipeResponse;
+            try {
+                jsonRecipeResponse = recipeResponse.body().string();
+            }
+            catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            completeRecipe = new JSONObject(jsonRecipeResponse);
+        }
+        else {
+            System.out.println("Request failed with code: " + recipeResponse.code());
+        }
+        return completeRecipe;
+
+    }
+
     /**
      * Also searches for recipes but with some extra filters.
      * @param ingredients list of string ingredients
@@ -165,19 +202,20 @@ public class SpoonacularRecipeDAO implements RecipeDAO, FilterRecipesDataAccessI
                     JSONObject recipeJson = results.getJSONObject(i);
 
                     // call the API again to retrieve the full recipe object
-                    int id = recipeJson.getInt("id");
-                    String recipeApiUrl = BASE_URL + "/recipes/" + id + "/information?apiKey=" + API_KEY + "&includeNutrition=false";
-                    Request recipeRequest = new Request.Builder()
-                            .url(recipeApiUrl)
-                            .build();
-                    Response recipeResponse = client.newCall(recipeRequest).execute();
-                    JSONObject completeRecipe = null;
-                    if (recipeResponse.isSuccessful() && recipeResponse.body() != null) {
-                        String jsonRecipeResponse = recipeResponse.body().string();
-                        completeRecipe = new JSONObject(jsonRecipeResponse);
-                    } else {
-                        System.out.println("Request failed with code: " + response.code());
-                    }
+                    final int id = recipeJson.getInt("id");
+                    final JSONObject completeRecipe = getCompleteRecipe(id);
+//                    String recipeApiUrl = BASE_URL + "/recipes/" + id + "/information?apiKey=" + API_KEY + "&includeNutrition=false";
+//                    Request recipeRequest = new Request.Builder()
+//                            .url(recipeApiUrl)
+//                            .build();
+//                    Response recipeResponse = client.newCall(recipeRequest).execute();
+//                    JSONObject completeRecipe = null;
+//                    if (recipeResponse.isSuccessful() && recipeResponse.body() != null) {
+//                        String jsonRecipeResponse = recipeResponse.body().string();
+//                        completeRecipe = new JSONObject(jsonRecipeResponse);
+//                    } else {
+//                        System.out.println("Request failed with code: " + response.code());
+//                    }
 
                     // for testing purposes
                     System.out.println(recipeJson.keySet());
