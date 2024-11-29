@@ -55,7 +55,9 @@ public class RecipeView extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String ingredientsText = ingredientInput.getText();
                 List<String> ingredients = Arrays.asList(ingredientsText.split(","));
-                List<Recipe> recipes = controller.getRecipes(ingredients);
+
+                final List<Recipe> recipes = controller.getRecipes(ingredients);
+                // final List<Recipe> recipes = applyFilters();
 
                 // I commented this out for now and instantiated the list of recipes differently to make it clickable;
                 // feel free to change it as needed
@@ -129,21 +131,22 @@ public class RecipeView extends JFrame {
     }
 
     // applying the filters
-    private void applyFilters() {
+    private List<Recipe> applyFilters() {
         final String enteredIngredients = ingredientInput.getText();
         final List<String> ingredients = List.of(enteredIngredients.split(","));
 
-        final String selectedDiet = Objects.requireNonNull(dietComboBox.getSelectedItem()).toString();
-        final String selectedCuisine = Objects.requireNonNull(cuisineComboBox.getSelectedItem()).toString();
+        final String selectedDiet = String.valueOf(dietComboBox.getSelectedItem());
+        final String selectedCuisine = String.valueOf(cuisineComboBox.getSelectedItem());
 
         final List<Recipe> recipesFiltered =
                 frDataAccessInterface.filterSearchRecipes(ingredients, selectedDiet, selectedCuisine);
+        return recipesFiltered;
 
-        listModel.clear();
-        for (Recipe recipe : recipesFiltered) {
-            listModel.addElement(recipe);
-        }
-        recipeList.setModel(listModel);
+        // listModel.clear();
+        // for (Recipe recipe : recipesFiltered) {
+        //     listModel.addElement(recipe);
+        // }
+        // recipeList.setModel(listModel);
     }
 
     // public void setFilterRecipesController(FilterRecipesController filterRecipesController) {

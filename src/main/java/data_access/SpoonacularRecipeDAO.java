@@ -88,6 +88,7 @@ public class SpoonacularRecipeDAO implements RecipeDAO, FilterRecipesDataAccessI
 
                     // for testing purposes
                     System.out.println(recipeJson.keySet());
+                    System.out.println(completeRecipe.keySet());
                     System.out.println(recipeJson.getInt("missedIngredientCount"));
                     String title = recipeJson.getString("title");
                     // String recipeUrl = BASE_URL + "/recipes/" + recipeJson.getInt("id") + "/information"; // URL to recipe details
@@ -156,58 +157,65 @@ public class SpoonacularRecipeDAO implements RecipeDAO, FilterRecipesDataAccessI
             if (response.isSuccessful() && response.body() != null) {
                 // Parse the JSON response
                 final String jsonResponse = response.body().string();
-                final JSONArray results = new JSONArray(jsonResponse);
+                final JSONObject jsonObject = new JSONObject(jsonResponse);
+                final JSONArray results = jsonObject.getJSONArray("results");
 
                 // Loop through the results and create Recipe objects
                 for (int i = 0; i < results.length(); i++) {
-                    final JSONObject recipeJson = results.getJSONObject(i);
+                    JSONObject recipeJson = results.getJSONObject(i);
 
                     // call the API again to retrieve the full recipe object
                     int id = recipeJson.getInt("id");
-                    //String recipeApiUrl = BASE_URL + "/recipes/" + "?apiKey=" + API_KEY + "/" + Integer.toString(id) + "/information";
                     String recipeApiUrl = BASE_URL + "/recipes/" + id + "/information?apiKey=" + API_KEY + "&includeNutrition=false";
-                    // String recipeApiUrl = "https://api.spoonacular.com/recipes/716429/information?includeNutrition=false";
                     Request recipeRequest = new Request.Builder()
                             .url(recipeApiUrl)
                             .build();
-                    JSONObject completeRecipe = null;
                     Response recipeResponse = client.newCall(recipeRequest).execute();
+                    JSONObject completeRecipe = null;
                     if (recipeResponse.isSuccessful() && recipeResponse.body() != null) {
                         String jsonRecipeResponse = recipeResponse.body().string();
                         completeRecipe = new JSONObject(jsonRecipeResponse);
-                    }
-                    else {
+                    } else {
                         System.out.println("Request failed with code: " + response.code());
                     }
 
-                    final String title = recipeJson.getString("title");
-                    // final String recipeUrl = BASE_URL + "/recipes/" + recipeJson.getInt("id") + "/information"; // URL to recipe details
-                    final String recipeUrl = recipeJson.getString("spoonacularSourceUrl");
-                    final JSONArray ingredientsJson = recipeJson.getJSONArray("usedIngredients");
-                    final String image = recipeJson.getString("image");
+                    // for testing purposes
+                    System.out.println(recipeJson.keySet());
+                    System.out.println(completeRecipe.keySet());
+                    System.out.println(recipeJson.getInt("missedIngredientCount"));
+                    String title = recipeJson.getString("title");
+                    // String recipeUrl = BASE_URL + "/recipes/" + recipeJson.getInt("id") + "/information"; // URL to recipe details
+                    final String recipeUrl = completeRecipe.getString("spoonacularSourceUrl");
+                    final JSONArray missedIngredientsJson = recipeJson.getJSONArray("missedIngredients");
+                    final JSONArray usedIngredientsJson = recipeJson.getJSONArray("usedIngredients");
+                    final JSONArray unusedIngredientsJson = recipeJson.getJSONArray("unusedIngredients");
+                    System.out.println(missedIngredientsJson); // for testing
+                    String image = recipeJson.getString("image");
 
                     // Collect ingredients from the JSON response
                     final List<Ingredient> recipeIngredients = new ArrayList<>();
-                    for (int j = 0; j < ingredientsJson.length(); j++) {
-                        recipeIngredients.add(new Ingredient(ingredientsJson.getJSONObject(j).getString("name"),
-                                ingredientsJson.getJSONObject(j).getDouble("amount"),
-                                ingredientsJson.getJSONObject(j).getString("unit")));
+                    for (int j = 0; j < usedIngredientsJson.length(); j++) {
+                        recipeIngredients.add(new Ingredient(usedIngredientsJson.getJSONObject(j).getString("name"),
+                                usedIngredientsJson.getJSONObject(j).getDouble("amount"),
+                                usedIngredientsJson.getJSONObject(j).getString("unit")));
+                    }
+                    for (int j = 0; j < missedIngredientsJson.length(); j++) {
+                        recipeIngredients.add(new Ingredient(missedIngredientsJson.getJSONObject(j).getString("name"),
+                                missedIngredientsJson.getJSONObject(j).getDouble("amount"),
+                                missedIngredientsJson.getJSONObject(j).getString("unit")));
                     }
 
                     // Create and add Recipe object to the list
-                    final Recipe recipe = new Recipe(title, recipeUrl, recipeIngredients, image);
+                    Recipe recipe = new Recipe(title, recipeUrl, recipeIngredients, image);
                     recipes.add(recipe);
                 }
-            }
-            else {
+            } else {
                 System.out.println("Request failed with code: " + response.code());
             }
-        }
-        catch (IOException exception) {
-            exception.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return recipes;
-
     }
 
     // hard-coded for now
