@@ -5,6 +5,7 @@ import entity.Recipe;
 import entity.User;
 import interface_adapter.RecipeController;
 import interface_adapter.filter_recipes.FilterRecipesController;
+import use_case.filter_recipes.FilterRecipesDataAccessInterface;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -26,15 +28,17 @@ public class RecipeView extends JFrame {
     private User user;
 
     // private final FilterRecipesController filterRecipesController;
-    private final SpoonacularRecipeDAO spoonacularRecipeDAO;
-    private final JComboBox<String> dietComboBox;
-    private final JComboBox<String> cuisineComboBox;
+    // private final SpoonacularRecipeDAO spoonacularRecipeDAO;
+    private FilterRecipesDataAccessInterface frDataAccessInterface;
+    private JComboBox<String> dietComboBox;
+    private JComboBox<String> cuisineComboBox;
 
     public RecipeView(RecipeController controller, User user) {
         this.controller = controller;
         this.user = user;
+        this.frDataAccessInterface = new SpoonacularRecipeDAO();
         // this.filterRecipesController = filterRecipesController;
-        this.spoonacularRecipeDAO = new SpoonacularRecipeDAO();
+        // this.spoonacularRecipeDAO = new SpoonacularRecipeDAO();
         // setFilterRecipesController(filterRecipesController);
 
         setTitle("Recipe Generator");
@@ -100,8 +104,13 @@ public class RecipeView extends JFrame {
         cuisineComboBox = new JComboBox<>();
 
         filterPanel.add(new JLabel("Diet:"));
+        final List<String> diets = frDataAccessInterface.getAvailableDiets();
+        populateDropdown(dietComboBox, diets);
         filterPanel.add(dietComboBox);
+
         filterPanel.add(new JLabel("Cuisine:"));
+        final List<String> cuisines = frDataAccessInterface.getAvailableCuisines();
+        populateDropdown(cuisineComboBox, cuisines);
         filterPanel.add(cuisineComboBox);
 
         add(filterPanel, BorderLayout.SOUTH);
@@ -109,29 +118,13 @@ public class RecipeView extends JFrame {
         dietComboBox.addActionListener(event -> applyFilters());
         cuisineComboBox.addActionListener(event -> applyFilters());
 
-        populateDropdowns();
-
         setVisible(true);
     }
 
-    // populating diet and cuisine dropdown menus
-    private void populateDropdowns() {
-        try {
-            // final List<String> diets = filterRecipesController.getAvailableDiets();
-            final List<String> diets = spoonacularRecipeDAO.getAvailableDiets();
-            dietComboBox.addItem("Any");
-            for (String diet : diets) {
-                dietComboBox.addItem(diet);
-            }
-
-            final List<String> cuisines = spoonacularRecipeDAO.getAvailableCuisines();
-            cuisineComboBox.addItem("Any");
-            for (String cuisine : cuisines) {
-                cuisineComboBox.addItem(cuisine);
-            }
-        } catch (Exception exception) {
-            JOptionPane.showMessageDialog(this,
-                    "Error loading filters: " + exception.getMessage());
+    private void populateDropdown(JComboBox<String> dropdown, List<String> stringList) {
+        dropdown.addItem("Any");
+        for (String item : stringList) {
+            dropdown.addItem(item);
         }
     }
 
@@ -144,7 +137,7 @@ public class RecipeView extends JFrame {
         final String selectedCuisine = Objects.requireNonNull(cuisineComboBox.getSelectedItem()).toString();
 
         final List<Recipe> recipesFiltered =
-                spoonacularRecipeDAO.filterSearchRecipes(ingredients, selectedDiet, selectedCuisine);
+                frDataAccessInterface.filterSearchRecipes(ingredients, selectedDiet, selectedCuisine);
 
         listModel.clear();
         for (Recipe recipe : recipesFiltered) {
