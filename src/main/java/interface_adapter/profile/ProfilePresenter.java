@@ -1,6 +1,7 @@
 package interface_adapter.profile;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.recipe_search.RecipeSearchViewModel;
 import interface_adapter.saved_recipes.SavedrecipesState;
 import interface_adapter.saved_recipes.SavedrecipesViewModel;
 import use_case.profile.ProfileOutputBoundary;
@@ -11,11 +12,13 @@ public class ProfilePresenter implements ProfileOutputBoundary {
     private final ProfileViewModel profileViewModel;
     private final SavedrecipesViewModel savedrecipesViewModel;
     private final ViewManagerModel viewManagerModel;
+    private final RecipeSearchViewModel recipeSearchViewModel;
 
-    public ProfilePresenter(SavedrecipesViewModel savedrecipesViewModel, ViewManagerModel viewManagerModel) {
+    public ProfilePresenter(SavedrecipesViewModel savedrecipesViewModel, ViewManagerModel viewManagerModel, RecipeSearchViewModel recipeSearchViewModel) {
         this.savedrecipesViewModel = savedrecipesViewModel;
         this.viewManagerModel = viewManagerModel;
         this.profileViewModel = new ProfileViewModel();
+        this.recipeSearchViewModel = recipeSearchViewModel;
     }
 
     public void prepareSuccessView(ProfileOutputData response) {
@@ -30,6 +33,11 @@ public class ProfilePresenter implements ProfileOutputBoundary {
 
     public void switchtoSavedrecipeView() {
         viewManagerModel.setState(savedrecipesViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
+    }
+
+    public void switchToRecipeSearchView() {
+        viewManagerModel.setState(recipeSearchViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
 }

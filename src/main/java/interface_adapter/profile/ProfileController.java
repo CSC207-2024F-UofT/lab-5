@@ -19,4 +19,8 @@ public class ProfileController {
     public void switchToSavedRecipesView() {
         this.profileInputBoundary.switchToSavedRecipesView();
     }
+
+    public void switchToRecipeSearchView() {
+        this.profileInputBoundary.switchToRecipeSearchView();
+    }
 }

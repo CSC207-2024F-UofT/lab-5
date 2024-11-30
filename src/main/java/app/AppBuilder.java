@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
 import data_access.InMemoryUserDataAccessObject;
+import data_access.RecipeDataAccessObject;
 import entity.CommonUserFactory;
 import entity.UserFactory;
 import interface_adapter.ForgotPassword.ForgotPasswordViewModel;
@@ -21,7 +22,14 @@ import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.logout.LogoutPresenter;
+import interface_adapter.recipe_details.RecipeDetailsViewModel;
+import interface_adapter.recipe_search.RecipeSearchController;
+import interface_adapter.recipe_search.RecipeSearchPresenter;
+import interface_adapter.recipe_search.RecipeSearchViewModel;
 import interface_adapter.saved_recipes.SavedrecipesViewModel;
+import interface_adapter.search_results.SearchResultsController;
+import interface_adapter.search_results.SearchResultsPresenter;
+import interface_adapter.search_results.SearchResultsViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
@@ -37,6 +45,12 @@ import use_case.logout.LogoutOutputBoundary;
 import use_case.profile.ProfileInputBoundary;
 import use_case.profile.ProfileInteractor;
 import use_case.profile.ProfileOutputBoundary;
+import use_case.recipe_search.RecipeSearchInputBoundary;
+import use_case.recipe_search.RecipeSearchInteractor;
+import use_case.recipe_search.RecipeSearchOutputBoundary;
+import use_case.search_results.SearchResultsInputBoundary;
+import use_case.search_results.SearchResultsInteractor;
+import use_case.search_results.SearchResultsOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
@@ -61,6 +75,8 @@ public class AppBuilder {
     private final ViewManagerModel viewManagerModel = new ViewManagerModel();
     private final ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
 
+    private final RecipeDataAccessObject recipeDataAccessObject = new RecipeDataAccessObject();
+
     // thought question: is the hard dependency below a problem?
     private final InMemoryUserDataAccessObject userDataAccessObject = new InMemoryUserDataAccessObject();
 
@@ -69,10 +85,15 @@ public class AppBuilder {
     private LoginViewModel loginViewModel;
     private ProfileViewModel profileViewModel;
     private ProfileView profileView;
+    private RecipeSearchViewModel recipeSearchViewModel;
+    private RecipeSearchView recipeSearchView;
+    private SearchResultsView searchResultsView;
+    private SearchResultsViewModel searchResultsViewModel;
     private LoginView loginView;
     private ForgotPasswordViewModel forgotPasswordViewModel;
     private ForgotPasswordView forgotPasswordView;
     private SavedrecipesViewModel savedrecipesViewModel;
+    private RecipeDetailsViewModel recipeDetailsViewModel;
     private SavedrecipesView savedrecipesView;
 
     public AppBuilder() {
@@ -126,6 +147,20 @@ public class AppBuilder {
         return this;
     }
 
+    public AppBuilder addRecipeSearchView() {
+        recipeSearchViewModel = new RecipeSearchViewModel();
+        recipeSearchView = new RecipeSearchView(recipeSearchViewModel);
+        cardPanel.add(recipeSearchView, recipeSearchView.getViewName());
+        return this;
+    }
+
+    public AppBuilder addSearchResultsView() {
+        searchResultsViewModel = new SearchResultsViewModel();
+        searchResultsView = new SearchResultsView(searchResultsViewModel);
+        cardPanel.add(searchResultsView, searchResultsView.getViewName());
+        return this;
+    }
+
     /**
      * Adds the Signup Use Case to the application.
      * @return this builder
@@ -142,7 +177,7 @@ public class AppBuilder {
     }
 
     public AppBuilder addProfileUseCase() {
-        final ProfileOutputBoundary profileOutputBoundary = new ProfilePresenter(savedrecipesViewModel, viewManagerModel);
+        final ProfileOutputBoundary profileOutputBoundary = new ProfilePresenter(savedrecipesViewModel, viewManagerModel, recipeSearchViewModel);
         final ProfileInputBoundary userProfileInteractor = new ProfileInteractor(profileOutputBoundary);
 
         final ProfileController controller = new ProfileController(userProfileInteractor);
@@ -195,6 +230,28 @@ public class AppBuilder {
 
         final LogoutController logoutController = new LogoutController(logoutInteractor);
         profileView.setLogoutController(logoutController);
+        return this;
+    }
+
+    public AppBuilder addSearchUseCase() {
+        final RecipeSearchOutputBoundary recipeSearchOutputBoundary = new RecipeSearchPresenter(
+                recipeSearchViewModel, searchResultsViewModel, viewManagerModel, profileViewModel);
+        final RecipeSearchInputBoundary searchInteractor = new RecipeSearchInteractor(
+                recipeDataAccessObject, recipeSearchOutputBoundary);
+
+        final RecipeSearchController controller = new RecipeSearchController(searchInteractor);
+        recipeSearchView.setSearchController(controller);
+        return this;
+    }
+
+    public AppBuilder addSearchResultsUseCase() {
+        final SearchResultsOutputBoundary searchResultsOutputBoundary = new SearchResultsPresenter(
+                searchResultsViewModel, recipeDetailsViewModel, viewManagerModel, recipeSearchViewModel);
+        final SearchResultsInputBoundary resultsInteractor = new SearchResultsInteractor(
+                searchResultsOutputBoundary);
+
+        final SearchResultsController controller = new SearchResultsController(resultsInteractor);
+        searchResultsView.setSearchResultsController(controller);
         return this;
     }
 

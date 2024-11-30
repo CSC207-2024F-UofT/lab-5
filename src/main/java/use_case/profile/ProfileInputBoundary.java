@@ -10,4 +10,6 @@ public interface ProfileInputBoundary {
      * Executes the switch to login view use case.
      */
     void switchToSavedRecipesView();
+
+    void switchToRecipeSearchView();
 }

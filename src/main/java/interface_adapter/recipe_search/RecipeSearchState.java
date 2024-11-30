@@ -11,6 +11,7 @@ public class RecipeSearchState {
     private String proteinMax = "";
     private String fatMin = "";
     private String fatMax = "";
+    private String errorMessage;
 
     public String getRecipeName() {
         return recipeName;
@@ -68,7 +69,7 @@ public class RecipeSearchState {
         this.proteinMax = proteinMax;
     }
 
-    public String getfatMin() {
+    public String getFatMin() {
         return this.fatMin;
     }
 
@@ -76,11 +77,19 @@ public class RecipeSearchState {
         this.fatMin = fatMin;
     }
 
-    public String getfatMax() {
+    public String getFatMax() {
         return this.fatMax;
     }
 
     public void setFatMax(String fatMax) {
         this.fatMax = fatMax;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
     }
 }

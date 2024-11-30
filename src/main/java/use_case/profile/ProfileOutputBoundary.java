@@ -7,4 +7,6 @@ public interface ProfileOutputBoundary {
     void prepareSuccessView(ProfileOutputData outputData);
 
     void switchtoSavedrecipeView();
+
+    void switchToRecipeSearchView();
 }
