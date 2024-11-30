@@ -49,7 +49,6 @@ public class SavedrecipesView extends JPanel implements PropertyChangeListener {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         this.add(title);
-        this.add(usernamePanel);
         this.add(backButtonPanel);
 
         recipeListPanel = new JPanel();

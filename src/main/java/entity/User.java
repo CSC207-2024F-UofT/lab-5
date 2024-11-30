@@ -21,4 +21,6 @@ public interface User {
 
     Map<Recipe, Integer> getRecipes();
 
+    void addRecipe(Recipe recipe, Integer amount);
+
 }
