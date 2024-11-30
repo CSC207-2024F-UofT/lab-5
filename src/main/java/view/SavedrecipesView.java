@@ -1,11 +1,14 @@
 package view;
 
 import entity.Recipe;
+import interface_adapter.saved_recipes.SavedrecipesController;
 import interface_adapter.saved_recipes.SavedrecipesState;
 import interface_adapter.saved_recipes.SavedrecipesViewModel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.HashMap;
@@ -24,6 +27,7 @@ public class SavedrecipesView extends JPanel implements PropertyChangeListener {
 
     private final JPanel recipeListPanel;
     private final JScrollPane scrollPane;
+    private SavedrecipesController savedrecipesController;
 
     public SavedrecipesView(SavedrecipesViewModel savedrecipesViewModel) {
         this.savedrecipesViewModel = savedrecipesViewModel;
@@ -54,6 +58,18 @@ public class SavedrecipesView extends JPanel implements PropertyChangeListener {
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
         this.add(scrollPane);
+
+        backButton.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(backButton)) {
+                            final SavedrecipesState currentState = savedrecipesViewModel.getState();
+
+                            savedrecipesController.switchToProfileView(currentState.getUsername());
+                        }
+                    }
+                }
+        );
     }
 
     public void populateRecipeList(Map<Recipe, Integer> recipesWithRatings) {
@@ -97,6 +113,10 @@ public class SavedrecipesView extends JPanel implements PropertyChangeListener {
 
     public String getViewName() {
         return viewName;
+    }
+
+    public void setSavedrecipesController(SavedrecipesController savedrecipesController) {
+        this.savedrecipesController = savedrecipesController;
     }
     //Test fuction//
     public static void test() {

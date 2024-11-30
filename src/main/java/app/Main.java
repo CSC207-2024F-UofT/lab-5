@@ -26,6 +26,7 @@ public class Main {
                                                 .addProfileUseCase()
                                                 .addLogoutUseCase()
                                                 .addSearchUseCase()
+                                                .addSavedrecipesUseCase()
                                                 .build();
 
         application.pack();

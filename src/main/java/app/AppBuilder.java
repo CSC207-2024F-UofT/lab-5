@@ -25,6 +25,8 @@ import interface_adapter.logout.LogoutPresenter;
 import interface_adapter.recipe_search.RecipeSearchController;
 import interface_adapter.recipe_search.RecipeSearchPresenter;
 import interface_adapter.recipe_search.RecipeSearchViewModel;
+import interface_adapter.saved_recipes.SavedrecipesController;
+import interface_adapter.saved_recipes.SavedrecipesPresenter;
 import interface_adapter.saved_recipes.SavedrecipesViewModel;
 import interface_adapter.search_results.SearchResultsViewModel;
 import interface_adapter.signup.SignupController;
@@ -45,6 +47,9 @@ import use_case.profile.ProfileOutputBoundary;
 import use_case.recipe_search.RecipeSearchInputBoundary;
 import use_case.recipe_search.RecipeSearchInteractor;
 import use_case.recipe_search.RecipeSearchOutputBoundary;
+import use_case.saved_recipes.SavedRecipeInputBoundary;
+import use_case.saved_recipes.SavedRecipeInteractor;
+import use_case.saved_recipes.SavedRecipeOutputBoundry;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
@@ -171,7 +176,7 @@ public class AppBuilder {
 
     public AppBuilder addProfileUseCase() {
         final ProfileOutputBoundary profileOutputBoundary = new ProfilePresenter(savedrecipesViewModel, viewManagerModel, recipeSearchViewModel);
-        final ProfileInputBoundary userProfileInteractor = new ProfileInteractor(profileOutputBoundary);
+        final ProfileInputBoundary userProfileInteractor = new ProfileInteractor(profileOutputBoundary, userDataAccessObject);
 
         final ProfileController controller = new ProfileController(userProfileInteractor);
         profileView.setProfileController(controller);
@@ -190,6 +195,16 @@ public class AppBuilder {
 
         final LoginController loginController = new LoginController(loginInteractor);
         loginView.setLoginController(loginController);
+        return this;
+    }
+
+    public AppBuilder addSavedrecipesUseCase() {
+        final SavedRecipeOutputBoundry savedRecipeOutputBoundry = new SavedrecipesPresenter(savedrecipesViewModel,
+                profileViewModel, viewManagerModel);
+        final SavedRecipeInputBoundary userSavedRecipeInteractor = new SavedRecipeInteractor(savedRecipeOutputBoundry);
+
+        final SavedrecipesController savedrecipesController = new SavedrecipesController(userSavedRecipeInteractor);
+        savedrecipesView.setSavedrecipesController(savedrecipesController);
         return this;
     }
 
