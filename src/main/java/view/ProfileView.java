@@ -146,7 +146,9 @@ public class ProfileView extends JPanel implements PropertyChangeListener {
 
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
-                        profileController.switchToSavedRecipesView();
+                        final ProfileState currentState = profileViewModel.getState();
+
+                        profileController.switchToSavedRecipesView(currentState.getUsername());
                     }
                 }
         );

@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SavedrecipesState {
-    private String username = "";
+    private String username;
     private Map<Recipe, Integer> recipes = new HashMap<>();
 
     public SavedrecipesState(SavedrecipesState copy) {

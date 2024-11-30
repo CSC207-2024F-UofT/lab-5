@@ -45,6 +45,7 @@ public class SavedrecipesView extends JPanel implements PropertyChangeListener {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         this.add(title);
+        this.add(usernamePanel);
         this.add(backButtonPanel);
 
         recipeListPanel = new JPanel();
@@ -81,6 +82,7 @@ public class SavedrecipesView extends JPanel implements PropertyChangeListener {
 
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("state")) {
             final SavedrecipesState state = (SavedrecipesState) evt.getNewValue();
@@ -182,4 +184,5 @@ public class SavedrecipesView extends JPanel implements PropertyChangeListener {
         frame.add(savedrecipesView);
         frame.setVisible(true);
     }
+
 }

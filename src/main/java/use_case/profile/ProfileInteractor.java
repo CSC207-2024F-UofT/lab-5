@@ -1,6 +1,7 @@
 package use_case.profile;
 
 import entity.Recipe;
+import entity.User;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,14 +13,11 @@ public class ProfileInteractor implements ProfileInputBoundary {
         this.userPresenter = profileOutputBoundary;
     }
 
-    public void execute(ProfileInputData profileInputData) {
-        final Map<Recipe, Integer> map = new HashMap<>();
-        final ProfileOutputData profileOutputData = new ProfileOutputData(map, false);
-        userPresenter.prepareSuccessView(profileOutputData);
-    }
-
-    public void switchToSavedRecipesView() {
-        userPresenter.switchtoSavedrecipeView();
+    public void switchToSavedRecipesView(ProfileInputData profileInputData) {
+        final String username = profileInputData.getUsername();
+        final Map<Recipe, Integer> savedRecipes = new HashMap<>();
+        final ProfileOutputData profileOutputData = new ProfileOutputData(username, savedRecipes, false);
+        userPresenter.switchtoSavedrecipeView(profileOutputData);
     }
 
     public void switchToRecipeSearchView() {
