@@ -14,7 +14,7 @@ import java.util.List;
 
 public class ViewNutritionDataAccessImpl implements ViewNutritionDataAccessInterface {
     private static final String BASE_URL = "https://api.spoonacular.com";
-    private static final String API_KEY = "5d06ae7be18746aaa4d1f1e5877f4450";
+    private static final String API_KEY = "5fcf2eef76af4e6893959ceefae0a087";
 
     @Override
     public List<Nutrition> getNutritionDataForRecipe(int recipeId) {
