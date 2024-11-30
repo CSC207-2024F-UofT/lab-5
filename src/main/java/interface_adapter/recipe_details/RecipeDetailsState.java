@@ -5,5 +5,4 @@ package interface_adapter.recipe_details;
  */
 public class RecipeDetailsState {
     private int rating;
-    private String comment = "";
 }

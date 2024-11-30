@@ -35,8 +35,7 @@ public class RecipeReviewInteractor implements RecipeReviewInputBoundary {
             reviewPresenter.prepareSuccessView(recipeReviewOutputData);
         }
         catch (IllegalArgumentException e) {
-            recipeReviewOutputData = new RecipeReviewOutputData(
-                    recipe.getName(),
+            recipeReviewOutputData = new RecipeReviewOutputData(recipe.getName(),
                     rating,
                     "Failure in adding review." + e.getMessage()
             );
