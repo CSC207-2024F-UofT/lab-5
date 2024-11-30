@@ -27,19 +27,19 @@ public class RecipeSearchView extends JPanel implements ActionListener, Property
     private final JTextField recipeInputField = new JTextField(15);
     private final JLabel recipeErrorField = new JLabel();
 
-    private final JLabel calories = new JLabel("Calories:");
+    private final JLabel calories = new JLabel("Calories Range:");
     private final JTextField caloriesMaxInputField = new JTextField(15);
     private final JTextField caloriesMinInputField = new JTextField(15);
 
-    private final JLabel carbs = new JLabel("Carbohydrates:");
+    private final JLabel carbs = new JLabel("Carbohydrates Range:");
     private final JTextField carbsMaxInputField = new JTextField(15);
     private final JTextField carbsMinInputField = new JTextField(15);
 
-    private final JLabel protein = new JLabel("Protein:");
+    private final JLabel protein = new JLabel("Protein Range:");
     private final JTextField proteinMinInputField = new JTextField(15);
     private final JTextField proteinMaxInputField = new JTextField(15);
 
-    private final JLabel fat = new JLabel("Fat:");
+    private final JLabel fat = new JLabel("Fat Range:");
     private final JTextField fatMaxInputField = new JTextField(15);
     private final JTextField fatMinInputField = new JTextField(15);
 
