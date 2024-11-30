@@ -4,7 +4,6 @@ import data_access.SpoonacularRecipeDAO;
 import entity.Recipe;
 import entity.User;
 import interface_adapter.RecipeController;
-import interface_adapter.filter_recipes.FilterRecipesController;
 import use_case.filter_recipes.FilterRecipesDataAccessInterface;
 
 import javax.swing.*;
@@ -27,8 +26,6 @@ public class RecipeView extends JFrame {
     private RecipeController controller;
     private User user;
 
-    // private final FilterRecipesController filterRecipesController;
-    // private final SpoonacularRecipeDAO spoonacularRecipeDAO;
     private FilterRecipesDataAccessInterface frDataAccessInterface;
     private JComboBox<String> dietComboBox;
     private JComboBox<String> cuisineComboBox;
@@ -37,9 +34,6 @@ public class RecipeView extends JFrame {
         this.controller = controller;
         this.user = user;
         this.frDataAccessInterface = new SpoonacularRecipeDAO();
-        // this.filterRecipesController = filterRecipesController;
-        // this.spoonacularRecipeDAO = new SpoonacularRecipeDAO();
-        // setFilterRecipesController(filterRecipesController);
 
         setTitle("Recipe Generator");
         setSize(800, 300);
@@ -66,7 +60,6 @@ public class RecipeView extends JFrame {
 //                        .toArray(String[]::new);
 //                recipeList.setListData(recipeNames);
 
-                // final DefaultListModel<Recipe> listModel = new DefaultListModel<>();
                 listModel.clear();
                 for (Recipe recipe : recipes) {
                     listModel.addElement(recipe);
@@ -141,12 +134,6 @@ public class RecipeView extends JFrame {
         final List<Recipe> recipesFiltered =
                 frDataAccessInterface.filterSearchRecipes(ingredients, selectedDiet, selectedCuisine);
         return recipesFiltered;
-
-        // listModel.clear();
-        // for (Recipe recipe : recipesFiltered) {
-        //     listModel.addElement(recipe);
-        // }
-        // recipeList.setModel(listModel);
     }
 
     // public void setFilterRecipesController(FilterRecipesController filterRecipesController) {
