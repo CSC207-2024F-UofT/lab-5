@@ -12,6 +12,7 @@ import java.beans.PropertyChangeListener;
 import interface_adapter.recipe_search.RecipeSearchController;
 import interface_adapter.recipe_search.RecipeSearchState;
 import interface_adapter.recipe_search.RecipeSearchViewModel;
+import interface_adapter.signup.SignupState;
 
 
 /**
@@ -126,7 +127,6 @@ public class RecipeSearchView extends JPanel implements ActionListener, Property
     private void handleSearchAction() {
         final RecipeSearchState currentState = recipeSearchViewModel.getState();
         executeSearch(currentState);
-        switchToSearchResultsView();
     }
 
     private void executeSearch(RecipeSearchState currentState) {
@@ -138,8 +138,8 @@ public class RecipeSearchView extends JPanel implements ActionListener, Property
                 currentState.getCarbMax(),
                 currentState.getProteinMin(),
                 currentState.getProteinMax(),
-                currentState.getfatMin(),
-                currentState.getfatMax()
+                currentState.getFatMin(),
+                currentState.getFatMax()
         );
     }
 
@@ -399,7 +399,10 @@ public class RecipeSearchView extends JPanel implements ActionListener, Property
      */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-    //handle search errors
+        final RecipeSearchState state = (RecipeSearchState) evt.getNewValue();
+        if (state.getErrorMessage() != null) {
+            JOptionPane.showMessageDialog(this, state.getErrorMessage());
+        }
     }
 
     public void setSearchController(RecipeSearchController searchController) {

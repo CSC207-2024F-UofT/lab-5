@@ -2,7 +2,6 @@ package interface_adapter.recipe_search;
 
 import use_case.recipe_search.RecipeSearchInputBoundary;
 import use_case.recipe_search.RecipeSearchInputData;
-import use_case.signup.SignupInputData;
 
 public class RecipeSearchController {
 

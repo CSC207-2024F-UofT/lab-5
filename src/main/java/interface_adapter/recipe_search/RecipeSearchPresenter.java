@@ -35,6 +35,9 @@ public class RecipeSearchPresenter implements RecipeSearchOutputBoundary {
 
     @Override
     public void prepareFailView(String error) {
+        final RecipeSearchState recipeSearchState = recipeSearchviewModel.getState();
+        recipeSearchState.setErrorMessage(error);
+        recipeSearchviewModel.firePropertyChanged();
     }
 
     @Override
