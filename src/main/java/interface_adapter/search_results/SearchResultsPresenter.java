@@ -28,4 +28,11 @@ public class SearchResultsPresenter implements SearchResultsOutputBoundary {
         viewManagerModel.setState(recipeSearchViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
+
+    @Override
+    public void switchToRecipeDetailsView() {
+        viewManagerModel.setState(recipeDetailsViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
+    }
+
 }

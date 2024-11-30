@@ -11,8 +11,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.*;
 import java.util.List;
+import javax.swing.BorderFactory;
+import javax.swing.border.Border;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class SearchResultsView extends JPanel implements PropertyChangeListener {
 
@@ -41,7 +44,7 @@ public class SearchResultsView extends JPanel implements PropertyChangeListener 
 
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
-                        searchResultsController.switchtoRecipeSearchView();
+                        searchResultsController.switchToRecipeSearchView();
                     }
                 }
         );
@@ -69,6 +72,9 @@ public class SearchResultsView extends JPanel implements PropertyChangeListener 
             final JPanel recipePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
             recipePanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5)); // Add some padding
 
+            // Add a separator (line) below each recipe
+            final Border border = BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY);
+            recipePanel.setBorder(BorderFactory.createCompoundBorder(border, recipePanel.getBorder()));
 
             final JLabel recipeNameLabel = new JLabel(recipe.getName());
             recipeNameLabel.setFont(new Font("Arial", Font.BOLD, 14));
@@ -79,6 +85,24 @@ public class SearchResultsView extends JPanel implements PropertyChangeListener 
             );
             recipeDetailsLabel.setFont(new Font("Arial", Font.PLAIN, 12));
             recipePanel.add(recipeDetailsLabel);
+
+            final JButton detailsButton;
+            detailsButton = new JButton("Details");
+            detailsButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent evt) {
+                    searchResultsController.switchToRecipeDetailsView();
+                }
+            });
+            recipePanel.add(detailsButton);
+
+            // Add a MouseListener to handle clicks
+            recipePanel.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    // Handle the recipe click event
+                    searchResultsController.switchToRecipeDetailsView();
+                }
+            });
 
             // Add the recipe panel to the results panel
             resultsPanel.add(recipePanel);

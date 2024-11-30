@@ -18,7 +18,15 @@ public class RecipeSearchController {
 
         searchUseCaseInteractor.execute(recipeSearchInputData);
     }
-    public void switchToLoginView() {
+
+    public void switchToSearchResultsView() {
         searchUseCaseInteractor.switchToSearchResultsView();
     }
+
+    public void switchToProfileView() {
+        searchUseCaseInteractor.switchToProfileView();
+    }
+
+
+
 }

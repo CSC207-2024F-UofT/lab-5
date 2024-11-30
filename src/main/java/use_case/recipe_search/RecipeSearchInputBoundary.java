@@ -14,4 +14,9 @@ public interface RecipeSearchInputBoundary {
      * Executes the switch to search view use case.
      */
     void switchToSearchResultsView();
+
+    /**
+     * Executes the switch to Profile view.
+     */
+    void switchToProfileView();
 }

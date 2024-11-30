@@ -11,4 +11,7 @@ public class SearchResultsInteractor implements SearchResultsInputBoundary{
     public void switchToRecipeSearchView() {
         searchResultsOutputBoundary.switchToRecipeSearchView();
     }
+    public void switchToRecipeDetailsView() {
+        searchResultsOutputBoundary.switchToRecipeDetailsView();
+    }
 }

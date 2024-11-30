@@ -9,14 +9,9 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import data_access.RecipeDataAccessObject;
-import interface_adapter.profile.ProfileController;
 import interface_adapter.recipe_search.RecipeSearchController;
-import interface_adapter.recipe_search.RecipeSearchPresenter;
 import interface_adapter.recipe_search.RecipeSearchState;
 import interface_adapter.recipe_search.RecipeSearchViewModel;
-import use_case.recipe_search.RecipeSearchInteractor;
-import use_case.recipe_search.RecipeSearchOutputBoundary;
 
 
 /**
@@ -48,7 +43,7 @@ public class RecipeSearchView extends JPanel implements ActionListener, Property
     private final JTextField fatMinInputField = new JTextField(15);
 
     private final JButton search;
-    private final JButton cancel;
+    private final JButton back;
 
     public RecipeSearchView(RecipeSearchViewModel recipeSearchViewModel) {
         this.recipeSearchViewModel = recipeSearchViewModel;
@@ -88,19 +83,14 @@ public class RecipeSearchView extends JPanel implements ActionListener, Property
         final JPanel buttons = new JPanel();
         search = new JButton("Search");
         buttons.add(search);
-        cancel = new JButton("Cancel");
-        buttons.add(cancel);
+        back = new JButton("Back");
+        buttons.add(back);
 
-        cancel.addActionListener(
+        back.addActionListener(
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        System.out.println("Cancel button clicked!");
-                        // Get the top-level container (e.g., JFrame) and close it
-                        final Window window = SwingUtilities.getWindowAncestor(cancel);
-                        if (window != null) {
-                            window.dispose();
-                        }
+                        recipeSearchController.switchToProfileView();
                     }
                 });
 
@@ -136,7 +126,7 @@ public class RecipeSearchView extends JPanel implements ActionListener, Property
     private void handleSearchAction() {
         final RecipeSearchState currentState = recipeSearchViewModel.getState();
         executeSearch(currentState);
-        switchToLoginView();
+        switchToSearchResultsView();
     }
 
     private void executeSearch(RecipeSearchState currentState) {
@@ -153,8 +143,8 @@ public class RecipeSearchView extends JPanel implements ActionListener, Property
         );
     }
 
-    private void switchToLoginView() {
-        recipeSearchController.switchToLoginView();
+    private void switchToSearchResultsView() {
+        recipeSearchController.switchToSearchResultsView();
     }
 
     private void addRecipeNameListener() {

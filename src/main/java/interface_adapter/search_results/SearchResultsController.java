@@ -10,7 +10,11 @@ public class SearchResultsController {
         this.searchResultsInputBoundary = searchResultsInputBoundary;
     }
 
-    public void switchtoRecipeSearchView(){
+    public void switchToRecipeSearchView(){
         this.searchResultsInputBoundary.switchToRecipeSearchView();
+    }
+
+    public void switchToRecipeDetailsView(){
+        this.searchResultsInputBoundary.switchToRecipeDetailsView();
     }
 }

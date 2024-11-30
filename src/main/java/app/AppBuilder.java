@@ -235,7 +235,7 @@ public class AppBuilder {
 
     public AppBuilder addSearchUseCase() {
         final RecipeSearchOutputBoundary recipeSearchOutputBoundary = new RecipeSearchPresenter(
-                recipeSearchViewModel, searchResultsViewModel, viewManagerModel);
+                recipeSearchViewModel, searchResultsViewModel, viewManagerModel, profileViewModel);
         final RecipeSearchInputBoundary searchInteractor = new RecipeSearchInteractor(
                 recipeDataAccessObject, recipeSearchOutputBoundary);
 
