@@ -21,17 +21,12 @@ public class ProfilePresenter implements ProfileOutputBoundary {
         this.recipeSearchViewModel = recipeSearchViewModel;
     }
 
-    public void prepareSuccessView(ProfileOutputData response) {
+    public void switchtoSavedrecipeView(ProfileOutputData response) {
         final SavedrecipesState savedrecipesState = savedrecipesViewModel.getState();
-        savedrecipesState.setRecipes(response.getRecipes());
+        savedrecipesState.setUsername(response.getUsername());
+        savedrecipesState.setUsername(response.getUsername());
         this.savedrecipesViewModel.setState(savedrecipesState);
-        savedrecipesViewModel.firePropertyChanged();
-
-        viewManagerModel.setState(savedrecipesViewModel.getViewName());
-        viewManagerModel.firePropertyChanged();
-    }
-
-    public void switchtoSavedrecipeView() {
+        this.savedrecipesViewModel.firePropertyChanged();
         viewManagerModel.setState(savedrecipesViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }

@@ -4,9 +4,7 @@ import use_case.signup.SignupOutputData;
 
 public interface ProfileOutputBoundary {
 
-    void prepareSuccessView(ProfileOutputData outputData);
-
-    void switchtoSavedrecipeView();
+    void switchtoSavedrecipeView(ProfileOutputData response);
 
     void switchToRecipeSearchView();
 }

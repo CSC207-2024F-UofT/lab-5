@@ -2,12 +2,11 @@ package interface_adapter.saved_recipes;
 
 import entity.Recipe;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class SavedrecipesState {
-    private String username = "";
-    private Map<Recipe, Integer> recipes = new HashMap<>();
+    private String username;
+    private Map<Recipe, Integer> recipes;
 
     public SavedrecipesState(SavedrecipesState copy) {
         this.username = copy.username;

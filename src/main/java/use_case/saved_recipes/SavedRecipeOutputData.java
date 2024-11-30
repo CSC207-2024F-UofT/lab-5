@@ -1,23 +1,17 @@
-package use_case.profile;
+package use_case.saved_recipes;
 
 import entity.Recipe;
 
 import java.util.Map;
 
-public class ProfileOutputData {
+public class SavedRecipeOutputData {
 
-    private final Map<Recipe, Integer> recipes;
     private final String username;
     private final boolean useCaseFailed;
 
-    public ProfileOutputData(String username, Map<Recipe, Integer> recipes, boolean useCaseFailed) {
+    public SavedRecipeOutputData(String username, boolean useCaseFailed) {
         this.username = username;
-        this.recipes = recipes;
         this.useCaseFailed = useCaseFailed;
-    }
-
-    public Map<Recipe, Integer> getRecipes() {
-        return recipes;
     }
 
     public String getUsername() {
