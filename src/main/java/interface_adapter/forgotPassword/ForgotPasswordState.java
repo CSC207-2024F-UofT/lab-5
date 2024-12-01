@@ -1,5 +1,8 @@
-package interface_adapter.ForgotPassword;
+package interface_adapter.forgotPassword;
 
+/**
+ * View state for unimplemented functionality.
+ */
 public class ForgotPasswordState {
     private String username = "";
 

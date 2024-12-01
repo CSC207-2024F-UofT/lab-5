@@ -26,6 +26,9 @@ public class LoginController {
         loginUseCaseInteractor.execute(loginInputData);
     }
 
+    /**
+     * Unimplemented switch to cut forget password view.
+     */
     public void switchToForgotPasswordView() {
         loginUseCaseInteractor.switchToForgotPasswordView();
     }

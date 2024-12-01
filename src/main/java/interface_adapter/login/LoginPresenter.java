@@ -1,7 +1,7 @@
 package interface_adapter.login;
 
-import interface_adapter.ForgotPassword.ForgotPasswordViewModel;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.forgotPassword.ForgotPasswordViewModel;
 import interface_adapter.profile.ProfileState;
 import interface_adapter.profile.ProfileViewModel;
 import use_case.login.LoginOutputBoundary;
@@ -47,6 +47,9 @@ public class LoginPresenter implements LoginOutputBoundary {
         loginViewModel.firePropertyChanged();
     }
 
+    /**
+     * Unimplemented switch to cut forget password view.
+     */
     public void switchToForgotPasswordView() {
         viewManagerModel.setState(forgotPasswordViewModel.getViewName());
         viewManagerModel.firePropertyChanged();

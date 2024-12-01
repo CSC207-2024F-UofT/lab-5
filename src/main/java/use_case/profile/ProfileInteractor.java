@@ -1,11 +1,12 @@
 package use_case.profile;
 
-import entity.Recipe;
-import entity.User;
-
-import java.util.HashMap;
 import java.util.Map;
 
+import entity.Recipe;
+
+/**
+ * Interactor for the Profile View.
+ */
 public class ProfileInteractor implements ProfileInputBoundary {
     private final ProfileOutputBoundary userPresenter;
     private final ProfileDataAccessInterface userDataAccess;
@@ -15,6 +16,10 @@ public class ProfileInteractor implements ProfileInputBoundary {
         this.userDataAccess = userDataAccess;
     }
 
+    /**
+     * Executes the SavedRecipes Use case.
+     * @param profileInputData Input data of Profile view.
+     */
     public void switchToSavedRecipesView(ProfileInputData profileInputData) {
         final String username = profileInputData.getUsername();
         final Map<Recipe, Integer> savedRecipes = userDataAccess.get(username).getRecipes();
@@ -22,6 +27,9 @@ public class ProfileInteractor implements ProfileInputBoundary {
         userPresenter.switchtoSavedrecipeView(profileOutputData);
     }
 
+    /**
+     * Execute the switch to RecipeSearchView.
+     */
     public void switchToRecipeSearchView() {
         userPresenter.switchToRecipeSearchView();
     }

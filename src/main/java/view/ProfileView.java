@@ -16,11 +16,13 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import org.jetbrains.annotations.NotNull;
+
 import interface_adapter.change_password.ChangePasswordController;
+import interface_adapter.logout.LogoutController;
 import interface_adapter.profile.ProfileController;
 import interface_adapter.profile.ProfileState;
 import interface_adapter.profile.ProfileViewModel;
-import interface_adapter.logout.LogoutController;
 
 /**
  * The View for when the user is logged into the program.
@@ -50,9 +52,6 @@ public class ProfileView extends JPanel implements PropertyChangeListener {
         final JLabel title = new JLabel("Profile");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        final LabelTextPanel passwordInfo = new LabelTextPanel(
-                new JLabel("Password"), passwordInputField);
-
         final JPanel usernamePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         final JLabel usernameInfo = new JLabel("'s account ");
         username = new JLabel();
@@ -67,25 +66,16 @@ public class ProfileView extends JPanel implements PropertyChangeListener {
         recipebuttons.add(recipeSaved);
 
         // Panel for Password input
-        final JPanel passwordPanel = new JPanel();
-        final JLabel passwordLabel = new JLabel("New Password");
-        passwordPanel.setLayout(new BoxLayout(passwordPanel, BoxLayout.Y_AXIS));
-        passwordLabel.setAlignmentX(Component.CENTER_ALIGNMENT); // Center-align label
-        passwordInputField.setAlignmentX(Component.CENTER_ALIGNMENT); // Center-align text field
-        passwordInputField.setMaximumSize(passwordInputField.getPreferredSize());
-        passwordPanel.add(passwordLabel);
-        passwordPanel.add(passwordInputField);
+        final JPanel passwordPanel = getPasswordPanel();
 
         // Panel for Change Password button
-        final JPanel changePasswordPanel = new JPanel();
-        changePasswordPanel.setLayout(new BoxLayout(changePasswordPanel, BoxLayout.Y_AXIS));
+        final JPanel changePasswordPanel = getChangePasswordPanel();
         changePassword = new JButton("Change Password");
         changePassword.setAlignmentX(Component.CENTER_ALIGNMENT);
         changePasswordPanel.add(changePassword);
 
         // Panel for Log Out button
-        final JPanel logOutPanel = new JPanel();
-        logOutPanel.setLayout(new BoxLayout(logOutPanel, BoxLayout.Y_AXIS));
+        final JPanel logOutPanel = getLogOutPanel();
         logOut = new JButton("Log Out");
         logOut.setAlignmentX(Component.CENTER_ALIGNMENT);
         logOutPanel.add(logOut);
@@ -116,43 +106,32 @@ public class ProfileView extends JPanel implements PropertyChangeListener {
             }
         });
 
-        changePassword.addActionListener(
-                // This creates an anonymous subclass of ActionListener and instantiates it.
-                evt -> {
-                    if (evt.getSource().equals(changePassword)) {
-                        final ProfileState currentState = profileViewModel.getState();
+        addactionlistnerChangePassword(profileViewModel);
 
-                        this.changePasswordController.execute(
-                                currentState.getUsername(),
-                                currentState.getPassword()
-                        );
-                    }
-                }
-        );
+        addactionlistnerChangeLogOut(profileViewModel);
 
-        logOut.addActionListener(
-                // This creates an anonymous subclass of ActionListener and instantiates it.
-                evt -> {
-                    if (evt.getSource().equals(logOut)) {
-                        // 1. get the state out of the loggedInViewModel. It contains the username.
-                        final ProfileState profileState = profileViewModel.getState();
-                        // 2. Execute the logout Controller.
-                        this.logoutController.execute(profileState.getUsername());
-                    }
-                }
-        );
+        addactionlistnerChangeRecipeSaved(profileViewModel);
 
-        recipeSaved.addActionListener(
+        addactionlistnerRecipeSearch();
 
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent evt) {
-                        final ProfileState currentState = profileViewModel.getState();
+        addPanels(title, usernamePanel, recipebuttons, passwordPanel, changePasswordPanel, logOutPanel);
+    }
 
-                        profileController.switchToSavedRecipesView(currentState.getUsername());
-                    }
-                }
-        );
+    @NotNull
+    private static JPanel getChangePasswordPanel() {
+        final JPanel changePasswordPanel = new JPanel();
+        changePasswordPanel.setLayout(new BoxLayout(changePasswordPanel, BoxLayout.Y_AXIS));
+        return changePasswordPanel;
+    }
 
+    @NotNull
+    private static JPanel getLogOutPanel() {
+        final JPanel logOutPanel = new JPanel();
+        logOutPanel.setLayout(new BoxLayout(logOutPanel, BoxLayout.Y_AXIS));
+        return logOutPanel;
+    }
+
+    private void addactionlistnerRecipeSearch() {
         recipeSearch.addActionListener(
 
                 new ActionListener() {
@@ -162,7 +141,54 @@ public class ProfileView extends JPanel implements PropertyChangeListener {
                     }
                 }
         );
+    }
 
+    private void addactionlistnerChangeRecipeSaved(ProfileViewModel profileViewModel1) {
+        recipeSaved.addActionListener(
+
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        final ProfileState currentState = profileViewModel1.getState();
+
+                        profileController.switchToSavedRecipesView(currentState.getUsername());
+                    }
+                }
+        );
+    }
+
+    private void addactionlistnerChangeLogOut(ProfileViewModel profileViewModel1) {
+        logOut.addActionListener(
+                // This creates an anonymous subclass of ActionListener and instantiates it.
+                evt -> {
+                    if (evt.getSource().equals(logOut)) {
+
+                        // 1. get the state out of the loggedInViewModel. It contains the username.
+                        final ProfileState profileState = profileViewModel1.getState();
+                        // 2. Execute the logout Controller.
+                        this.logoutController.execute(profileState.getUsername());
+                    }
+                }
+        );
+    }
+
+    private void addactionlistnerChangePassword(ProfileViewModel profileViewModel1) {
+        changePassword.addActionListener(
+                // This creates an anonymous subclass of ActionListener and instantiates it.
+                evt -> {
+                    if (evt.getSource().equals(changePassword)) {
+                        final ProfileState currentState = profileViewModel1.getState();
+
+                        this.changePasswordController.execute(
+                                currentState.getUsername(),
+                                currentState.getPassword()
+                        );
+                    }
+                }
+        );
+    }
+
+    private void addPanels(JLabel title, JPanel usernamePanel, JPanel recipebuttons, JPanel passwordPanel,
+                           JPanel changePasswordPanel, JPanel logOutPanel) {
         this.add(title);
         this.add(usernamePanel);
         this.add(recipebuttons);
@@ -172,12 +198,26 @@ public class ProfileView extends JPanel implements PropertyChangeListener {
         this.add(logOutPanel);
     }
 
+    @NotNull
+    private JPanel getPasswordPanel() {
+        final JPanel passwordPanel = new JPanel();
+        final JLabel passwordLabel = new JLabel("New Password");
+        passwordPanel.setLayout(new BoxLayout(passwordPanel, BoxLayout.Y_AXIS));
+        passwordLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        passwordInputField.setAlignmentX(Component.CENTER_ALIGNMENT);
+        passwordInputField.setMaximumSize(passwordInputField.getPreferredSize());
+        passwordPanel.add(passwordLabel);
+        passwordPanel.add(passwordInputField);
+        return passwordPanel;
+    }
+
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("state")) {
             final ProfileState state = (ProfileState) evt.getNewValue();
             username.setText(state.getUsername());
-        } else if (evt.getPropertyName().equals("password")) {
+        }
+        else if (evt.getPropertyName().equals("password")) {
             final ProfileState state = (ProfileState) evt.getNewValue();
             JOptionPane.showMessageDialog(null, "password updated for " + state.getUsername());
         }
