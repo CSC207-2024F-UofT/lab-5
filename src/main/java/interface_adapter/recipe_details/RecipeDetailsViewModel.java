@@ -1,5 +1,6 @@
 package interface_adapter.recipe_details;
 
+import entity.Recipe;
 import interface_adapter.ViewModel;
 
 /**
@@ -14,9 +15,10 @@ public class RecipeDetailsViewModel extends ViewModel<RecipeDetailsState> {
     private String recipeLink;
     private String[] nutrients;
     private int[] nutrientValues;
+    private Recipe recipe;
 
     public RecipeDetailsViewModel() {
         super("Recipe Details");
-        setState(new RecipeDetailsState());
+        setState(new RecipeDetailsState(recipe));
     }
 }

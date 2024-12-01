@@ -25,8 +25,8 @@ public class RecipeReviewController {
         reviewRecipeUseCaseInteractor.execute(recipeReviewInputData);
     }
 
-    public void switchToRecipeHistoryView() {
-        reviewRecipeUseCaseInteractor.switchToRecipeHistoryView();
+    public void switchToSavedrecipesView() {
+        reviewRecipeUseCaseInteractor.switchToSavedrecipesView();
     }
 
 }

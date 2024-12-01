@@ -17,7 +17,7 @@ public interface RecipeReviewOutputBoundary {
     void prepareFailView(String errorMessage);
 
     /**
-     * Switches to the Recipe History View.
+     * Switches to the Savedrecipes View.
      */
-    void switchToRecipeHistoryView();
+    void switchToSavedrecipesView();
 }

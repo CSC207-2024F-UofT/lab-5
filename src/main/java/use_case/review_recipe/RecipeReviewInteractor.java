@@ -22,8 +22,7 @@ public class RecipeReviewInteractor implements RecipeReviewInputBoundary {
     public void execute(RecipeReviewInputData recipeReviewInputData) {
         final Recipe recipe = recipeReviewInputData.getRecipe();
         final int rating = recipeReviewInputData.getRating();
-
-        RecipeReviewOutputData recipeReviewOutputData;
+        final RecipeReviewOutputData recipeReviewOutputData;
 
         try {
             user.reviewRecipe(recipe, rating);
@@ -34,16 +33,16 @@ public class RecipeReviewInteractor implements RecipeReviewInputBoundary {
             );
             reviewPresenter.prepareSuccessView(recipeReviewOutputData);
         }
-        catch (IllegalArgumentException e) {
-            recipeReviewOutputData = new RecipeReviewOutputData(recipe.getName(),
-                    rating,
-                    "Failure in adding review." + e.getMessage()
-            );
+        catch (IllegalArgumentException ex) {
             reviewPresenter.prepareFailView("Review could not be added.");
         }
     }
 
-    public void switchToRecipeHistoryViewView() {
-        reviewPresenter.switchToRecipeHistoryView();
+    /**
+     * Switches to the SavedRecipes View.
+     *
+     */
+    public void switchToSavedrecipesView() {
+        reviewPresenter.switchToSavedrecipesView();
     }
 }
