@@ -1,6 +1,9 @@
 package use_case.search_results;
 
-public class SearchResultsInteractor implements SearchResultsInputBoundary{
+/**
+ * The Search Results Interactor.
+ */
+public class SearchResultsInteractor implements SearchResultsInputBoundary {
 
     private final SearchResultsOutputBoundary searchResultsOutputBoundary;
 
@@ -8,9 +11,12 @@ public class SearchResultsInteractor implements SearchResultsInputBoundary{
         this.searchResultsOutputBoundary = searchResultsOutputBoundary;
     }
 
+    @Override
     public void switchToRecipeSearchView() {
         searchResultsOutputBoundary.switchToRecipeSearchView();
     }
+
+    @Override
     public void switchToRecipeDetailsView() {
         searchResultsOutputBoundary.switchToRecipeDetailsView();
     }

@@ -1,17 +1,18 @@
 package use_case.recipe_search;
 
-import use_case.signup.SignupOutputData;
-
+/**
+ * The output boundary for the Signup Use Case.
+ */
 public interface RecipeSearchOutputBoundary {
 
     /**
-     * Prepares the success view for the Saerch Use Case.
+     * Prepares the success view for the Search Use Case.
      * @param outputData the output data
      */
     void prepareSuccessView(RecipeSearchOutputData outputData);
 
     /**
-     * Prepares the failure view for the Saerch Use Case.
+     * Prepares the failure view for the Search Use Case.
      * @param errorMessage the explanation of the failure
      */
     void prepareFailView(String errorMessage);

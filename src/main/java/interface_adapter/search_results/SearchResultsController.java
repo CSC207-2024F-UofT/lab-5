@@ -2,6 +2,9 @@ package interface_adapter.search_results;
 
 import use_case.search_results.SearchResultsInputBoundary;
 
+/**
+ * The controller for the Search Results Use Case.
+ */
 public class SearchResultsController {
 
     private final SearchResultsInputBoundary searchResultsInputBoundary;
@@ -10,11 +13,17 @@ public class SearchResultsController {
         this.searchResultsInputBoundary = searchResultsInputBoundary;
     }
 
-    public void switchToRecipeSearchView(){
+    /**
+     * Executes the "switch to RecipeSearchView" Use Case.
+     */
+    public void switchToRecipeSearchView() {
         this.searchResultsInputBoundary.switchToRecipeSearchView();
     }
 
-    public void switchToRecipeDetailsView(){
+    /**
+     * Executes the "switch to RecipeDetailsView" Use Case.
+     */
+    public void switchToRecipeDetailsView() {
         this.searchResultsInputBoundary.switchToRecipeDetailsView();
     }
 }
