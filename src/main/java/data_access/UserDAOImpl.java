@@ -210,4 +210,10 @@ public class UserDAOImpl implements UserDAO {
         saveUsersToFile();
         System.out.println("RecentlyViewed cleared successfully");
     }
+
+    public List<Recipe> getFolderFromFile(String username, String folder) {
+        final Map<String, User> users = loadUsersFromFile();
+        final User user = users.get(username);
+        return user.getFolder(folder);
+    }
 }

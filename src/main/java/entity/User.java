@@ -1,19 +1,23 @@
 package entity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class User {
     private String username;
     private String password;
     private List<Recipe> bookmarks;
     private List<Recipe> recentlyViewed;
+    private Map<String, List<Recipe>> folders;
 
     public User(String username, String password) {
         this.username = username;
         this.password = password;
         this.bookmarks = List.of();
         this.recentlyViewed = List.of();
+        this.folders = new HashMap<>();
     }
 
     // Overloaded constructor for user with bookmarks and recentlyViewed
@@ -22,6 +26,16 @@ public class User {
         this.password = password;
         this.bookmarks = bookmarks;
         this.recentlyViewed = recentlyViewed;
+    }
+
+    // TODO add another overloaded constructor for user with folders?
+    public User(String username, String password, List<Recipe> bookmarks, List<Recipe> recentlyViewed,
+                Map<String, List<Recipe>> folders) {
+        this.username = username;
+        this.password = password;
+        this.bookmarks = bookmarks;
+        this.recentlyViewed = recentlyViewed;
+        this.folders = folders;
     }
 
     // Getters and Setters
@@ -49,6 +63,13 @@ public class User {
         return recentlyViewed;
     }
 
+    public List<Recipe> getFolder(String folder) {
+        if (!folders.containsKey(folder)) {
+            return List.of();
+        }
+        return folders.get(folder);
+    }
+
     /*
         Add a recipe to the list of bookmarks.
          */
@@ -65,5 +86,16 @@ public class User {
 
     public void clearRecentlyViewed() {
         this.recentlyViewed.clear();
+    }
+
+    public void addFolder(String folder) {
+        this.folders.put(folder, new ArrayList<>());
+    }
+
+    public void addRecipeToFolder(String folder, Recipe recipe) {
+        if (!this.folders.containsKey(folder)) {
+            addFolder(folder);
+        }
+        this.folders.get(folder).add(recipe);
     }
 }
