@@ -1,7 +1,12 @@
 package view;
 
+import entity.CommonUser;
+import entity.Recipe;
+import interface_adapter.recipe_details.RecipeDetailsState;
 import interface_adapter.recipe_details.RecipeDetailsViewModel;
-import interface_adapter.signup.SignupViewModel;
+import interface_adapter.recipe_review.RecipeReviewController;
+import use_case.review_recipe.RecipeReviewInputBoundary;
+import use_case.review_recipe.ReviewRecipeInputBoundary;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,10 +17,14 @@ import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.net.URI;
+import java.util.Map;
 
 public class RecipeDetailsView extends JPanel implements ActionListener, PropertyChangeListener {
 
     private final RecipeDetailsViewModel recipeDetailsViewModel;
+    private final RecipeReviewController recipeReviewController;
+    private final CommonUser user;
+
     private JLabel recipeNameLabel;
     private JLabel caloriesLabel;
     private JLabel servingsLabel;
@@ -26,14 +35,13 @@ public class RecipeDetailsView extends JPanel implements ActionListener, Propert
 
     private final JLabel rating = new JLabel("Rating:");
     private final JTextField ratingInputField = new JTextField(15);
-
-    private final JLabel comment = new JLabel("Comment:");
-    private final JTextField commentInputField = new JTextField(15);
-
     private final JButton saveButton = new JButton("Save");
 
-    public RecipeDetailsView(RecipeDetailsViewModel recipeDetailsViewModel) {
+    public RecipeDetailsView(RecipeDetailsViewModel recipeDetailsViewModel, RecipeReviewController recipeReviewController, CommonUser user) {
         this.recipeDetailsViewModel = recipeDetailsViewModel;
+        this.recipeReviewController = recipeReviewController;
+        this.user = user;
+
         recipeDetailsViewModel.addPropertyChangeListener(this);
 
         // Title
@@ -75,16 +83,10 @@ public class RecipeDetailsView extends JPanel implements ActionListener, Propert
         nutrientsPanel.setLayout(new BoxLayout(nutrientsPanel, BoxLayout.Y_AXIS));
         nutrientsPanel.setBorder(BorderFactory.createTitledBorder("Nutrients"));
 
-
         // panel for rating
         final JPanel ratingInfo = new JPanel();
         ratingInfo.add(rating);
         ratingInfo.add(ratingInputField);
-
-        // panel for comment
-        final JPanel commentInfo = new JPanel();
-        commentInfo.add(comment);
-        commentInfo.add(commentInputField);
 
         // Set Layout
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -97,9 +99,11 @@ public class RecipeDetailsView extends JPanel implements ActionListener, Propert
         this.add(urlLabel);
         this.add(nutrientsPanel);
         this.add(ratingInfo);
-        this.add(commentInfo);
         this.add(saveButton);
+
+        saveButton.addActionListener(this);
     }
+
 
     public String getViewName() {
         return viewName;
@@ -107,20 +111,65 @@ public class RecipeDetailsView extends JPanel implements ActionListener, Propert
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == saveButton) {
+            handleSaveAction();
+        }
+    }
 
+    private void handleSaveAction() {
+        try {
+            final RecipeDetailsState currentState = recipeDetailsViewModel.getState();
+            if (currentState == null) {
+                JOptionPane.showMessageDialog(this, "No recipe selected to save.",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            final Recipe recipe = currentState.getRecipe();
+            final int userRating = Integer.parseInt(ratingInputField.getText());
+            user.addRecipe(recipe, userRating);
+            recipeReviewController.switchToSavedrecipesView();
+        }
+        catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Please enter a valid number for the rating.",
+                    "Input Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        if (evt.getPropertyName().equals("recipeDetails")) {
+            updateView(recipeDetailsViewModel.getState());
+        }
+    }
 
+    private void updateView(RecipeDetailsState state) {
+        if (state == null) {
+            final Recipe recipe = state.getRecipe();
+            recipeNameLabel.setText("Recipe: " + recipe.getName());
+            caloriesLabel.setText("Calories: " + recipe.getCalories());
+            servingsLabel.setText("Servings :" + recipe.getServings());
+            urlLabel.setText("<html><a href=''>" + recipe.getUrl() + "</a></html>");
+
+            nutrientsPanel.removeAll();
+            final Map<String, Integer> nutrients = recipe.getNutrients();
+            if (nutrients != null) {
+                for (Map.Entry<String, Integer> entry : nutrients.entrySet()) {
+                    nutrientsPanel.add(new JLabel(entry.getKey()));
+                }
+            }
+        }
     }
 
     public static void main(String[] args) {
         // Create a dummy RecipeDetailsViewModel
-        RecipeDetailsViewModel viewModel = new RecipeDetailsViewModel();
+        final ReviewRecipeInputBoundary recipeReviewInputBoundary = null;
+        // recipeReviewInputBoundary = new RecipeReviewInputBoundary();
+        final RecipeDetailsViewModel viewModel = new RecipeDetailsViewModel();
+        final RecipeReviewController recipeReviewController = new RecipeReviewController(recipeReviewInputBoundary);
+        final CommonUser user = new CommonUser("Adya", "adya");
 
         // Create an instance of RecipeDetailsView
-        RecipeDetailsView recipeDetailsView = new RecipeDetailsView(viewModel);
+        final RecipeDetailsView recipeDetailsView = new RecipeDetailsView(viewModel, recipeReviewController, user);
 
         // Create a JFrame to display the view
         JFrame frame = new JFrame("Recipe Detail");
@@ -133,5 +182,4 @@ public class RecipeDetailsView extends JPanel implements ActionListener, Propert
         // Make the frame visible
         frame.setVisible(true);
     }
-
 }
