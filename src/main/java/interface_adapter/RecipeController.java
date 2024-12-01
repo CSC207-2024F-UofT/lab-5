@@ -1,17 +1,19 @@
 package interface_adapter;
 
-import use_case.SearchRecipeUseCase;
-import entity.Recipe;
+import use_case.SearchRecipe.SearchRecipeInputBoundary;
+import use_case.SearchRecipe.SearchRecipeInputData;
+
 import java.util.List;
 
 public class RecipeController {
-    private final SearchRecipeUseCase searchRecipeUseCase;
+    private final SearchRecipeInputBoundary searchInteractor;
 
-    public RecipeController(SearchRecipeUseCase searchRecipeUseCase) {
-        this.searchRecipeUseCase = searchRecipeUseCase;
+    public RecipeController(SearchRecipeInputBoundary searchInteractor) {
+        this.searchInteractor = searchInteractor;
     }
 
-    public List<Recipe> getRecipes(List<String> ingredients) {
-        return searchRecipeUseCase.searchRecipes(ingredients);
+    public void searchRecipes(List<String> ingredients) {
+        SearchRecipeInputData inputData = new SearchRecipeInputData(ingredients);
+        searchInteractor.searchRecipes(inputData);
     }
 }
