@@ -7,8 +7,6 @@ import java.util.List;
  */
 public class FilterRecipesInputData {
 
-    // private final DietaryPreference dietaryPreference;
-    // private final CuisinePreference cuisinePreference;
     private final List<String> ingredients;
     private final String diet;
     private final String cuisine;
