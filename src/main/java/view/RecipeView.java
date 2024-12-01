@@ -101,7 +101,7 @@ public class RecipeView extends JFrame {
         String ingredientsText = ingredientInput.getText();
         List<String> ingredients = Arrays.asList(ingredientsText.split(","));
         listModel.clear();
-        // Delegate search to the controller
+        // Delegate search to the controller when default filters applied
         if (defaultFilter.equals(dietComboBox.getSelectedItem())
                 && defaultFilter.equals(cuisineComboBox.getSelectedItem())) {
             controller.searchRecipes(ingredients);
@@ -112,18 +112,17 @@ public class RecipeView extends JFrame {
             recipeList.setModel(listModel);
         }
         else {
+            // else: filters have been chosen, so using search function specific to filters
             final List<Recipe> recipes = applyFilters();
-            listModel.clear();
             for (Recipe recipe : recipes) {
                 listModel.addElement(recipe);
             }
         }
         recipeList.setModel(listModel);
-
     }
 
     private void populateDropdown(JComboBox<String> dropdown, List<String> stringList) {
-        dropdown.addItem("Any");
+        dropdown.addItem(defaultFilter);
         for (String item : stringList) {
             dropdown.addItem(item);
         }
@@ -133,13 +132,12 @@ public class RecipeView extends JFrame {
     private List<Recipe> applyFilters() {
         final String enteredIngredients = ingredientInput.getText();
         final List<String> ingredients = List.of(enteredIngredients.split(","));
-
+        // get selected value from dropdown menu
         final String selectedDiet = String.valueOf(dietComboBox.getSelectedItem());
         final String selectedCuisine = String.valueOf(cuisineComboBox.getSelectedItem());
-
+        // call the data access object and api to return a list of recipes
         final List<Recipe> recipesFiltered =
                 frDataAccessInterface.filterSearchRecipes(ingredients, selectedDiet, selectedCuisine);
         return recipesFiltered;
     }
-
 }
