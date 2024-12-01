@@ -1,21 +1,20 @@
 package view;
 
-import data_access.SpoonacularRecipeDAO;
-import entity.Recipe;
-import entity.User;
-import interface_adapter.RecipeController;
-import use_case.filter_recipes.FilterRecipesDataAccessInterface;
-
-import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
+
+import java.awt.*;
+import javax.swing.*;
+
+import entity.Recipe;
+import entity.User;
+import interface_adapter.RecipeController;
+import interface_adapter.SearchRecipePresenter;
+import use_case.filter_recipes.FilterRecipesDataAccessInterface;
 
 public class RecipeView extends JFrame {
     private JTextField ingredientInput;
@@ -23,26 +22,30 @@ public class RecipeView extends JFrame {
     // private JList<String> recipeList; - commented out for now to make the double click function work
     private JList<Recipe> recipeList;
     private final DefaultListModel<Recipe> listModel;
-    private RecipeController controller;
-    private User user;
+    private final RecipeController controller;
+    private final SearchRecipePresenter presenter;
+    private final User user;
 
     private FilterRecipesDataAccessInterface frDataAccessInterface;
     private JComboBox<String> dietComboBox;
     private JComboBox<String> cuisineComboBox;
 
-    public RecipeView(RecipeController controller, User user) {
+    public RecipeView(RecipeController controller, SearchRecipePresenter presenter, User user,
+                      FilterRecipesDataAccessInterface frDataAccessInterface) {
         this.controller = controller;
+        this.presenter = presenter;
         this.user = user;
-        this.frDataAccessInterface = new SpoonacularRecipeDAO();
+        this.frDataAccessInterface = frDataAccessInterface;
 
         setTitle("Recipe Generator");
-        setSize(800, 300);
+        setSize(800, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         ingredientInput = new JTextField(20);
         searchButton = new JButton("Find Recipes");
         recipeList = new JList<>();
-        this.listModel = new DefaultListModel<>();
+        listModel = new DefaultListModel<>();
+        recipeList.setModel(listModel);
 
         searchButton.addActionListener(new ActionListener() {
             @Override
