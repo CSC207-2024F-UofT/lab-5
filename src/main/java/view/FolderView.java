@@ -11,16 +11,23 @@ import javax.swing.*;
 
 // implements ActionListener removed for now
 public class FolderView extends RecipeListView {
-    private final String folderName;
+//    private final List<Recipe> recipes;
 
     public FolderView(User user, String folderName) {
-        super(user);
-        this.folderName = folderName;
+        super(user, folderName);
+//        this.recipes = getRecipeList(userDAO.findUserByUsername(user.getUsername()), folderName);
         setTitle(folderName);
     }
 
     @Override
     protected List<Recipe> getRecipeList(User user1) {
-        return userDAO.getFolderFromFile(user1.getUsername(), folderName);
+        return List.of();
+    }
+
+    @Override
+    protected List<Recipe> getRecipeList(User user1, String folder) {
+        System.out.println(user1.getUsername());
+        System.out.println(folder + "aaaaa");
+        return userDAO.getFolderFromFile(user1.getUsername(), folder);
     }
 }

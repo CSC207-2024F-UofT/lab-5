@@ -17,6 +17,7 @@ import java.util.List;
 import interface_adapter.ShoppingListController;
 import use_case.ShoppingListUseCase;
 import data_access.SpoonacularAPI;
+import use_case.SearchRecipeUseCase;
 import use_case.filter_recipes.FilterRecipesInteractor;
 
 public class HomePage extends JFrame {
@@ -39,7 +40,7 @@ public class HomePage extends JFrame {
             // Create the presenter
             SearchRecipePresenter presenter = new SearchRecipePresenter();
             // Create the use case interactor
-            use_case.SearchRecipe.SearchRecipeUseCase interactor = new use_case.SearchRecipe.SearchRecipeUseCase(new SpoonacularRecipeDAO(), presenter);
+            use_case.SearchRecipeUseCase interactor = new use_case.SearchRecipeUseCase(new SpoonacularRecipeDAO(), presenter);
             // Create the controller
             RecipeController controller = new RecipeController(interactor);
             // Open the RecipeView and pass dependencies
@@ -75,7 +76,7 @@ public class HomePage extends JFrame {
 //            Recipe recipe2 = new Recipe("name2", "url2", List.of(ingredient1, ingredient2), imageURL);
 //            user.addBookmark(recipe1);
 //            user.addBookmark(recipe2);
-            new BookmarkView(this.user);
+            new BookmarkView(this.user, null);
         });
 
         final JButton recentlyViewedButton = new JButton("Recently Viewed");
@@ -89,7 +90,7 @@ public class HomePage extends JFrame {
 //            Recipe recipe2 = new Recipe("name2", "url2", List.of(ingredient1, ingredient2), imageURL);
 //            user.addRecentlyViewed(recipe1);
 //            user.addRecentlyViewed(recipe2);
-            new RecentlyViewedView(this.user);
+            new RecentlyViewedView(this.user, null);
         });
 
         final JPanel panel = new JPanel();

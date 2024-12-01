@@ -23,6 +23,7 @@ public abstract class RecipeListView extends JFrame implements ActionListener {
     // attributes for default view
     private static User user;
     protected static UserDAOImpl userDAO;
+//    protected List<Recipe> recipes;
     protected final JList<Recipe> recipeList;
     protected final DefaultListModel<Recipe> listModel;
     private final RecipeListController controller;
@@ -40,19 +41,27 @@ public abstract class RecipeListView extends JFrame implements ActionListener {
     /*
     Generates the default view of a list of recipes associated with a User.
      */
-    public RecipeListView(User user) {
+    public RecipeListView(User user, String folderName) {
         this.user = user;
         this.userDAO = new UserDAOImpl();
         this.recipeList = new JList<>();
         this.listModel = new DefaultListModel<>();
-        this.controller = new RecipeListController(new SearchRecipeListByIngredientUseCase(getRecipeList(user)),
-                new SearchRecipeListByNameUseCase(getRecipeList(user)));
+        this.controller = new RecipeListController(new SearchRecipeListByIngredientUseCase(
+                getRecipeList(userDAO.findUserByUsername(user.getUsername()))),
+                new SearchRecipeListByNameUseCase(getRecipeList(userDAO.findUserByUsername(user.getUsername()))));
         this.spoonacularRecipeDAO = new SpoonacularRecipeDAO();
 
         setSize(800, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        final List<Recipe> recipes = getRecipeList(user);
+        List<Recipe> recipes = new ArrayList<>();
+        if (folderName == null) {
+            recipes = getRecipeList(userDAO.findUserByUsername(user.getUsername()));
+        }
+        else {
+            recipes = getRecipeList(userDAO.findUserByUsername(user.getUsername()), folderName);
+        }
+
         for (Recipe recipe : recipes) {
             this.listModel.addElement(recipe);
         }
@@ -233,4 +242,6 @@ public abstract class RecipeListView extends JFrame implements ActionListener {
     }
 
     protected abstract List<Recipe> getRecipeList(User user1);
+
+    protected abstract List<Recipe> getRecipeList(User user1, String folderName);
 }

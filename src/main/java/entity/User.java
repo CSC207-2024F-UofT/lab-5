@@ -26,9 +26,10 @@ public class User {
         this.password = password;
         this.bookmarks = bookmarks;
         this.recentlyViewed = recentlyViewed;
+        this.folders = new HashMap<>();
     }
 
-    // TODO add another overloaded constructor for user with folders?
+    // Overloaded constructor for user with bookmarks, recentlyViewed and folders
     public User(String username, String password, List<Recipe> bookmarks, List<Recipe> recentlyViewed,
                 Map<String, List<Recipe>> folders) {
         this.username = username;
@@ -63,8 +64,13 @@ public class User {
         return recentlyViewed;
     }
 
+    public Map<String, List<Recipe>> getFolders() {
+        return folders;
+    }
+
     public List<Recipe> getFolder(String folder) {
         if (!folders.containsKey(folder)) {
+            System.out.println("No such folder: " + folder);
             return List.of();
         }
         return folders.get(folder);

@@ -1,4 +1,4 @@
-package use_case.SearchRecipe;
+package use_case;
 
 import data_access.RecipeDAO;
 import entity.Recipe;

@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import data_access.GetRecipeId;
 import data_access.UserDAOImpl;
@@ -112,6 +114,24 @@ public class IndividualRecipeView extends JFrame implements ActionListener {
         bookmarkButton.addActionListener(this);
         urlButton.addActionListener(this);
 
+        // Create an array of dropdown options
+        // TODO populate the list of options as the user creates folders
+        String[] options = user.getFolders().keySet().toArray(new String[0]);
+        // Create a JComboBox with the options
+        final JComboBox<String> dropdown = new JComboBox<>(options);
+        final JLabel dropdownLabel = new JLabel("Add this recipe to a folder");
+        dropdown.add(dropdownLabel);
+        // Add an action listener to handle selections
+        dropdown.addActionListener(folderEvent -> {
+            final String selectedOption = (String) dropdown.getSelectedItem();
+            // TODO logic of adding a recipe to a folder
+            // final List<Recipe> folder = userDAO.getFolderFromFile(user.getUsername(), selectedOption);
+            userDAO.addRecipeToFolderInFile(this.user.getUsername(), selectedOption, this.recipe);
+            JOptionPane.showMessageDialog(this, "Recipe added to " + selectedOption + "!");
+        });
+        // Add the dropdown to the frame
+        add(dropdown);
+
         // Display the frame
         setVisible(true);
     }
@@ -127,7 +147,6 @@ public class IndividualRecipeView extends JFrame implements ActionListener {
         else if (event.getSource() == bookmarkButton) {
             // TODO complete bookmark function
             if (!user.getBookmarks().contains(recipe)) {
-                // user.addBookmark(recipe);
                 userDAO.addBookmarkToFile(user.getUsername(), recipe);
                 JOptionPane.showMessageDialog(this, "Recipe added to bookmarks!");
             } else {
