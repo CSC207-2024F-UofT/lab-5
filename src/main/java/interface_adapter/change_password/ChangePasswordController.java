@@ -24,3 +24,4 @@ public class ChangePasswordController {
         userChangePasswordUseCaseInteractor.execute(changePasswordInputData);
     }
 }
+
