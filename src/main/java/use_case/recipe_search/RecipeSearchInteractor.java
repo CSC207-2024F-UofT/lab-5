@@ -63,6 +63,7 @@ public class RecipeSearchInteractor implements RecipeSearchInputBoundary {
 
         if (recipes.isEmpty() && !value) {
             recipePresenter.prepareFailView("No recipes found for the given filters.");
+            value = true;
         }
         if (!value) {
             final RecipeSearchOutputData outputData = new RecipeSearchOutputData(recipes, false);
