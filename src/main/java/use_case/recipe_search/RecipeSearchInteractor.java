@@ -6,7 +6,7 @@ import entity.Recipe;
 import java.util.Arrays;
 import java.util.List;
 
-public class RecipeSearchInteractor implements RecipeSearchInputBoundary{
+public class RecipeSearchInteractor implements RecipeSearchInputBoundary {
     private final RecipeDataAccessObject recipeDataAccessObject;
     private final RecipeSearchOutputBoundary recipePresenter;
 
