@@ -3,17 +3,16 @@ package use_case.recipe_search;
 import java.util.Arrays;
 import java.util.List;
 
-import data_access.RecipeDataAccessObject;
 import entity.Recipe;
 
 /**
  * The Search Interactor.
  */
 public class RecipeSearchInteractor implements RecipeSearchInputBoundary {
-    private final RecipeDataAccessObject recipeDataAccessObject;
+    private final RecipeSearchDataAccessInterface recipeDataAccessObject;
     private final RecipeSearchOutputBoundary recipePresenter;
 
-    public RecipeSearchInteractor(RecipeDataAccessObject recipeDataAccessObject,
+    public RecipeSearchInteractor(RecipeSearchDataAccessInterface recipeDataAccessObject,
                                   RecipeSearchOutputBoundary recipePresenter) {
         this.recipeDataAccessObject = recipeDataAccessObject;
         this.recipePresenter = recipePresenter;
@@ -33,7 +32,8 @@ public class RecipeSearchInteractor implements RecipeSearchInputBoundary {
         boolean value = false;
 
         // Ensure at least one parameter is provided
-        if (isAllParametersEmpty(Arrays.asList(recipeName, calMin, calMax, carbMin, carbMax, proteinMin, proteinMax, fatMin, fatMax))) {
+        if (isAllParametersEmpty(Arrays.asList(recipeName, calMin, calMax, carbMin, carbMax, proteinMin,
+                proteinMax, fatMin, fatMax))) {
             recipePresenter.prepareFailView("At least one filter parameter must be provided.");
             value = true;
         }
@@ -97,7 +97,6 @@ public class RecipeSearchInteractor implements RecipeSearchInputBoundary {
                 isValid = false;
             }
         }
-
         return isValid;
     }
 
