@@ -1,24 +1,27 @@
 package view;
 
-import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import java.awt.*;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
 import interface_adapter.recipe_search.RecipeSearchController;
 import interface_adapter.recipe_search.RecipeSearchState;
 import interface_adapter.recipe_search.RecipeSearchViewModel;
-import interface_adapter.signup.SignupState;
-
 
 /**
  * The View for when the user is searching for a recipe.
  */
-
 public class RecipeSearchView extends JPanel implements ActionListener, PropertyChangeListener {
     private final String viewName = "Recipe Search";
     private final RecipeSearchViewModel recipeSearchViewModel;
@@ -385,18 +388,11 @@ public class RecipeSearchView extends JPanel implements ActionListener, Property
         return viewName;
     }
 
-    /**
-     * @param e the event to be processed
-     */
     @Override
     public void actionPerformed(ActionEvent e) {
 
     }
 
-    /**
-     * @param evt A PropertyChangeEvent object describing the event source
-     *            and the property that has changed.
-     */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         final RecipeSearchState state = (RecipeSearchState) evt.getNewValue();

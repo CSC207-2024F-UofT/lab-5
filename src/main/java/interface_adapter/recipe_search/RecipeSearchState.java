@@ -1,5 +1,8 @@
 package interface_adapter.recipe_search;
 
+/**
+ * The state for the Recipe Search View Model.
+ */
 public class RecipeSearchState {
 
     private String recipeName = "";

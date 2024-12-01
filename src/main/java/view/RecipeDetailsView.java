@@ -21,6 +21,8 @@ public class RecipeDetailsView extends JPanel implements ActionListener, Propert
     private JLabel servingsLabel;
     private JLabel urlLabel;
     private JPanel nutrientsPanel;
+    private final String viewName = "Recipe Details";
+
 
     private final JLabel rating = new JLabel("Rating:");
     private final JTextField ratingInputField = new JTextField(15);
@@ -33,9 +35,6 @@ public class RecipeDetailsView extends JPanel implements ActionListener, Propert
     public RecipeDetailsView(RecipeDetailsViewModel recipeDetailsViewModel) {
         this.recipeDetailsViewModel = recipeDetailsViewModel;
         recipeDetailsViewModel.addPropertyChangeListener(this);
-
-        //final JLabel title = new JLabel(RecipeDetailsViewModel.TITLE_LABEL);
-        //title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // Title
         final JLabel title = new JLabel("Recipe Details");
@@ -102,6 +101,10 @@ public class RecipeDetailsView extends JPanel implements ActionListener, Propert
         this.add(saveButton);
     }
 
+    public String getViewName() {
+        return viewName;
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
 
@@ -120,7 +123,7 @@ public class RecipeDetailsView extends JPanel implements ActionListener, Propert
         RecipeDetailsView recipeDetailsView = new RecipeDetailsView(viewModel);
 
         // Create a JFrame to display the view
-        JFrame frame = new JFrame("Recipe Details View");
+        JFrame frame = new JFrame("Recipe Detail");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(500, 400);
 

@@ -1,7 +1,8 @@
 package use_case.recipe_search;
 
-import use_case.signup.SignupInputData;
-
+/**
+ * Input Boundary for actions which are related to searching.
+ */
 public interface RecipeSearchInputBoundary {
 
     /**

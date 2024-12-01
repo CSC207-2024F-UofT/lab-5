@@ -1,12 +1,15 @@
 package use_case.recipe_search;
 
-import data_access.RecipeDataAccessObject;
-import entity.Recipe;
-
 import java.util.Arrays;
 import java.util.List;
 
-public class RecipeSearchInteractor implements RecipeSearchInputBoundary{
+import data_access.RecipeDataAccessObject;
+import entity.Recipe;
+
+/**
+ * The Search Interactor.
+ */
+public class RecipeSearchInteractor implements RecipeSearchInputBoundary {
     private final RecipeDataAccessObject recipeDataAccessObject;
     private final RecipeSearchOutputBoundary recipePresenter;
 
@@ -25,31 +28,32 @@ public class RecipeSearchInteractor implements RecipeSearchInputBoundary{
         final String carbMax = recipeSearchInputData.getCarbMax();
         final String proteinMin = recipeSearchInputData.getProteinMin();
         final String proteinMax = recipeSearchInputData.getProteinMax();
-        final String fatMin = recipeSearchInputData.getfatMin();
-        final String fatMax = recipeSearchInputData.getfatMax();
+        final String fatMin = recipeSearchInputData.getFatMin();
+        final String fatMax = recipeSearchInputData.getFatMax();
+        boolean value = false;
 
         // Ensure at least one parameter is provided
         if (isAllParametersEmpty(Arrays.asList(recipeName, calMin, calMax, carbMin, carbMax, proteinMin, proteinMax, fatMin, fatMax))) {
             recipePresenter.prepareFailView("At least one filter parameter must be provided.");
-            return;
+            value = true;
         }
 
         // Validate ranges for each parameter
         if (!isValidRange(calMin, calMax)) {
             recipePresenter.prepareFailView("Invalid calorie range: Minimum cannot be greater than maximum.");
-            return;
+            value = true;
         }
         if (!isValidRange(carbMin, carbMax)) {
             recipePresenter.prepareFailView("Invalid carbohydrate range: Minimum cannot be greater than maximum.");
-            return;
+            value = true;
         }
         if (!isValidRange(proteinMin, proteinMax)) {
             recipePresenter.prepareFailView("Invalid protein range: Minimum cannot be greater than maximum.");
-            return;
+            value = true;
         }
         if (!isValidRange(fatMin, fatMax)) {
             recipePresenter.prepareFailView("Invalid fat range: Minimum cannot be greater than maximum.");
-            return;
+            value = true;
         }
 
         // Fetch recipes using DAO
@@ -57,10 +61,10 @@ public class RecipeSearchInteractor implements RecipeSearchInputBoundary{
                 calMin, calMax, carbMin, carbMax, proteinMin, proteinMax, fatMin, fatMax
         );
 
-        if (recipes.isEmpty()) {
+        if (recipes.isEmpty() && !value) {
             recipePresenter.prepareFailView("No recipes found for the given filters.");
         }
-        else {
+        if (!value) {
             final RecipeSearchOutputData outputData = new RecipeSearchOutputData(recipes, false);
             recipePresenter.prepareSuccessView(outputData);
         }
@@ -88,7 +92,7 @@ public class RecipeSearchInteractor implements RecipeSearchInputBoundary{
                 final int maxValue = Integer.parseInt(max);
                 isValid = minValue <= maxValue;
             }
-            catch (NumberFormatException e) {
+            catch (NumberFormatException exception) {
                 isValid = false;
             }
         }

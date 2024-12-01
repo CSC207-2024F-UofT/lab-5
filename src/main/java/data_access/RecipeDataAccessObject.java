@@ -1,17 +1,21 @@
 package data_access;
 
+import java.io.IOException;
+import java.util.*;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import entity.Recipe;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import use_case.recipe_search.RecipeSearchDataAccessInterface;
 
-import java.io.IOException;
-import java.util.*;
-
+/**
+ * The DAO for recipe data.
+ */
 public class RecipeDataAccessObject implements RecipeSearchDataAccessInterface {
 
     private static final String API_URL = "https://api.edamam.com/api/recipes/v2";
@@ -106,46 +110,46 @@ public class RecipeDataAccessObject implements RecipeSearchDataAccessInterface {
                 .build();
 
         try {
-            Response response = client.newCall(request).execute();
+            final Response response = client.newCall(request).execute();
 
             // Check response
             if (!response.isSuccessful()) {
                 throw new IOException("Unexpected code: " + response);
             }
 
-            String responseBody = response.body().string();
-            JSONObject root = new JSONObject(responseBody);
+            final String responseBody = response.body().string();
+            final JSONObject root = new JSONObject(responseBody);
 
-            JSONArray hits = root.getJSONArray("hits");
-            List<Recipe> recipes = new ArrayList<>();
+            final JSONArray hits = root.getJSONArray("hits");
+            final List<Recipe> recipes = new ArrayList<>();
 
             for (int i = 0; i < hits.length(); i++) {
-                JSONObject recipeObj = hits.getJSONObject(i).getJSONObject("recipe");
+                final JSONObject recipeObj = hits.getJSONObject(i).getJSONObject("recipe");
 
                 // Extract recipe details
-                String name = recipeObj.getString("label");
-                int servings = recipeObj.optInt("yield", 1);
-                int calories = (int) Math.round(recipeObj.getDouble("calories") / servings);
-                String url = recipeObj.getString("url");
-                String image = recipeObj.getJSONObject("images").getJSONObject("THUMBNAIL").getString("url");
+                final String name = recipeObj.getString("label");
+                final int servings = recipeObj.optInt("yield", 1);
+                final int calories = (int) Math.round(recipeObj.getDouble("calories") / servings);
+                final String url = recipeObj.getString("url");
+                final String image = recipeObj.getJSONObject("images").getJSONObject("THUMBNAIL").getString("url");
 
                 // Extract nutrients
-                Map<String, Integer> nutrients = new HashMap<>();
-                JSONObject totalNutrients = recipeObj.getJSONObject("totalNutrients");
+                final Map<String, Integer> nutrients = new HashMap<>();
+                final JSONObject totalNutrients = recipeObj.getJSONObject("totalNutrients");
                 for (String key : totalNutrients.keySet()) {
-                    JSONObject nutrient = totalNutrients.getJSONObject(key);
+                    final JSONObject nutrient = totalNutrients.getJSONObject(key);
                     nutrients.put(nutrient.getString("label"), (int) nutrient.getDouble("quantity"));
                 }
 
                 // Extract tags
-                Set<String> tags = new HashSet<>();
-                JSONArray healthLabels = recipeObj.getJSONArray("healthLabels");
+                final Set<String> tags = new HashSet<>();
+                final JSONArray healthLabels = recipeObj.getJSONArray("healthLabels");
                 for (int j = 0; j < healthLabels.length(); j++) {
                     tags.add(healthLabels.getString(j));
                 }
 
                 // Build the Recipe object
-                Recipe recipe = Recipe.builder()
+                final Recipe recipe = Recipe.builder()
                         .name(name)
                         .servings(servings)
                         .calories(calories)
