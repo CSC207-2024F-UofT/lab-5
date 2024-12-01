@@ -17,7 +17,7 @@ public class ProfileInteractor implements ProfileInputBoundary {
     }
 
     /**
-     * Executes the SavedRecipes Use case.
+     * Executes switch to SavedRecipes.
      * @param profileInputData Input data of Profile view.
      */
     public void switchToSavedRecipesView(ProfileInputData profileInputData) {
