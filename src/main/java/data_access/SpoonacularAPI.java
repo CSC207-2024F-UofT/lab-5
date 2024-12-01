@@ -10,7 +10,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class SpoonacularAPI {
-    private final String apiKey = "9c13038e18cc407ca440bd756225cd13";
+    private final String apiKey = AppConstants.API_KEY;
 
     // Define pantry staples
     private final List<String> pantryStaples = Arrays.asList(
