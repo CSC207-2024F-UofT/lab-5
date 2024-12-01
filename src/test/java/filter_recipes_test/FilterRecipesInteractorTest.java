@@ -1,9 +1,6 @@
 package filter_recipes_test;
 
 import data_access.InMemoryFilterRecipesDataAccessObject;
-import entity.Recipe;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import use_case.filter_recipes.*;
 
@@ -12,32 +9,24 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 class FilterRecipesInteractorTest {
 
-    @BeforeEach
-    void setUp() {
-        InMemoryFilterRecipesDataAccessObject mockDAO = new InMemoryFilterRecipesDataAccessObject();
-    }
-
-    @AfterEach
-    void tearDown() {
-    }
-
     @Test
     void getAvailableDiets() {
-        FilterRecipesOutputBoundary successPresenter = new FilterRecipesOutputBoundary() {
-            @Override
-            public void prepareSuccessView(FilterRecipesOutputData data) {
-                // assert test
-            }
-            @Override
-            public void prepareFailView(String error) {
-                fail("Use case failure is unexpected");
-            }
-        };
-        // List<String> diets =
+        FilterRecipesDataAccessInterface testRepo = new InMemoryFilterRecipesDataAccessObject();
+        FilterRecipesInputBoundary interactor = new FilterRecipesInteractor(testRepo);
+        List<String> diets = interactor.getAvailableDiets();
+        assertNotNull(diets);
+        assertTrue(diets.contains("vegetarian"));
+        assertTrue(diets.contains("vegan"));
     }
 
     @Test
     void getAvailableCuisines() {
+        FilterRecipesDataAccessInterface testRepo = new InMemoryFilterRecipesDataAccessObject();
+        FilterRecipesInputBoundary interactor = new FilterRecipesInteractor(testRepo);
+        List<String> cuisines = interactor.getAvailableCuisines();
+        assertNotNull(cuisines);
+        assertTrue(cuisines.contains("italian"));
+        assertTrue(cuisines.contains("chinese"));
     }
 
     @Test
@@ -47,7 +36,6 @@ class FilterRecipesInteractorTest {
         FilterRecipesOutputBoundary successPresenter = new FilterRecipesOutputBoundary() {
             @Override
             public void prepareSuccessView(FilterRecipesOutputData data) {
-                // assert test
                 assertNotNull(data.getRecipes());
                 assertEquals(data.getRecipes().size(), 1);
                 assertEquals("vegan pasta", data.getRecipes().get(0).getName());
