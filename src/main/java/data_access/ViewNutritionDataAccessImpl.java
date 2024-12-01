@@ -14,17 +14,15 @@ import java.util.List;
 
 public class ViewNutritionDataAccessImpl implements ViewNutritionDataAccessInterface {
     private static final String BASE_URL = "https://api.spoonacular.com";
-    private static final String API_KEY = "5d06ae7be18746aaa4d1f1e5877f4450";
+    private static final String API_KEY = "5fcf2eef76af4e6893959ceefae0a087";
 
     @Override
     public List<Nutrition> getNutritionDataForRecipe(int recipeId) {
         OkHttpClient client = new OkHttpClient();
 
-        // Define the endpoint and query parameters(None)
         String endpoint = "/recipes/" + recipeId + "/nutritionWidget.json";
         String url = BASE_URL + endpoint + "?apiKey=" + API_KEY;
 
-        // Build the request
         Request request = new Request.Builder().url(url).build();
 
         List<Nutrition> nutritionList = new ArrayList<>();
@@ -32,11 +30,9 @@ public class ViewNutritionDataAccessImpl implements ViewNutritionDataAccessInter
         try (Response response = client.newCall(request).execute()) {
             if (response.isSuccessful() && response.body() != null) {
 
-                // Parse the JSON response
                 String jsonResponse = response.body().string();
                 JSONObject jsonObject = new JSONObject(jsonResponse);
 
-                // Extract 'nutrients' array
                 if (jsonObject.has("nutrients")) {
                     JSONArray nutrients = jsonObject.getJSONArray("nutrients");
                     for (int i = 0; i < nutrients.length(); i++) {

@@ -1,85 +1,69 @@
 package view;
 
-import entity.Recipe;
-import entity.User;
-import interface_adapter.RecipeController;
-import interface_adapter.filter_recipes.FilterRecipesController;
-
-import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
+
+import java.awt.*;
+import javax.swing.*;
+
+import entity.Recipe;
+import entity.User;
+import interface_adapter.RecipeController;
+import interface_adapter.SearchRecipePresenter;
+import use_case.filter_recipes.FilterRecipesDataAccessInterface;
 
 public class RecipeView extends JFrame {
     private JTextField ingredientInput;
     private JButton searchButton;
     // private JList<String> recipeList; - commented out for now to make the double click function work
-    private JList <Recipe> recipeList;
+    private JList<Recipe> recipeList;
     private final DefaultListModel<Recipe> listModel;
-    private RecipeController controller;
-    private User user;
+    private final RecipeController controller;
+    private final SearchRecipePresenter presenter;
+    private final User user;
 
-    private final FilterRecipesController filterRecipesController;
-    private final JComboBox<String> dietComboBox;
-    private final JComboBox<String> cuisineComboBox;
+    private FilterRecipesDataAccessInterface frDataAccessInterface;
+    private JComboBox<String> dietComboBox;
+    private JComboBox<String> cuisineComboBox;
+    private final String defaultFilter;
 
-    public RecipeView(RecipeController controller, User user, FilterRecipesController filterRecipesController) {
+    public RecipeView(RecipeController controller, SearchRecipePresenter presenter, User user,
+                      FilterRecipesDataAccessInterface frDataAccessInterface) {
         this.controller = controller;
+        this.presenter = presenter;
         this.user = user;
-        this.filterRecipesController = filterRecipesController;
-        // setFilterRecipesController(filterRecipesController);
+        this.frDataAccessInterface = frDataAccessInterface;
+        this.defaultFilter = "Any";
+
         setTitle("Recipe Generator");
-        setSize(800, 300);
+        setSize(800, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         ingredientInput = new JTextField(20);
         searchButton = new JButton("Find Recipes");
         recipeList = new JList<>();
-        this.listModel = new DefaultListModel<>();
+        listModel = new DefaultListModel<>();
+        recipeList.setModel(listModel);
 
-        searchButton.addActionListener(new ActionListener() {
+        searchButton.addActionListener(event -> handleSearch());
+        recipeList.addMouseListener(new MouseAdapter() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                String ingredientsText = ingredientInput.getText();
-                List<String> ingredients = Arrays.asList(ingredientsText.split(","));
-                List<Recipe> recipes = controller.getRecipes(ingredients);
-
-                // I commented this out for now and instantiated the list of recipes differently to make it clickable;
-                // feel free to change it as needed
-//                String[] recipeNames = recipes.stream()
-//                        .map(recipe -> recipe.getName() + " - " + recipe.getUrl())
-//                        .toArray(String[]::new);
-//                recipeList.setListData(recipeNames);
-
-                // final DefaultListModel<Recipe> listModel = new DefaultListModel<>();
-                listModel.clear();
-                for (Recipe recipe : recipes) {
-                    listModel.addElement(recipe);
-                }
-                recipeList.setModel(listModel);
-
-                // Make the recipe list clickable
-                recipeList.addMouseListener(new MouseAdapter() {
-                    public void mouseClicked(MouseEvent event) {
-                        if (event.getClickCount() == 2) {
-                            // Get index of clicked item
-                            final int index = recipeList.locationToIndex(event.getPoint());
-                            // Ensure valid index
-                            if (index >= 0) {
-                                // Get selected item
-                                final Recipe selectedItem = recipeList.getModel().getElementAt(index);
-                                // Open a new window
-
-                                new IndividualRecipeView(selectedItem, user);
-                            }
-                        }
+            public void mouseClicked(MouseEvent event) {
+                if (event.getClickCount() == 2) {
+                    // Get index of clicked item
+                    final int index = recipeList.locationToIndex(event.getPoint());
+                    // Ensure valid index
+                    if (index >= 0) {
+                        // Get selected item
+                        final Recipe selectedItem = recipeList.getModel().getElementAt(index);
+                        // Open a new window
+                        new IndividualRecipeView(selectedItem, user);
                     }
-                });
+                }
             }
         });
 
@@ -96,60 +80,64 @@ public class RecipeView extends JFrame {
         cuisineComboBox = new JComboBox<>();
 
         filterPanel.add(new JLabel("Diet:"));
+        final List<String> diets = frDataAccessInterface.getAvailableDiets();
+        populateDropdown(dietComboBox, diets);
         filterPanel.add(dietComboBox);
+
         filterPanel.add(new JLabel("Cuisine:"));
+        final List<String> cuisines = frDataAccessInterface.getAvailableCuisines();
+        populateDropdown(cuisineComboBox, cuisines);
         filterPanel.add(cuisineComboBox);
+
+        add(filterPanel, BorderLayout.SOUTH);
 
         dietComboBox.addActionListener(event -> applyFilters());
         cuisineComboBox.addActionListener(event -> applyFilters());
 
-        add(filterPanel, BorderLayout.SOUTH);
-
-        populateDropdowns();
-
         setVisible(true);
     }
 
-    // populating diet and cuisine dropdown menus
-    private void populateDropdowns() {
-        try {
-            final List<String> diets = filterRecipesController.getAvailableDiets();
-            dietComboBox.addItem("Any");
-            for (String diet : diets) {
-                dietComboBox.addItem(diet);
-            }
-
-            final List<String> cuisines = filterRecipesController.getAvailableCuisines();
-            cuisineComboBox.addItem("Any");
-            for (String cuisine : cuisines) {
-                cuisineComboBox.addItem(cuisine);
-            }
-        } catch (Exception exception) {
-            JOptionPane.showMessageDialog(this,
-                    "Error loading filters: " + exception.getMessage());
-        }
-    }
-
-    // applying the filters
-    private void applyFilters() {
-        final String enteredIngredients = ingredientInput.getText();
-        final List<String> ingredients = List.of(enteredIngredients.split(","));
-
-        final String selectedDiet = Objects.requireNonNull(dietComboBox.getSelectedItem()).toString();
-        final String selectedCuisine = Objects.requireNonNull(cuisineComboBox.getSelectedItem()).toString();
-
-        final List<Recipe> recipesFiltered =
-                filterRecipesController.filterSearchRecipes(ingredients, selectedDiet, selectedCuisine);
-
+    private void handleSearch() {
+        String ingredientsText = ingredientInput.getText();
+        List<String> ingredients = Arrays.asList(ingredientsText.split(","));
         listModel.clear();
-        for (Recipe recipe : recipesFiltered) {
-            listModel.addElement(recipe);
+        // Delegate search to the controller when default filters applied
+        if (defaultFilter.equals(dietComboBox.getSelectedItem())
+                && defaultFilter.equals(cuisineComboBox.getSelectedItem())) {
+            controller.searchRecipes(ingredients);
+            // Retrieve results from the presenter
+            for (Recipe recipe : presenter.getRecipes()) {
+                listModel.addElement(recipe);
+            }
+            recipeList.setModel(listModel);
+        }
+        else {
+            // else: filters have been chosen, so using search function specific to filters
+            final List<Recipe> recipes = applyFilters();
+            for (Recipe recipe : recipes) {
+                listModel.addElement(recipe);
+            }
         }
         recipeList.setModel(listModel);
     }
 
-    // public void setFilterRecipesController(FilterRecipesController filterRecipesController) {
-    //     this.filterRecipesController = filterRecipesController;
-    // }
+    private void populateDropdown(JComboBox<String> dropdown, List<String> stringList) {
+        dropdown.addItem(defaultFilter);
+        for (String item : stringList) {
+            dropdown.addItem(item);
+        }
+    }
 
+    // applying the filters
+    private List<Recipe> applyFilters() {
+        final String enteredIngredients = ingredientInput.getText();
+        final List<String> ingredients = List.of(enteredIngredients.split(","));
+        // get selected value from dropdown menu
+        final String selectedDiet = String.valueOf(dietComboBox.getSelectedItem());
+        final String selectedCuisine = String.valueOf(cuisineComboBox.getSelectedItem());
+        // call the data access object and api to return a list of recipes
+        final List<Recipe> recipesFiltered =
+                frDataAccessInterface.filterSearchRecipes(ingredients, selectedDiet, selectedCuisine);
+        return recipesFiltered;
+    }
 }

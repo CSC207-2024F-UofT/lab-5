@@ -5,8 +5,8 @@ import entity.Ingredient;
 import entity.Recipe;
 import entity.User;
 import interface_adapter.RecipeController;
+import interface_adapter.SearchRecipePresenter;
 import interface_adapter.filter_recipes.FilterRecipesController;
-import use_case.SearchRecipeUseCase;
 
 import javax.swing.*;
 import java.awt.*;
@@ -36,14 +36,16 @@ public class HomePage extends JFrame {
         final JButton startButton = new JButton("Start Searching Recipes");
         startButton.setFont(new Font("Arial", Font.PLAIN, 16));
         startButton.addActionListener(e -> {
-            // Open RecipeView and close HomePage
-            RecipeController controller = new RecipeController(new SearchRecipeUseCase(new SpoonacularRecipeDAO()));
-            // new RecipeView(controller, user);
-            FilterRecipesController frController = new FilterRecipesController(
-                    new FilterRecipesInteractor(new SpoonacularRecipeDAO()));
-            new RecipeView(controller, user, frController);
-            //dispose(); // Would it be better to not close the main page?
+            // Create the presenter
+            SearchRecipePresenter presenter = new SearchRecipePresenter();
+            // Create the use case interactor
+            use_case.SearchRecipe.SearchRecipeUseCase interactor = new use_case.SearchRecipe.SearchRecipeUseCase(new SpoonacularRecipeDAO(), presenter);
+            // Create the controller
+            RecipeController controller = new RecipeController(interactor);
+            // Open the RecipeView and pass dependencies
+            new RecipeView(controller, presenter, user, new SpoonacularRecipeDAO());
         });
+
         // Shopping List Button
         final JButton shoppingListButton = new JButton("Shopping List");
         shoppingListButton.setFont(new Font("Arial", Font.PLAIN, 16));

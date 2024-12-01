@@ -137,8 +137,6 @@ public abstract class RecipeListView extends JFrame implements ActionListener {
 //        });
 
         // search filters
-        // final JPanel bottomPanel = new JPanel();
-        // bottomPanel.setLayout(new FlowLayout());
         final JPanel filterPanel = new JPanel(new FlowLayout());
         dietComboBox = new JComboBox<>();
         cuisineComboBox = new JComboBox<>();
@@ -161,12 +159,12 @@ public abstract class RecipeListView extends JFrame implements ActionListener {
         //     }
         // });
 
-        cuisineComboBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                applyFilters();
-            }
-        });
+        // cuisineComboBox.addActionListener(new ActionListener() {
+        //     @Override
+        //     public void actionPerformed(ActionEvent e) {
+        //         applyFilters();
+        //     }
+        // });
 
         setVisible(true);
     }

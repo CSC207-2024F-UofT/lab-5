@@ -2,8 +2,6 @@ package use_case.filter_recipes;
 
 import java.util.List;
 
-import entity.Recipe;
-
 /**
  * The filter recipes input boundary interface for calling the use case.
  */
@@ -29,10 +27,8 @@ public interface FilterRecipesInputBoundary {
 
     /**
      * Filter searches recipes.
-     * @param ingredients list of ingredients
-     * @param diet diet choice
-     * @param cuisine cuisine choice
-     * @return list of recipes
+     *
+     * @param filterRecipesInputData input data
      */
-    List<Recipe> filterSearchRecipes(List<String> ingredients, String diet, String cuisine);
+    void filterSearchRecipes(FilterRecipesInputData filterRecipesInputData);
 }
