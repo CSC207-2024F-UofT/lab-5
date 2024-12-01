@@ -1,8 +1,8 @@
 package use_case.filter_recipes;
 
-import entity.Recipe;
-
 import java.util.List;
+
+import entity.Recipe;
 
 /**
  * The Filter Recipes Interactor.
@@ -12,11 +12,6 @@ public class FilterRecipesInteractor implements FilterRecipesInputBoundary {
     private FilterRecipesDataAccessInterface userDataAccessObject;
     private FilterRecipesOutputBoundary outputBoundary;
     // private SpoonacularRecipeDAO recipeDataAccessObject;
-
-/*    // overloading constructor for now
-    public FilterRecipesInteractor(SpoonacularRecipeDAO recipeDataAccessObject) {
-        this.recipeDataAccessObject = recipeDataAccessObject;
-    }*/
 
     public FilterRecipesInteractor(FilterRecipesDataAccessInterface userDataAccessObject,
                                    FilterRecipesOutputBoundary outputBoundary) {
