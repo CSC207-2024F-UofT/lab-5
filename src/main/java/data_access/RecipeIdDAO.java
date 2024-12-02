@@ -7,14 +7,13 @@ import java.net.URL;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class GetRecipeId {
+public class RecipeIdDAO {
 
-    private static final String API_KEY = "5fcf2eef76af4e6893959ceefae0a087";
+    private static final String API_KEY = "5fcf2eef76af4e6893959ceefae0a087"; //
     private static final String BASE_URL = "https://api.spoonacular.com/recipes/complexSearch";
 
     public static int getRecipeIdByName(String recipeName) {
         try {
-
             String apiUrl = BASE_URL + "?query=" + recipeName.replace(" ", "+") + "&apiKey=" + API_KEY;
 
             URL url = new URL(apiUrl);

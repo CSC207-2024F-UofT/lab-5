@@ -9,7 +9,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
-import data_access.GetRecipeId;
+import data_access.RecipeIdDAO;
 import data_access.UserDAOImpl;
 import entity.*;
 
@@ -116,13 +116,12 @@ public class IndividualRecipeView extends JFrame implements ActionListener {
         setVisible(true);
     }
 
-    GetRecipeId getRecipeId = new GetRecipeId();
-
     @Override
     public void actionPerformed(ActionEvent event) {
         if (event.getSource() == nutritionButton) {
-            int recipeId = getRecipeId.getRecipeIdByName(recipe.getName());
-            new NutritionView(recipeId);
+            RecipeIdDAO getRecipeIdDAO = new RecipeIdDAO();
+            int recipeId = getRecipeIdDAO.getRecipeIdByName(recipe.getName());
+            new NutritionInformationView(recipeId);
         }
         else if (event.getSource() == bookmarkButton) {
             // TODO complete bookmark function
