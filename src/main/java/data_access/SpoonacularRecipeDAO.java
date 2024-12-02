@@ -47,7 +47,7 @@ public class SpoonacularRecipeDAO implements RecipeDAO, FilterRecipesDataAccessI
 
         // Construct the URL with the ingredients query
         String endpoint = "/recipes/findByIngredients";
-        String url = BASE_URL + endpoint + "?apiKey=" + API_KEY + "&ingredients=" + ingredientsQuery + "&number=5";
+        String url = BASE_URL + endpoint + "?apiKey=" + API_KEY + "&ingredients=" + ingredientsQuery + "&number=20";
 
         // Build the request
         Request request = new Request.Builder()
