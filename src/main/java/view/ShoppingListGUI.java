@@ -1,16 +1,14 @@
 package view;
 
-import entity.Recipe;
-import interface_adapter.ShoppingListController;
-
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.Arrays;
 import java.util.List;
+
+import javax.swing.*;
+
+import interface_adapter.ShoppingListController;
 
 public class ShoppingListGUI {
     private final ShoppingListController controller;
@@ -21,27 +19,26 @@ public class ShoppingListGUI {
 
     public void run() {
         // Main Frame
-        JFrame frame = new JFrame("Shopping List Generator");
+        final JFrame frame = new JFrame("Shopping List Generator");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(600, 500);
 
         // Panel Layout
-        JPanel panel = new JPanel();
+        final JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
 
         // Top Input Section
-        JPanel inputPanel = new JPanel(new FlowLayout());
-        JLabel ingredientLabel = new JLabel("Enter Ingredients (comma-separated):");
-        JTextField ingredientField = new JTextField(20);
-        JButton searchButton = new JButton("Search Recipes");
+        final JPanel inputPanel = new JPanel(new FlowLayout());
+        final JLabel ingredientLabel = new JLabel("Enter Ingredients (comma-separated):");
+        final JTextField ingredientField = new JTextField(20);
+        final JButton searchButton = new JButton("Search Recipes");
         inputPanel.add(ingredientLabel);
         inputPanel.add(ingredientField);
         inputPanel.add(searchButton);
 
         // Center Recipe List Section
-        DefaultListModel<String> recipeListModel = new DefaultListModel<>();
-        JList<String> recipeList = new JList<>(recipeListModel);
-        JScrollPane recipeScrollPane = new JScrollPane(recipeList);
+        final DefaultListModel<String> recipeListModel = new DefaultListModel<>();
+        final JList<String> recipeList = new JList<>(recipeListModel);
+        final JScrollPane recipeScrollPane = new JScrollPane(recipeList);
         recipeScrollPane.setBorder(BorderFactory.createTitledBorder("Select Recipes"));
 
         // TODO Make the recipe list clickable - will be complicated...
@@ -66,10 +63,10 @@ public class ShoppingListGUI {
 //        });
 
         // Bottom Generate Section
-        JButton generateButton = new JButton("Generate Shopping List");
-        JTextArea shoppingListArea = new JTextArea(10, 50);
+        final JButton generateButton = new JButton("Generate Shopping List");
+        final JTextArea shoppingListArea = new JTextArea(10, 50);
         shoppingListArea.setEditable(false);
-        JScrollPane shoppingListScrollPane = new JScrollPane(shoppingListArea);
+        final JScrollPane shoppingListScrollPane = new JScrollPane(shoppingListArea);
         shoppingListScrollPane.setBorder(BorderFactory.createTitledBorder("Shopping List"));
 
         // Add components to panel
@@ -88,17 +85,17 @@ public class ShoppingListGUI {
                 String ingredientInput = ingredientField.getText().trim();
                 if (ingredientInput.isEmpty()) {
                     JOptionPane.showMessageDialog(frame, "Please enter ingredients!", "Error", JOptionPane.ERROR_MESSAGE);
-                    return;
                 }
 
                 // Parse the user-provided ingredients
-                List<String> availableIngredients = Arrays.asList(ingredientInput.split(","));
+                final List<String> availableIngredients = Arrays.asList(ingredientInput.split(","));
 
                 // Fetch recipes
-                List<String> recipes = controller.getRecipesContaining(availableIngredients);
+                final List<String> recipes = controller.getRecipesContaining(availableIngredients);
                 if (recipes.isEmpty()) {
                     JOptionPane.showMessageDialog(frame, "No recipes found!", "Info", JOptionPane.INFORMATION_MESSAGE);
-                } else {
+                }
+                else {
                     recipeListModel.clear();
                     for (String recipe : recipes) {
                         recipeListModel.addElement(recipe);
@@ -111,27 +108,26 @@ public class ShoppingListGUI {
         generateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                List<String> selectedRecipes = recipeList.getSelectedValuesList();
-                String ingredientInput = ingredientField.getText().trim();
+                final List<String> selectedRecipes = recipeList.getSelectedValuesList();
+                final String ingredientInput = ingredientField.getText().trim();
 
                 if (ingredientInput.isEmpty()) {
                     JOptionPane.showMessageDialog(frame, "Please enter ingredients!", "Error", JOptionPane.ERROR_MESSAGE);
-                    return;
                 }
 
                 List<String> availableIngredients = Arrays.asList(ingredientInput.split(","));
                 if (selectedRecipes.isEmpty()) {
                     JOptionPane.showMessageDialog(frame, "Please select at least one recipe!", "Error", JOptionPane.ERROR_MESSAGE);
-                    return;
                 }
 
                 // Generate the shopping list
-                String shoppingList = controller.generateShoppingList(selectedRecipes, availableIngredients);
+                final String shoppingList = controller.generateShoppingList(selectedRecipes, availableIngredients);
                 shoppingListArea.setText(shoppingList);
             }
         });
 
         // Show Frame
+        frame.pack();
         frame.setVisible(true);
     }
 }

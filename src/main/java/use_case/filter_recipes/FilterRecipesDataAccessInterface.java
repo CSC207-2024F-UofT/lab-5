@@ -2,8 +2,6 @@ package use_case.filter_recipes;
 
 import java.util.List;
 
-import entity.CuisinePreference;
-import entity.DietaryPreference;
 import entity.Recipe;
 
 /**

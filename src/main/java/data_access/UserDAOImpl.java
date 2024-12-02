@@ -42,6 +42,7 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public User findUserByUsername(String username) {
+        usersDatabase = loadUsersFromFile();
         return usersDatabase.get(username); // Returns null if the user doesn't exist
     }
 
@@ -101,7 +102,6 @@ public class UserDAOImpl implements UserDAO {
                 }
 
                 // reconstructing recentlyViewed as a list of recipes
-                JSONArray recentlyViewed = userObject.getJSONArray("recentlyViewed");
                 JSONArray recentlyViewedArray = userObject.getJSONArray("recentlyViewed");
                 List<Recipe> recipeRecentlyViewed = new ArrayList<>();
                 for (int m = 0; m < recentlyViewedArray.length(); m++) {
@@ -126,17 +126,56 @@ public class UserDAOImpl implements UserDAO {
                     recipeRecentlyViewed.add(recipe);
                 }
 
+                // reconstructing folders as a map of folderNames and lists of recipes
+                JSONObject foldersJson = new JSONObject();
+                if (userObject.has("folders")) {
+                    foldersJson = userObject.getJSONObject("folders");
+                }
+                else {
+                    foldersJson.put("folders", new JSONArray());
+                }
+                final Map<String, List<Recipe>> foldersMap = new HashMap<>();
+                for (String folderName : foldersJson.keySet()) {
+                    final JSONArray recipesArray = foldersJson.getJSONArray(folderName);
+                    final List<Recipe> recipes = new ArrayList<>();
+
+                    for (int t = 0; t < recipesArray.length(); t++) {
+                        final JSONObject recipeJson = recipesArray.getJSONObject(t);
+                        final JSONArray ingredientsJson = recipeJson.getJSONArray("ingredients");
+                        final List<Ingredient> ingredients = new ArrayList<>();
+
+                        for (int s = 0; s < ingredientsJson.length(); s++) {
+                            JSONObject ingredientJson = ingredientsJson.getJSONObject(s);
+                            Ingredient ingredient = new Ingredient(
+                                    ingredientJson.getString("name"),
+                                    ingredientJson.getDouble("amount"),
+                                    ingredientJson.getString("unit"));
+                            ingredients.add(ingredient);
+                        }
+
+                        final Recipe recipe = new Recipe(
+                                recipeJson.getString("name"),
+                                recipeJson.getString("url"),
+                                ingredients,
+                                recipeJson.getString("image"));
+                        recipes.add(recipe);
+                    }
+                    System.out.println(folderName);
+                    System.out.println(recipes);
+                    foldersMap.put(folderName, recipes);
+                }
+
                 // putting the new user object in the list of users to be returned
-                users.put(username, new User(username, password, recipeBookmarks, recipeRecentlyViewed));
+                users.put(username, new User(username, password, recipeBookmarks, recipeRecentlyViewed, foldersMap));
                 System.out.println("Loaded user: " + username); // Debugging output
             }
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             e.printStackTrace();
             saveUsersToFile();
         }
         return users;
     }
-
 
     // Save users to JSON file using org.json
     private void saveUsersToFile() {
@@ -147,6 +186,7 @@ public class UserDAOImpl implements UserDAO {
             userObject.put("password", user.getPassword());
             userObject.put("bookmarks", user.getBookmarks());
             userObject.put("recentlyViewed", user.getRecentlyViewed());
+            userObject.put("folders", user.getFolders());
             usersArray.put(userObject);
         }
         try (FileWriter writer = new FileWriter(FILE_PATH)) {
@@ -209,5 +249,31 @@ public class UserDAOImpl implements UserDAO {
         usersDatabase.put(user.getUsername(), user);
         saveUsersToFile();
         System.out.println("RecentlyViewed cleared successfully");
+    }
+
+    public void addFolderToFile(String username, String folder) {
+        final Map<String, User> users = loadUsersFromFile();
+        final User user = users.get(username);
+        user.addFolder(folder);
+        usersDatabase.put(user.getUsername(), user);
+        saveUsersToFile();
+        System.out.println("Folder added successfully for: " + user.getUsername());
+        // TODO double check this method
+    }
+
+    public void addRecipeToFolderInFile(String username, String folder, Recipe recipe) {
+        final Map<String, User> users = loadUsersFromFile();
+        final User user = users.get(username);
+        user.addRecipeToFolder(folder, recipe);
+        usersDatabase.put(user.getUsername(), user);
+        saveUsersToFile();
+        System.out.println("Recipe added successfully for: " + user.getFolder(folder));
+    }
+
+    public List<Recipe> getFolderFromFile(String username, String folder) {
+        final Map<String, User> users = loadUsersFromFile();
+        final User user = users.get(username);
+        System.out.println("Loaded folder: " + user.getFolder(folder));
+        return user.getFolder(folder);
     }
 }
