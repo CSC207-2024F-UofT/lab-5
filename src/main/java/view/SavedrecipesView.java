@@ -1,21 +1,30 @@
 package view;
 
+import java.awt.Component;
+import java.awt.Desktop;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.Map;
+
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+
 import entity.Recipe;
 import interface_adapter.saved_recipes.SavedrecipesController;
 import interface_adapter.saved_recipes.SavedrecipesState;
 import interface_adapter.saved_recipes.SavedrecipesViewModel;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
+/**
+ * Saved Recipes view.
+ */
 public class SavedrecipesView extends JPanel implements PropertyChangeListener {
 
     private final String viewName = "SavedRecipes";
@@ -71,6 +80,10 @@ public class SavedrecipesView extends JPanel implements PropertyChangeListener {
         );
     }
 
+    /**
+     * Shows list of all saved recipes.
+     * @param recipesWithRatings User's saved recipes.
+     */
     public void populateRecipeList(Map<Recipe, Integer> recipesWithRatings) {
         recipeListPanel.removeAll();
 
@@ -81,7 +94,7 @@ public class SavedrecipesView extends JPanel implements PropertyChangeListener {
             // Create a panel for each recipe entry
             final JPanel recipePanel = new JPanel();
             recipePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-            recipePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 50)); // Ensure width fits
+            recipePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 50));
 
             final JLabel recipeLabel = new JLabel(recipe.getName() + " (Rating: " + rating + ")");
             final JButton linkButton = new JButton("View Recipe");
@@ -93,10 +106,18 @@ public class SavedrecipesView extends JPanel implements PropertyChangeListener {
                     try {
                         Desktop.getDesktop().browse(new java.net.URI(recipe.getUrl()));
                     }
-                    catch (Exception ex) {
+                    catch (java.io.IOException ex) {
                         JOptionPane.showMessageDialog(
                                 SavedrecipesView.this,
                                 "Unable to open link: " + ex.getMessage(),
+                                "Error",
+                                JOptionPane.ERROR_MESSAGE
+                        );
+                    }
+                    catch (java.net.URISyntaxException ex) {
+                        JOptionPane.showMessageDialog(
+                                SavedrecipesView.this,
+                                "Invalid URL format: " + ex.getMessage(),
                                 "Error",
                                 JOptionPane.ERROR_MESSAGE
                         );
@@ -133,92 +154,6 @@ public class SavedrecipesView extends JPanel implements PropertyChangeListener {
 
     public void setSavedrecipesController(SavedrecipesController savedrecipesController) {
         this.savedrecipesController = savedrecipesController;
-    }
-    //Test fuction//
-    public static void test() {
-        // Create sample recipes using Java 7-compatible methods
-        Map<String, Integer> pastaNutrients = new HashMap<>();
-        pastaNutrients.put("Carbs", 100);
-        pastaNutrients.put("Protein", 20);
-
-        Set<String> pastaTags = new HashSet<>();
-        pastaTags.add("Dinner");
-
-        Recipe pasta = new Recipe(
-                "Pasta",
-                2,
-                500,
-                pastaNutrients,
-                pastaTags,
-                "https://example.com/pasta",
-                "pasta_image"
-        );
-
-        Map<String, Integer> saladNutrients = new HashMap<>();
-        saladNutrients.put("Fiber", 20);
-        saladNutrients.put("Vitamins", 10);
-
-        Set<String> saladTags = new HashSet<>();
-        saladTags.add("Healthy");
-
-        Recipe salad = new Recipe(
-                "Salad",
-                1,
-                200,
-                saladNutrients,
-                saladTags,
-                "https://example.com/salad",
-                "salad_image"
-        );
-
-        Map<String, Integer> smoothieNutrients = new HashMap<>();
-        smoothieNutrients.put("Sugar", 15);
-        smoothieNutrients.put("Protein", 5);
-
-        Set<String> smoothieTags = new HashSet<>();
-        smoothieTags.add("Breakfast");
-        smoothieTags.add("Healthy");
-
-        Recipe smoothie = new Recipe(
-                "Smoothie",
-                1,
-                150,
-                smoothieNutrients,
-                smoothieTags,
-                "https://example.com/smoothie",
-                "smoothie_image"
-        );
-
-        // Create a HashMap of recipes with their ratings
-        HashMap<Recipe, Integer> recipes = new HashMap<>();
-        recipes.put(pasta, 5);
-        recipes.put(salad, 4);
-        recipes.put(smoothie, 3);
-
-        // Set up the main frame for testing
-        JFrame frame = new JFrame("Test Recipe Viewer");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 600);
-
-        // Create a mock ViewModel (can replace with your actual ViewModel implementation)
-        SavedrecipesViewModel mockViewModel = new SavedrecipesViewModel() {
-            @Override
-            public void addPropertyChangeListener(PropertyChangeListener listener) {
-                // No-op for this example
-            }
-
-            public void removePropertyChangeListener(PropertyChangeListener listener) {
-                // No-op for this example
-            }
-        };
-
-        // Create the SavedrecipesView and populate it
-        SavedrecipesView savedrecipesView = new SavedrecipesView(mockViewModel);
-        savedrecipesView.populateRecipeList(recipes);
-
-        // Add the view to the frame
-        frame.add(savedrecipesView);
-        frame.setVisible(true);
     }
 
 }
