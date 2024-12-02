@@ -18,8 +18,7 @@ public class LoginPresenter implements LoginOutputBoundary {
 
     public LoginPresenter(ViewManagerModel viewManagerModel,
                           ProfileViewModel profileViewModel,
-                          LoginViewModel loginViewModel,
-                          ForgotPasswordViewModel forgotPasswordViewModel) {
+                          LoginViewModel loginViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.profileViewModel = profileViewModel;
         this.loginViewModel = loginViewModel;

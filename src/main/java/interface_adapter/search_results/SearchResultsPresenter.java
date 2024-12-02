@@ -1,9 +1,11 @@
 package interface_adapter.search_results;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.recipe_details.RecipeDetailsState;
 import interface_adapter.recipe_details.RecipeDetailsViewModel;
 import interface_adapter.recipe_search.RecipeSearchViewModel;
 import use_case.search_results.SearchResultsOutputBoundary;
+import use_case.search_results.SearchResultsOutputData;
 
 /**
  * The Presenter for the Search Results Use Case.
@@ -29,7 +31,12 @@ public class SearchResultsPresenter implements SearchResultsOutputBoundary {
     }
 
     @Override
-    public void switchToRecipeDetailsView() {
+    public void switchToRecipeDetailsView(SearchResultsOutputData response) {
+        final RecipeDetailsState recipeDetailsState = recipeDetailsViewModel.getState();
+        recipeDetailsState.setRecipe(response.getRecipe());
+        recipeDetailsState.setUsername(response.getUsername());
+        this.recipeDetailsViewModel.setState(recipeDetailsState);
+        this.recipeDetailsViewModel.firePropertyChanged();
         viewManagerModel.setState(recipeDetailsViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }

@@ -13,16 +13,17 @@ import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.ChangePasswordPresenter;
-import interface_adapter.forgotPassword.ForgotPasswordViewModel;
+import interface_adapter.profile.ProfileController;
+import interface_adapter.profile.ProfilePresenter;
+import interface_adapter.profile.ProfileViewModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.logout.LogoutPresenter;
-import interface_adapter.profile.ProfileController;
-import interface_adapter.profile.ProfilePresenter;
-import interface_adapter.profile.ProfileViewModel;
 import interface_adapter.recipe_details.RecipeDetailsViewModel;
+import interface_adapter.recipe_review.RecipeReviewController;
+import interface_adapter.recipe_review.RecipeReviewPresenter;
 import interface_adapter.recipe_search.RecipeSearchController;
 import interface_adapter.recipe_search.RecipeSearchPresenter;
 import interface_adapter.recipe_search.RecipeSearchViewModel;
@@ -50,6 +51,9 @@ import use_case.profile.ProfileOutputBoundary;
 import use_case.recipe_search.RecipeSearchInputBoundary;
 import use_case.recipe_search.RecipeSearchInteractor;
 import use_case.recipe_search.RecipeSearchOutputBoundary;
+import use_case.review_recipe.RecipeReviewInputBoundary;
+import use_case.review_recipe.RecipeReviewInteractor;
+import use_case.review_recipe.RecipeReviewOutputBoundary;
 import use_case.saved_recipes.SavedRecipeInputBoundary;
 import use_case.saved_recipes.SavedRecipeInteractor;
 import use_case.saved_recipes.SavedRecipeOutputBoundry;
@@ -59,14 +63,7 @@ import use_case.search_results.SearchResultsOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
-import view.ForgotPasswordView;
-import view.LoginView;
-import view.ProfileView;
-import view.RecipeSearchView;
-import view.SavedrecipesView;
-import view.SearchResultsView;
-import view.SignupView;
-import view.ViewManager;
+import view.*;
 
 /**
  * The AppBuilder class is responsible for putting together the pieces of
@@ -102,10 +99,10 @@ public class AppBuilder {
     private SearchResultsView searchResultsView;
     private SearchResultsViewModel searchResultsViewModel;
     private LoginView loginView;
-    private ForgotPasswordViewModel forgotPasswordViewModel;
     private ForgotPasswordView forgotPasswordView;
     private SavedrecipesViewModel savedrecipesViewModel;
     private RecipeDetailsViewModel recipeDetailsViewModel;
+    private RecipeDetailsView recipeDetailsView;
     private SavedrecipesView savedrecipesView;
 
     public AppBuilder() {
@@ -145,21 +142,6 @@ public class AppBuilder {
         return this;
     }
 
-    /**
-     * Adds the cut Forgot password View to the application.
-     * @return this builder
-     */
-    public AppBuilder addForgotPasswordView() {
-        forgotPasswordViewModel = new ForgotPasswordViewModel();
-        forgotPasswordView = new ForgotPasswordView(forgotPasswordViewModel);
-        cardPanel.add(forgotPasswordView, forgotPasswordViewModel.getViewName());
-        return this;
-    }
-
-    /**
-     * Adds the SavedRecipes View to the application.
-     * @return this builder
-     */
     public AppBuilder addSavedRecipesView() {
         savedrecipesViewModel = new SavedrecipesViewModel();
         savedrecipesView = new SavedrecipesView(savedrecipesViewModel);
@@ -167,10 +149,6 @@ public class AppBuilder {
         return this;
     }
 
-    /**
-     * Adds the Recipe Search View to the application.
-     * @return this builder
-     */
     public AppBuilder addRecipeSearchView() {
         recipeSearchViewModel = new RecipeSearchViewModel();
         recipeSearchView = new RecipeSearchView(recipeSearchViewModel);
@@ -178,14 +156,17 @@ public class AppBuilder {
         return this;
     }
 
-    /**
-     * Adds the Search Results View to the application.
-     * @return this builder
-     */
     public AppBuilder addSearchResultsView() {
         searchResultsViewModel = new SearchResultsViewModel();
         searchResultsView = new SearchResultsView(searchResultsViewModel);
         cardPanel.add(searchResultsView, searchResultsView.getViewName());
+        return this;
+    }
+
+    public AppBuilder addRecipeDetailsView() {
+        recipeDetailsViewModel = new RecipeDetailsViewModel();
+        recipeDetailsView = new RecipeDetailsView(recipeDetailsViewModel);
+        cardPanel.add(recipeDetailsView, recipeDetailsView.getViewName());
         return this;
     }
 
@@ -204,15 +185,9 @@ public class AppBuilder {
         return this;
     }
 
-    /**
-     * Adds the Profile Use Case to the application.
-     * @return this builder
-     */
     public AppBuilder addProfileUseCase() {
-        final ProfileOutputBoundary profileOutputBoundary = new ProfilePresenter(savedrecipesViewModel,
-                viewManagerModel, recipeSearchViewModel);
-        final ProfileInputBoundary userProfileInteractor = new ProfileInteractor(profileOutputBoundary,
-                userDataAccessObject);
+        final ProfileOutputBoundary profileOutputBoundary = new ProfilePresenter(savedrecipesViewModel, viewManagerModel, recipeSearchViewModel);
+        final ProfileInputBoundary userProfileInteractor = new ProfileInteractor(profileOutputBoundary, userDataAccessObject);
 
         final ProfileController controller = new ProfileController(userProfileInteractor);
         profileView.setProfileController(controller);
@@ -225,7 +200,7 @@ public class AppBuilder {
      */
     public AppBuilder addLoginUseCase() {
         final LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel,
-                profileViewModel, loginViewModel, forgotPasswordViewModel);
+                profileViewModel, loginViewModel);
         final LoginInputBoundary loginInteractor = new LoginInteractor(
                 userDataAccessObject, loginOutputBoundary);
 
@@ -234,10 +209,6 @@ public class AppBuilder {
         return this;
     }
 
-    /**
-     * Adds the Saved Recipes Use Case to the application.
-     * @return this builder
-     */
     public AppBuilder addSavedrecipesUseCase() {
         final SavedRecipeOutputBoundry savedRecipeOutputBoundry = new SavedrecipesPresenter(savedrecipesViewModel,
                 profileViewModel, viewManagerModel);
@@ -281,10 +252,6 @@ public class AppBuilder {
         return this;
     }
 
-    /**
-     * Adds the recipe Search Use Case to the application.
-     * @return this builder
-     */
     public AppBuilder addSearchUseCase() {
         final RecipeSearchOutputBoundary recipeSearchOutputBoundary = new RecipeSearchPresenter(
                 recipeSearchViewModel, searchResultsViewModel, viewManagerModel, profileViewModel);
@@ -296,18 +263,22 @@ public class AppBuilder {
         return this;
     }
 
-    /**
-     * Adds the Search results Use Case to the application.
-     * @return this builder
-     */
     public AppBuilder addSearchResultsUseCase() {
         final SearchResultsOutputBoundary searchResultsOutputBoundary = new SearchResultsPresenter(
                 searchResultsViewModel, recipeDetailsViewModel, viewManagerModel, recipeSearchViewModel);
-        final SearchResultsInputBoundary resultsInteractor = new SearchResultsInteractor(
-                searchResultsOutputBoundary);
+        final SearchResultsInputBoundary resultsInteractor = new SearchResultsInteractor(searchResultsOutputBoundary, userDataAccessObject);
 
         final SearchResultsController controller = new SearchResultsController(resultsInteractor);
         searchResultsView.setSearchResultsController(controller);
+        return this;
+    }
+
+    public AppBuilder addRecipeReviewUseCase() {
+        final RecipeReviewOutputBoundary recipeReviewOutputBoundary = new RecipeReviewPresenter(viewManagerModel, profileViewModel);
+        final RecipeReviewInteractor recipeReviewInteractor = new RecipeReviewInteractor(recipeReviewOutputBoundary, userDataAccessObject);
+
+        final RecipeReviewController controller = new RecipeReviewController(recipeReviewInteractor);
+        recipeDetailsView.setRecipeReviewController(controller);
         return this;
     }
 
@@ -316,7 +287,7 @@ public class AppBuilder {
      * @return the application
      */
     public JFrame build() {
-        final JFrame application = new JFrame("Recipe Management System");
+        final JFrame application = new JFrame("Login Example");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         application.add(cardPanel);

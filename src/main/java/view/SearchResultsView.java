@@ -106,7 +106,7 @@ public class SearchResultsView extends JPanel implements PropertyChangeListener 
             detailsButton = new JButton("Details");
             detailsButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent evt) {
-                    searchResultsController.switchToRecipeDetailsView();
+                    searchResultsController.switchToRecipeDetailsView(recipe);
                 }
             });
             recipePanel.add(detailsButton);
@@ -116,7 +116,7 @@ public class SearchResultsView extends JPanel implements PropertyChangeListener 
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     // Handle the recipe click event
-                    searchResultsController.switchToRecipeDetailsView();
+                    searchResultsController.switchToRecipeDetailsView(recipe);
                 }
             });
 
