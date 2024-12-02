@@ -1,9 +1,8 @@
 package use_case.saved_recipes;
 
-import entity.Recipe;
-
-import java.util.Map;
-
+/**
+ * Output data for SavedRecipe View.
+ */
 public class SavedRecipeOutputData {
 
     private final String username;

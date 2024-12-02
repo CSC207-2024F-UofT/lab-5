@@ -11,5 +11,5 @@ public interface LoginInputBoundary {
      */
     void execute(LoginInputData loginInputData);
 
-    void switchToForgotPasswordView();
+    //    void switchToForgotPasswordView();
 }

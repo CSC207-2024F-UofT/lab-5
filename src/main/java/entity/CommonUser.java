@@ -32,8 +32,22 @@ public class CommonUser implements User {
         return recipes;
     }
 
+    /**
+     * Add Recipe to the user's saved recipes.
+     * @param recipe the recipe object being saved.
+     * @param amount rating of the recipe.
+     */
     public void addRecipe(Recipe recipe, Integer amount) {
         recipes.put(recipe, amount);
     }
 
+    public void reviewRecipe(Recipe recipe, int rating) {
+        if (recipes.containsKey(recipe)) {
+            recipes.put(recipe, rating);
+        }
+        else {
+            throw new IllegalArgumentException("Recipe not found");
+        }
+    }
 }
+

@@ -7,7 +7,9 @@ import interface_adapter.search_results.SearchResultsViewModel;
 import use_case.recipe_search.RecipeSearchOutputBoundary;
 import use_case.recipe_search.RecipeSearchOutputData;
 
-
+/**
+ * The Presenter for the Search Use Case.
+ */
 public class RecipeSearchPresenter implements RecipeSearchOutputBoundary {
 
     private final RecipeSearchViewModel recipeSearchviewModel;
@@ -47,7 +49,7 @@ public class RecipeSearchPresenter implements RecipeSearchOutputBoundary {
     }
 
     @Override
-    public void switchToProfileView(){
+    public void switchToProfileView() {
         viewManagerModel.setState(profileViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }

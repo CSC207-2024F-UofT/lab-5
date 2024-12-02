@@ -38,7 +38,7 @@ public class LoginInteractor implements LoginInputBoundary {
         }
     }
 
-    public void switchToForgotPasswordView() {
-        loginPresenter.switchToForgotPasswordView();
-    }
+    //    public void switchToForgotPasswordView() {
+    //        loginPresenter.switchToForgotPasswordView();
+    //    }
 }

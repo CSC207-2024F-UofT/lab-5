@@ -1,8 +1,17 @@
 package use_case.search_results;
 
+/**
+ * The output boundary for the Search Results Use Case.
+ */
 public interface SearchResultsOutputBoundary {
 
+    /**
+     * Switches to the Recipe Search View.
+     */
     void switchToRecipeSearchView();
 
-    void switchToRecipeDetailsView();
+    /**
+     * Switches to the Recipe Details View.
+     */
+    void switchToRecipeDetailsView(SearchResultsOutputData searchResultsOutputData);
 }

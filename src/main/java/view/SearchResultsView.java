@@ -1,22 +1,33 @@
 package view;
 
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.List;
+
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.border.Border;
+
 import entity.Recipe;
 import interface_adapter.search_results.SearchResultsController;
 import interface_adapter.search_results.SearchResultsState;
 import interface_adapter.search_results.SearchResultsViewModel;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.List;
-import javax.swing.BorderFactory;
-import javax.swing.border.Border;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-
+/**
+ * The View for when the search results are displayed.
+ */
 public class SearchResultsView extends JPanel implements PropertyChangeListener {
 
     private final SearchResultsViewModel searchResultsViewModel;
@@ -24,6 +35,7 @@ public class SearchResultsView extends JPanel implements PropertyChangeListener 
 
     private final JButton backButton;
     private final JPanel resultsPanel;
+    private final int padding = 5;
 
     private final JScrollPane resultsScrollPane;
 
@@ -62,6 +74,10 @@ public class SearchResultsView extends JPanel implements PropertyChangeListener 
 
     }
 
+    /**
+     * Populates resultsPanel.
+     * @param recipes the recipes list to display
+     */
     public void populateRecipeList(List<Recipe> recipes) {
         // Clear previous results
         resultsPanel.removeAll();
@@ -70,7 +86,7 @@ public class SearchResultsView extends JPanel implements PropertyChangeListener 
 
             // Create a panel for each recipe
             final JPanel recipePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-            recipePanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5)); // Add some padding
+            recipePanel.setBorder(BorderFactory.createEmptyBorder(padding, padding, padding, padding));
 
             // Add a separator (line) below each recipe
             final Border border = BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY);
@@ -90,7 +106,7 @@ public class SearchResultsView extends JPanel implements PropertyChangeListener 
             detailsButton = new JButton("Details");
             detailsButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent evt) {
-                    searchResultsController.switchToRecipeDetailsView();
+                    searchResultsController.switchToRecipeDetailsView(recipe);
                 }
             });
             recipePanel.add(detailsButton);
@@ -100,7 +116,7 @@ public class SearchResultsView extends JPanel implements PropertyChangeListener 
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     // Handle the recipe click event
-                    searchResultsController.switchToRecipeDetailsView();
+                    searchResultsController.switchToRecipeDetailsView(recipe);
                 }
             });
 

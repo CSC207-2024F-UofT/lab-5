@@ -10,7 +10,6 @@ import data_access.InMemoryUserDataAccessObject;
 import data_access.RecipeDataAccessObject;
 import entity.CommonUserFactory;
 import entity.UserFactory;
-import interface_adapter.ForgotPassword.ForgotPasswordViewModel;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.ChangePasswordPresenter;
@@ -23,6 +22,8 @@ import interface_adapter.login.LoginViewModel;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.logout.LogoutPresenter;
 import interface_adapter.recipe_details.RecipeDetailsViewModel;
+import interface_adapter.recipe_review.RecipeReviewController;
+import interface_adapter.recipe_review.RecipeReviewPresenter;
 import interface_adapter.recipe_search.RecipeSearchController;
 import interface_adapter.recipe_search.RecipeSearchPresenter;
 import interface_adapter.recipe_search.RecipeSearchViewModel;
@@ -50,6 +51,9 @@ import use_case.profile.ProfileOutputBoundary;
 import use_case.recipe_search.RecipeSearchInputBoundary;
 import use_case.recipe_search.RecipeSearchInteractor;
 import use_case.recipe_search.RecipeSearchOutputBoundary;
+import use_case.review_recipe.RecipeReviewInputBoundary;
+import use_case.review_recipe.RecipeReviewInteractor;
+import use_case.review_recipe.RecipeReviewOutputBoundary;
 import use_case.saved_recipes.SavedRecipeInputBoundary;
 import use_case.saved_recipes.SavedRecipeInteractor;
 import use_case.saved_recipes.SavedRecipeOutputBoundry;
@@ -95,10 +99,10 @@ public class AppBuilder {
     private SearchResultsView searchResultsView;
     private SearchResultsViewModel searchResultsViewModel;
     private LoginView loginView;
-    private ForgotPasswordViewModel forgotPasswordViewModel;
     private ForgotPasswordView forgotPasswordView;
     private SavedrecipesViewModel savedrecipesViewModel;
     private RecipeDetailsViewModel recipeDetailsViewModel;
+    private RecipeDetailsView recipeDetailsView;
     private SavedrecipesView savedrecipesView;
 
     public AppBuilder() {
@@ -138,13 +142,6 @@ public class AppBuilder {
         return this;
     }
 
-    public AppBuilder addForgotPasswordView() {
-        forgotPasswordViewModel = new ForgotPasswordViewModel();
-        forgotPasswordView = new ForgotPasswordView(forgotPasswordViewModel);
-        cardPanel.add(forgotPasswordView, forgotPasswordViewModel.getViewName());
-        return this;
-    }
-
     public AppBuilder addSavedRecipesView() {
         savedrecipesViewModel = new SavedrecipesViewModel();
         savedrecipesView = new SavedrecipesView(savedrecipesViewModel);
@@ -163,6 +160,13 @@ public class AppBuilder {
         searchResultsViewModel = new SearchResultsViewModel();
         searchResultsView = new SearchResultsView(searchResultsViewModel);
         cardPanel.add(searchResultsView, searchResultsView.getViewName());
+        return this;
+    }
+
+    public AppBuilder addRecipeDetailsView() {
+        recipeDetailsViewModel = new RecipeDetailsViewModel();
+        recipeDetailsView = new RecipeDetailsView(recipeDetailsViewModel);
+        cardPanel.add(recipeDetailsView, recipeDetailsView.getViewName());
         return this;
     }
 
@@ -196,7 +200,7 @@ public class AppBuilder {
      */
     public AppBuilder addLoginUseCase() {
         final LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel,
-                profileViewModel, loginViewModel, forgotPasswordViewModel);
+                profileViewModel, loginViewModel);
         final LoginInputBoundary loginInteractor = new LoginInteractor(
                 userDataAccessObject, loginOutputBoundary);
 
@@ -262,11 +266,19 @@ public class AppBuilder {
     public AppBuilder addSearchResultsUseCase() {
         final SearchResultsOutputBoundary searchResultsOutputBoundary = new SearchResultsPresenter(
                 searchResultsViewModel, recipeDetailsViewModel, viewManagerModel, recipeSearchViewModel);
-        final SearchResultsInputBoundary resultsInteractor = new SearchResultsInteractor(
-                searchResultsOutputBoundary);
+        final SearchResultsInputBoundary resultsInteractor = new SearchResultsInteractor(searchResultsOutputBoundary, userDataAccessObject);
 
         final SearchResultsController controller = new SearchResultsController(resultsInteractor);
         searchResultsView.setSearchResultsController(controller);
+        return this;
+    }
+
+    public AppBuilder addRecipeReviewUseCase() {
+        final RecipeReviewOutputBoundary recipeReviewOutputBoundary = new RecipeReviewPresenter(viewManagerModel, profileViewModel);
+        final RecipeReviewInteractor recipeReviewInteractor = new RecipeReviewInteractor(recipeReviewOutputBoundary, userDataAccessObject);
+
+        final RecipeReviewController controller = new RecipeReviewController(recipeReviewInteractor);
+        recipeDetailsView.setRecipeReviewController(controller);
         return this;
     }
 

@@ -1,5 +1,8 @@
 package use_case.recipe_search;
 
+/**
+ * The Input Data for the Search Use Case.
+ */
 public class RecipeSearchInputData {
 
     private final String recipeName;
@@ -52,11 +55,11 @@ public class RecipeSearchInputData {
         return proteinMax;
     }
 
-    public String getfatMin() {
+    public String getFatMin() {
         return fatMin;
     }
 
-    public String getfatMax() {
+    public String getFatMax() {
         return fatMax;
     }
 }

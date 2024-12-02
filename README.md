@@ -2,6 +2,7 @@
 # Group 150
 # Collaborators: Noura Francis, Adya Gopaul, Zain Malik
 
+
 # Table of Contents
 - [Software Specifications](#software-specifications)
 - [Features of the Software](#features-of-the-software)
@@ -25,8 +26,6 @@ one to five, with one being the lowest and five being the highest, and an option
 - **Log Out**: Users can securely log out of the application.
 
 
-
-
 ### Recipe Search
 - **Search for Recipes**: Users can search for recipes by name.
 - **Filter Search Results**: Filters include options for:
@@ -39,9 +38,7 @@ one to five, with one being the lowest and five being the highest, and an option
 
 ### Recipe Interaction
 - **Review Recipe**: Users can add reviews to a recipe.
-- **Save Recipe**: Users can save recipes to their profiles for easy access later.
-
-
+- **Save Recipe**: Users can save recipes to their profiles for easy access later. 
 
 
 ### Profile Features
@@ -94,11 +91,12 @@ one to five, with one being the lowest and five being the highest, and an option
 Considering the user’s experience with the Recipe Management System is an integral aspect of this project. We, the creators of this project, are open to accepting feedback on your experience using the system, suggest ways in which the system can be improved or recommend features you would like to see in the future. If you wish to do so, the best way to contact us is through the following email addresses.
 - Noura Francis: noura.francis@mail.utoronto.ca
 - Adya Gopaul: adya.gopaul@mail.utoronto.ca
-- Zain Malik:
+- Zain Malik: za.malik@mail.utoronto.ca
 
 ## Contributions
 This project is not accepting contributions at the moment. Persons interested in working with this software may create a fork of the repository by pressing the “Fork” button located in the top-right corner of the repository. Changes to the code may be made on the individual’s local repository after cloning their fork. Any merge requests made will neither be reviewed nor merged into the project. The individual will be solely responsible for any and all changes made to their fork of the repository.
 
 
 * * *
+=======
 

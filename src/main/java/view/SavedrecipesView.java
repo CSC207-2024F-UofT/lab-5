@@ -75,26 +75,43 @@ public class SavedrecipesView extends JPanel implements PropertyChangeListener {
         recipeListPanel.removeAll();
 
         for (Map.Entry<Recipe, Integer> entry : recipesWithRatings.entrySet()) {
-            Recipe recipe = entry.getKey();
-            Integer rating = entry.getValue();
+            final Recipe recipe = entry.getKey();
+            final Integer rating = entry.getValue();
 
             // Create a panel for each recipe entry
-            JPanel recipePanel = new JPanel();
+            final JPanel recipePanel = new JPanel();
             recipePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
             recipePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 50)); // Ensure width fits
 
-            JLabel recipeLabel = new JLabel(recipe.getName() + " (Rating: " + rating + ")");
-            JButton detailsButton = new JButton("Details");
+            final JLabel recipeLabel = new JLabel(recipe.getName() + " (Rating: " + rating + ")");
+            final JButton linkButton = new JButton("View Recipe");
+
+            // Add an action listener to the link button
+            linkButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    try {
+                        Desktop.getDesktop().browse(new java.net.URI(recipe.getUrl()));
+                    }
+                    catch (Exception ex) {
+                        JOptionPane.showMessageDialog(
+                                SavedrecipesView.this,
+                                "Unable to open link: " + ex.getMessage(),
+                                "Error",
+                                JOptionPane.ERROR_MESSAGE
+                        );
+                    }
+                }
+            });
 
             recipePanel.add(recipeLabel);
-            recipePanel.add(detailsButton);
+            recipePanel.add(linkButton);
 
             recipeListPanel.add(recipePanel);
         }
 
         recipeListPanel.revalidate();
         recipeListPanel.repaint();
-
     }
 
     @Override

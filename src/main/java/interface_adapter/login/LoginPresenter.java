@@ -1,7 +1,7 @@
 package interface_adapter.login;
 
-import interface_adapter.ForgotPassword.ForgotPasswordViewModel;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.forgotPassword.ForgotPasswordViewModel;
 import interface_adapter.profile.ProfileState;
 import interface_adapter.profile.ProfileViewModel;
 import use_case.login.LoginOutputBoundary;
@@ -15,16 +15,13 @@ public class LoginPresenter implements LoginOutputBoundary {
     private final LoginViewModel loginViewModel;
     private final ProfileViewModel profileViewModel;
     private final ViewManagerModel viewManagerModel;
-    private final ForgotPasswordViewModel forgotPasswordViewModel;
 
     public LoginPresenter(ViewManagerModel viewManagerModel,
                           ProfileViewModel profileViewModel,
-                          LoginViewModel loginViewModel,
-                          ForgotPasswordViewModel forgotPasswordViewModel) {
+                          LoginViewModel loginViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.profileViewModel = profileViewModel;
         this.loginViewModel = loginViewModel;
-        this.forgotPasswordViewModel = forgotPasswordViewModel;
     }
 
     @Override
@@ -46,9 +43,8 @@ public class LoginPresenter implements LoginOutputBoundary {
         loginState.setLoginError(error);
         loginViewModel.firePropertyChanged();
     }
-
-    public void switchToForgotPasswordView() {
-        viewManagerModel.setState(forgotPasswordViewModel.getViewName());
-        viewManagerModel.firePropertyChanged();
-    }
+    //    public void switchToForgotPasswordView() {
+    //        viewManagerModel.setState(forgotPasswordViewModel.getViewName());
+    //        viewManagerModel.firePropertyChanged();
+    //    }
 }

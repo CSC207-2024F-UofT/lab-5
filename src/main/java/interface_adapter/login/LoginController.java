@@ -25,8 +25,7 @@ public class LoginController {
 
         loginUseCaseInteractor.execute(loginInputData);
     }
-
-    public void switchToForgotPasswordView() {
-        loginUseCaseInteractor.switchToForgotPasswordView();
-    }
+    //    public void switchToForgotPasswordView() {
+    //        loginUseCaseInteractor.switchToForgotPasswordView();
+    //    }
 }
