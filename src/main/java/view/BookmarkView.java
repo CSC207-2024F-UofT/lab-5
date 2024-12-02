@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.swing.*;
 
+import interface_adapter.RecipeListViewModel;
 import org.jetbrains.annotations.NotNull;
 
 import entity.Recipe;
@@ -12,8 +13,8 @@ import entity.User;
 
 public class BookmarkView extends RecipeListView {
 
-    public BookmarkView(User user, String folderName) {
-        super(user, folderName);
+    public BookmarkView(User user, String folderName, RecipeListViewModel recipeListViewModel) {
+        super(user, folderName, recipeListViewModel);
         setTitle(user.getUsername() + "'s Bookmarks");
 
         final JPanel folderPanel = new JPanel();
@@ -38,7 +39,7 @@ public class BookmarkView extends RecipeListView {
         dropdown.addActionListener(event -> {
             final String selectedOption = (String) dropdown.getSelectedItem();
             System.out.println(selectedOption + "folder name in bookmark view");
-            new FolderView(user, selectedOption);
+            new FolderView(user, selectedOption, new RecipeListViewModel());
         });
         return dropdown;
     }

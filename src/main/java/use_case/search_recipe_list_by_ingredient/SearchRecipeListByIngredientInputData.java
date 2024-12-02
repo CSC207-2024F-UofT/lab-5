@@ -1,5 +1,7 @@
 package use_case.search_recipe_list_by_ingredient;
 
+import entity.User;
+
 import java.util.List;
 
 /**
@@ -8,12 +10,24 @@ import java.util.List;
 public class SearchRecipeListByIngredientInputData {
 
     private final List<String> ingredients;
+    private final User user;
+    private final String folder;
 
-    public SearchRecipeListByIngredientInputData(List<String> ingredients) {
+    public SearchRecipeListByIngredientInputData(List<String> ingredients, User user, String folder) {
         this.ingredients = ingredients;
+        this.user = user;
+        this.folder = folder;
     }
 
-    List<String> getIngredients() {
+    public List<String> getIngredients() {
         return ingredients;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public String getFolder() {
+        return folder;
     }
 }

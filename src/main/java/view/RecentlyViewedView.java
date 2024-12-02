@@ -6,11 +6,12 @@ import javax.swing.*;
 
 import entity.Recipe;
 import entity.User;
+import interface_adapter.RecipeListViewModel;
 
 public class RecentlyViewedView extends RecipeListView {
 
-    public RecentlyViewedView(User user, String folderName) {
-        super(user, folderName);
+    public RecentlyViewedView(User user, String folderName, RecipeListViewModel recipeListViewModel) {
+        super(user, folderName, recipeListViewModel);
         setTitle(user.getUsername() + "'s Recently Viewed");
         final JButton clearButton = new JButton("Clear Recently Viewed");
         clearButton.addActionListener(event -> {

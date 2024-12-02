@@ -1,5 +1,6 @@
 package use_case.search_recipe_list_by_ingredient;
 
+import entity.Recipe;
 import entity.User;
 
 import java.util.List;
@@ -12,6 +13,11 @@ public interface SearchRecipeListByIngredientDataAccessInterface {
     /**
      * Searches recipes by ingredient.
      * @param ingredients the ingredients entered.
+     * @param user the user.
+     * @param folder the folder to search in.
+     * @return search results.
      */
-    void searchRecipeListByIngredient(List<String> ingredients);
+    List<Recipe> searchRecipeListByIngredient(List<String> ingredients, User user, String folder);
+
+    boolean addUser(User user);
 }
