@@ -44,16 +44,6 @@ public class IndividualRecipeView extends JFrame implements ActionListener {
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         setContentPane(mainPanel);
 
-        // Initialize ingredient list
-        final DefaultListModel<String> listModel = new DefaultListModel<>();
-        for (Ingredient ingredient : recipe.getIngredients()) {
-            listModel.addElement(ingredient.getName() + ", Amount: " + ingredient.getAmount() + " " + ingredient.getUnit());
-        }
-        ingredientsJLIst = new JList<>(listModel);
-        final JScrollPane scrollPane = new JScrollPane(ingredientsJLIst);
-        scrollPane.setPreferredSize(ingredientsJLIst.getPreferredScrollableViewportSize());
-        mainPanel.add(scrollPane);
-
         // Initialize buttons
         nutritionButton = new JButton("Nutrition");
         bookmarkButton = new JButton("Bookmark");
@@ -93,6 +83,16 @@ public class IndividualRecipeView extends JFrame implements ActionListener {
             mainPanel.add(errorLabel, BorderLayout.CENTER);
             e.printStackTrace();
         }
+
+        // Initialize ingredient list
+        final DefaultListModel<String> listModel = new DefaultListModel<>();
+        for (Ingredient ingredient : recipe.getIngredients()) {
+            listModel.addElement(ingredient.getName() + ", Amount: " + ingredient.getAmount() + " " + ingredient.getUnit());
+        }
+        ingredientsJLIst = new JList<>(listModel);
+        final JScrollPane scrollPane = new JScrollPane(ingredientsJLIst);
+        scrollPane.setPreferredSize(ingredientsJLIst.getPreferredScrollableViewportSize());
+        mainPanel.add(scrollPane);
 
         // Initialize button panel with horizontal BoxLayout
         final JPanel buttonPanel = new JPanel();

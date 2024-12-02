@@ -1,6 +1,6 @@
 package interface_adapter;
 
-import use_case.SearchRecipe.SearchRecipeInputBoundary;
+import use_case.search_recipe.SearchRecipeInputBoundary;
 import use_case.search_recipe.SearchRecipeInputData;
 import use_case.search_recipe.SearchRecipeUseCase;
 

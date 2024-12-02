@@ -16,11 +16,16 @@ public class BookmarkView extends RecipeListView {
         super(user, folderName);
         setTitle(user.getUsername() + "'s Bookmarks");
 
+        final JPanel folderPanel = new JPanel();
+        folderPanel.setLayout(new BoxLayout(folderPanel, BoxLayout.Y_AXIS));
+
         final JComboBox<String> dropdown = getDropdown(user);
-        add(dropdown, BorderLayout.EAST);
+        folderPanel.add(dropdown);
 
         final JPanel createFolderPanel = getCreateFolderPanel(user);
-        add(createFolderPanel, BorderLayout.WEST);
+        folderPanel.add(createFolderPanel);
+
+        add(folderPanel);
     }
 
     @NotNull

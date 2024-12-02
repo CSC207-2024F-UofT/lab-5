@@ -118,7 +118,7 @@ public abstract class RecipeListView extends JFrame implements ActionListener {
         // Clear search button
         clearSearchButton = new JButton("Clear Search");
         clearSearchButton.addActionListener(this);
-        searchPanel.add(clearSearchButton, BorderLayout.EAST);
+        add(clearSearchButton, BorderLayout.WEST);
 
         // Add the search panel to the frame
         add(searchPanel, BorderLayout.NORTH);

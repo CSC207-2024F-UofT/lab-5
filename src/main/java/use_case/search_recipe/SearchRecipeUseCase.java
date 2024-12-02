@@ -6,9 +6,9 @@ import interface_adapter.SearchRecipePresenter;
 
 import java.util.List;
 
-public class SearchRecipeUseCase implements use_case.SearchRecipe.SearchRecipeInputBoundary {
+public class SearchRecipeUseCase implements use_case.search_recipe.SearchRecipeInputBoundary {
     private final RecipeDAO recipeDAO;
-    private final use_case.SearchRecipe.SearchRecipeOutputBoundary presenter;
+    private final use_case.search_recipe.SearchRecipeOutputBoundary presenter;
 
     public SearchRecipeUseCase(RecipeDAO recipeDAO, SearchRecipePresenter presenter) {
         this.recipeDAO = recipeDAO;
@@ -23,7 +23,7 @@ public class SearchRecipeUseCase implements use_case.SearchRecipe.SearchRecipeIn
         List<Recipe> recipes = recipeDAO.getRecipesByIngredients(ingredients);
 
         // Pass results to presenter
-        use_case.SearchRecipe.SearchRecipeOutputData outputData = new use_case.SearchRecipe.SearchRecipeOutputData(recipes);
+        use_case.search_recipe.SearchRecipeOutputData outputData = new use_case.search_recipe.SearchRecipeOutputData(recipes);
         presenter.presentRecipes(outputData);
     }
 }
