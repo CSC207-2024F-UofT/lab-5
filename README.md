@@ -3,6 +3,7 @@
 # Collaborators: Noura Francis, Adya Gopaul, Zain Malik
 
 # Table of Contents
+- [Software Specifications](#software-specifications)
 - [Features of the Software](#features-of-the-software)
 - [Installation Instructions](#installation-instructions)
 - [Usage Guide](#usage-guide)
