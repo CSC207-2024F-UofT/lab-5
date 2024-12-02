@@ -91,9 +91,9 @@ one to five, with one being the lowest and five being the highest, and an option
 
 ## Feedback
 Considering the user’s experience with the Recipe Management System is an integral aspect of this project. We, the creators of this project, are open to accepting feedback on your experience using the system, suggest ways in which the system can be improved or recommend features you would like to see in the future. If you wish to do so, the best way to contact us is through the following email addresses.
-Noura Francis: noura.francis@mail.utoronto.ca
-Adya Gopaul: adya.gopaul@mail.utoronto.ca
-Zain Malik:
+- Noura Francis: noura.francis@mail.utoronto.ca
+- Adya Gopaul: adya.gopaul@mail.utoronto.ca
+- Zain Malik:
 
 ## Contributions
 This project is not accepting contributions at the moment. Persons interested in working with this software may create a fork of the repository by pressing the “Fork” button located in the top-right corner of the repository. Changes to the code may be made on the individual’s local repository after cloning their fork. Any merge requests made will neither be reviewed nor merged into the project. The individual will be solely responsible for any and all changes made to their fork of the repository.
