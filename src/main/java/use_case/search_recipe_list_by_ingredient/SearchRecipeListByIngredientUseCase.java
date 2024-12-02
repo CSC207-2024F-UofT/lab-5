@@ -1,4 +1,4 @@
-package use_case;
+package use_case.search_recipe_list_by_ingredient;
 
 import entity.Ingredient;
 import entity.Recipe;

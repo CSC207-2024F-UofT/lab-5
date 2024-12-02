@@ -8,9 +8,9 @@ import java.util.Map;
 public class User {
     private String username;
     private String password;
-    private List<Recipe> bookmarks;
-    private List<Recipe> recentlyViewed;
-    private Map<String, List<Recipe>> folders;
+    private final List<Recipe> bookmarks;
+    private final List<Recipe> recentlyViewed;
+    private final Map<String, List<Recipe>> folders;
 
     public User(String username, String password) {
         this.username = username;
@@ -73,7 +73,9 @@ public class User {
             System.out.println("No such folder: " + folder);
             return List.of();
         }
-        return folders.get(folder);
+        else {
+            return folders.get(folder);
+        }
     }
 
     /*

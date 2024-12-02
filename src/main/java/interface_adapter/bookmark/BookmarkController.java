@@ -1,7 +1,7 @@
 package interface_adapter.bookmark;
 
 import interface_adapter.RecipeListController;
-import use_case.SearchRecipeListByIngredientUseCase;
+import use_case.search_recipe_list_by_ingredient.SearchRecipeListByIngredientUseCase;
 import use_case.SearchRecipeListByNameUseCase;
 
 public class BookmarkController extends RecipeListController {

@@ -1,3 +1,5 @@
+package use_case.nutrition;
+
 import data_access.ViewNutritionDataAccessImpl;
 import entity.Nutrition;
 

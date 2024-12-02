@@ -3,11 +3,12 @@ package view;
 import java.awt.*;
 import java.util.List;
 
-import entity.Recipe;
-import entity.User;
+import javax.swing.*;
+
 import org.jetbrains.annotations.NotNull;
 
-import javax.swing.*;
+import entity.Recipe;
+import entity.User;
 
 public class BookmarkView extends RecipeListView {
 
@@ -24,14 +25,11 @@ public class BookmarkView extends RecipeListView {
 
     @NotNull
     private JComboBox<String> getDropdown(User user) {
-        // Create an array of dropdown options
-        // TODO populate the list of options as the user creates folders
         String[] options = user.getFolders().keySet().toArray(new String[0]);
         final JComboBox<String> dropdown = new JComboBox<>(options);
         final JLabel dropdownLabel = new JLabel("Select a folder:");
         dropdown.add(dropdownLabel);
 
-        // Add an action listener to handle selections
         dropdown.addActionListener(event -> {
             final String selectedOption = (String) dropdown.getSelectedItem();
             System.out.println(selectedOption + "folder name in bookmark view");
@@ -48,10 +46,6 @@ public class BookmarkView extends RecipeListView {
         final JButton addFolderButton = new JButton("Create Folder");
         addFolderButton.addActionListener(event -> {
             final String folderName = textField.getText();
-            // for testing
-            System.out.println(folderName);
-            // not sure if this is necessary
-            user.addFolder(folderName);
             userDAO.addFolderToFile(user.getUsername(), folderName);
         });
         createFolderPanel.add(textField);

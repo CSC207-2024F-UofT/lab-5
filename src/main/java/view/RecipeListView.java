@@ -16,14 +16,12 @@ import data_access.UserDAOImpl;
 import entity.Recipe;
 import entity.User;
 import interface_adapter.RecipeListController;
-import use_case.SearchRecipeListByIngredientUseCase;
+import use_case.search_recipe_list_by_ingredient.SearchRecipeListByIngredientUseCase;
 import use_case.SearchRecipeListByNameUseCase;
 
 public abstract class RecipeListView extends JFrame implements ActionListener {
-    // attributes for default view
     private static User user;
     protected static UserDAOImpl userDAO;
-//    protected List<Recipe> recipes;
     protected final JList<Recipe> recipeList;
     protected final DefaultListModel<Recipe> listModel;
     private final RecipeListController controller;
@@ -51,23 +49,19 @@ public abstract class RecipeListView extends JFrame implements ActionListener {
                 new SearchRecipeListByNameUseCase(getRecipeList(userDAO.findUserByUsername(user.getUsername()))));
         this.spoonacularRecipeDAO = new SpoonacularRecipeDAO();
 
-        setSize(800, 300);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+        // Initialize recipe list to display
         List<Recipe> recipes = new ArrayList<>();
+        // Split into cases: BookmarkView/RecentlyViewedView and FolderView
         if (folderName == null) {
             recipes = getRecipeList(userDAO.findUserByUsername(user.getUsername()));
         }
         else {
             recipes = getRecipeList(userDAO.findUserByUsername(user.getUsername()), folderName);
         }
-
         for (Recipe recipe : recipes) {
             this.listModel.addElement(recipe);
         }
-
         this.recipeList.setModel(listModel);
-
         // Wrap the JList in a JScrollPane
         final JScrollPane scrollPane = new JScrollPane(recipeList);
         scrollPane.setPreferredSize(recipeList.getPreferredScrollableViewportSize());
@@ -82,6 +76,7 @@ public abstract class RecipeListView extends JFrame implements ActionListener {
 //        // Add components to the main panel
 //        mainPanel.add(scrollPane);
 
+        // Make the recipe list clickable
         recipeList.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent event) {
                 if (event.getClickCount() == 2) {
@@ -98,7 +93,10 @@ public abstract class RecipeListView extends JFrame implements ActionListener {
             }
         });
 
-        // Display the two search bars
+        // Initialize and display the two search bars in a panel
+        final JPanel searchPanel = new JPanel();
+        searchPanel.setLayout(new BoxLayout(searchPanel, BoxLayout.Y_AXIS));
+        // Search by ingredient
         ingredientSearchField = new JTextField(20);
         ingredientSearchButton = new JButton("Search recipes by ingredients");
         final JPanel ingredientSearchPanel = new JPanel();
@@ -106,8 +104,8 @@ public abstract class RecipeListView extends JFrame implements ActionListener {
         ingredientSearchPanel.add(ingredientSearchField);
         ingredientSearchPanel.add(ingredientSearchButton);
         ingredientSearchButton.addActionListener(this);
-        add(ingredientSearchPanel, BorderLayout.NORTH);
-
+        searchPanel.add(ingredientSearchPanel);
+        // Search by recipe name
         recipeSearchField = new JTextField(20);
         recipeSearchButton = new JButton("Search recipes by name");
         final JPanel recipeSearchPanel = new JPanel();
@@ -115,37 +113,17 @@ public abstract class RecipeListView extends JFrame implements ActionListener {
         recipeSearchPanel.add(recipeSearchField);
         recipeSearchPanel.add(recipeSearchButton);
         recipeSearchButton.addActionListener(this);
-        add(recipeSearchPanel, BorderLayout.CENTER);
+        searchPanel.add(recipeSearchPanel);
 
-        // Clear search
+        // Clear search button
         clearSearchButton = new JButton("Clear Search");
         clearSearchButton.addActionListener(this);
-        add(clearSearchButton, BorderLayout.WEST);
+        searchPanel.add(clearSearchButton, BorderLayout.EAST);
 
-        // TODO Search function - in progress
-//        ingredientInput = new JTextField(20);
-//        searchButton = new JButton("Find Recipes by Ingredients");
-//        recipeListByIngredient = new JList<>();
-//
-//        nameInput = new JTextField(20);
-//        searchButton = new JButton("Find Recipes by Name");
-//        recipeListByName = new JList<>();
-//
-//        searchButton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                String ingredientsText = ingredientInput.getText();
-//                java.util.List<String> ingredients = Arrays.asList(ingredientsText.split(","));
-//                List<Recipe> recipes = controller.getRecipes(ingredients);
-//
-//                String[] recipeNames = recipes.stream()
-//                        .map(recipe -> recipe.getName() + " - " + recipe.getUrl())
-//                        .toArray(String[]::new);
-//                recipeList.setListData(recipeNames);
-//            }
-//        });
+        // Add the search panel to the frame
+        add(searchPanel, BorderLayout.NORTH);
 
-        // search filters
+        // Search filters
         final JPanel filterPanel = new JPanel(new FlowLayout());
         dietComboBox = new JComboBox<>();
         cuisineComboBox = new JComboBox<>();
@@ -175,6 +153,8 @@ public abstract class RecipeListView extends JFrame implements ActionListener {
         //     }
         // });
 
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        pack();
         setVisible(true);
     }
 

@@ -20,7 +20,6 @@ public class IndividualRecipeView extends JFrame implements ActionListener {
     private final JButton bookmarkButton;
     private final JButton urlButton;
     private JList<String> ingredientsJLIst;
-    // if we want to display the used and missed ingredients separately... private JList<String> usedIngredientsJList;
     private final Recipe recipe;
     private URL imageUrl;
     private ImageIcon imageIcon;
@@ -33,8 +32,17 @@ public class IndividualRecipeView extends JFrame implements ActionListener {
         this.user = user;
         this.userDAO = new UserDAOImpl();
 
-        // Add this recipe to the user's recently viewed list
+        // Add this recipe to the user's recently viewed list upon the page's opening
         userDAO.addRecentlyViewedToFile(this.user.getUsername(), this.recipe);
+
+        // Set up JFrame properties
+        setTitle(recipe.getName());
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        // Initialize main panel with vertical BoxLayout
+        final JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+        setContentPane(mainPanel);
 
         // Initialize ingredient list
         final DefaultListModel<String> listModel = new DefaultListModel<>();
@@ -44,23 +52,14 @@ public class IndividualRecipeView extends JFrame implements ActionListener {
         ingredientsJLIst = new JList<>(listModel);
         final JScrollPane scrollPane = new JScrollPane(ingredientsJLIst);
         scrollPane.setPreferredSize(ingredientsJLIst.getPreferredScrollableViewportSize());
+        mainPanel.add(scrollPane);
 
         // Initialize buttons
         nutritionButton = new JButton("Nutrition");
         bookmarkButton = new JButton("Bookmark");
         urlButton = new JButton("Open Recipe in Browser");
 
-        // Set up JFrame properties
-        setTitle(recipe.getName());
-        setSize(800, 300);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        // Main panel with vertical BoxLayout - you need a Layout for each Panel
-        final JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-        setContentPane(mainPanel);
-
-        // initializing image
+        // Initialize image
         try {
             // Specify the image URL
             if (recipe.getImage() == null) {
@@ -84,7 +83,7 @@ public class IndividualRecipeView extends JFrame implements ActionListener {
             imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
             imageLabel.setVerticalAlignment(SwingConstants.CENTER);
 
-            // Add the label to the frame
+            // Add the label to the main panel
             mainPanel.add(imageLabel, BorderLayout.CENTER);
 
         } catch (Exception e) {
@@ -95,10 +94,7 @@ public class IndividualRecipeView extends JFrame implements ActionListener {
             e.printStackTrace();
         }
 
-        // Add components to main panel
-        mainPanel.add(scrollPane);
-
-        // Button panel with horizontal BoxLayout
+        // Initialize button panel with horizontal BoxLayout
         final JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
         buttonPanel.add(nutritionButton);
@@ -106,46 +102,38 @@ public class IndividualRecipeView extends JFrame implements ActionListener {
         buttonPanel.add(bookmarkButton);
         buttonPanel.add(Box.createRigidArea(new Dimension(10, 0)));
         buttonPanel.add(urlButton);
-
         mainPanel.add(buttonPanel);
 
-        // Add action listeners
+        // Add action listeners to buttons
         nutritionButton.addActionListener(this);
         bookmarkButton.addActionListener(this);
         urlButton.addActionListener(this);
 
-        // Create an array of dropdown options
-        // TODO populate the list of options as the user creates folders
+        // Initialize dropdown menu for adding the recipe to folders
         String[] options = user.getFolders().keySet().toArray(new String[0]);
-        // Create a JComboBox with the options
         final JComboBox<String> dropdown = new JComboBox<>(options);
         final JLabel dropdownLabel = new JLabel("Add this recipe to a folder");
         dropdown.add(dropdownLabel);
-        // Add an action listener to handle selections
         dropdown.addActionListener(folderEvent -> {
             final String selectedOption = (String) dropdown.getSelectedItem();
-            // TODO logic of adding a recipe to a folder
-            // final List<Recipe> folder = userDAO.getFolderFromFile(user.getUsername(), selectedOption);
             userDAO.addRecipeToFolderInFile(this.user.getUsername(), selectedOption, this.recipe);
             JOptionPane.showMessageDialog(this, "Recipe added to " + selectedOption + "!");
         });
-        // Add the dropdown to the frame
-        add(dropdown);
+        mainPanel.add(dropdown);
 
         // Display the frame
+        pack();
         setVisible(true);
     }
-
-    GetRecipeId getRecipeId = new GetRecipeId();
 
     @Override
     public void actionPerformed(ActionEvent event) {
         if (event.getSource() == nutritionButton) {
+            GetRecipeId getRecipeId = new GetRecipeId();
             int recipeId = getRecipeId.getRecipeIdByName(recipe.getName());
             new NutritionView(recipeId);
         }
         else if (event.getSource() == bookmarkButton) {
-            // TODO complete bookmark function
             if (!user.getBookmarks().contains(recipe)) {
                 userDAO.addBookmarkToFile(user.getUsername(), recipe);
                 JOptionPane.showMessageDialog(this, "Recipe added to bookmarks!");

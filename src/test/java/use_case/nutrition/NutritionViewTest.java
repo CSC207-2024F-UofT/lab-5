@@ -1,3 +1,5 @@
+package use_case.nutrition;
+
 import view.NutritionView;
 
 public class NutritionViewTest {

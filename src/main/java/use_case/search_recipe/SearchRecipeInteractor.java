@@ -1,4 +1,4 @@
-package use_case.SearchRecipe;
+package use_case.search_recipe;
 
 import data_access.RecipeDAO;
 import entity.Recipe;
@@ -20,7 +20,7 @@ public class SearchRecipeInteractor implements SearchRecipeInputBoundary {
         List<Recipe> recipes = recipeDAO.getRecipesByIngredients(inputData.getIngredients());
 
         // Prepare output data and pass to presenter
-        SearchRecipeOutputData outputData = new SearchRecipeOutputData(recipes);
+        use_case.search_recipe.SearchRecipeOutputData outputData = new SearchRecipeOutputData(recipes);
         presenter.presentRecipes(outputData);
     }
 }

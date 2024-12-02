@@ -1,24 +1,20 @@
 package view;
 
-import data_access.SpoonacularRecipeDAO;
-import entity.Ingredient;
-import entity.Recipe;
-import entity.User;
-import interface_adapter.RecipeController;
-import interface_adapter.SearchRecipePresenter;
-import interface_adapter.filter_recipes.FilterRecipesController;
-
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 
+import javax.swing.*;
+
+import data_access.AppConstants;
+import data_access.SpoonacularAPI;
+import data_access.SpoonacularRecipeDAO;
+import entity.User;
+import interface_adapter.RecipeController;
+import interface_adapter.SearchRecipePresenter;
 import interface_adapter.ShoppingListController;
 import use_case.ShoppingListUseCase;
-import data_access.SpoonacularAPI;
-import use_case.SearchRecipeUseCase;
-import use_case.filter_recipes.FilterRecipesInteractor;
+import use_case.search_recipe.SearchRecipeUseCase;
 
 public class HomePage extends JFrame {
     private final User user;
@@ -26,31 +22,30 @@ public class HomePage extends JFrame {
     public HomePage(User user) {
         this.user = user;
         setTitle("Welcome to the Recipe Finder");
-        setSize(400, 300);
+        // setSize(400, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
         final JLabel welcomeLabel = new JLabel("Welcome to the Recipe Finder!", JLabel.CENTER);
-        welcomeLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        welcomeLabel.setFont(new Font(AppConstants.FONT, Font.BOLD, AppConstants.WELCOME_FONT_SIZE));
         add(welcomeLabel, BorderLayout.CENTER);
 
         final JButton startButton = new JButton("Start Searching Recipes");
-        startButton.setFont(new Font("Arial", Font.PLAIN, 16));
+        startButton.setFont(new Font(AppConstants.FONT, Font.PLAIN, AppConstants.BUTTON_FONT_SIZE));
         startButton.addActionListener(e -> {
             // Create the presenter
-            SearchRecipePresenter presenter = new SearchRecipePresenter();
+            final SearchRecipePresenter presenter = new SearchRecipePresenter();
             // Create the use case interactor
-            use_case.SearchRecipeUseCase interactor = new use_case.SearchRecipeUseCase(new SpoonacularRecipeDAO(), presenter);
+            final SearchRecipeUseCase interactor = new SearchRecipeUseCase(new SpoonacularRecipeDAO(), presenter);
             // Create the controller
-            RecipeController controller = new RecipeController(interactor);
+            final RecipeController controller = new RecipeController(interactor);
             // Open the RecipeView and pass dependencies
             new RecipeView(controller, presenter, user, new SpoonacularRecipeDAO());
         });
 
         // Shopping List Button
         final JButton shoppingListButton = new JButton("Shopping List");
-        shoppingListButton.setFont(new Font("Arial", Font.PLAIN, 16));
-
+        shoppingListButton.setFont(new Font(AppConstants.FONT, Font.PLAIN, AppConstants.BUTTON_FONT_SIZE));
 // Action Listener for Shopping List Button
         shoppingListButton.addActionListener(new ActionListener() {
             @Override
@@ -64,35 +59,21 @@ public class HomePage extends JFrame {
             }
         });
 
+        // Bookmarks Button
         final JButton bookmarksButton = new JButton("Bookmarks");
-        bookmarksButton.setFont(new Font("Arial", Font.PLAIN, 16));
-        bookmarksButton.addActionListener(e -> {
-//            // Open BookmarkView in a separate window
-//            // User user = new User("Test_username", "Test_password");
-//            Ingredient ingredient1 = new Ingredient("Test_ingredient1");
-//            Ingredient ingredient2 = new Ingredient("Test_Ingredient2");
-//            String imageURL = "https://img.spoonacular.com/recipes/716429-556x370.jpg";
-//            Recipe recipe1 = new Recipe("name1", "url1", java.util.List.of(ingredient1, ingredient2), imageURL);
-//            Recipe recipe2 = new Recipe("name2", "url2", List.of(ingredient1, ingredient2), imageURL);
-//            user.addBookmark(recipe1);
-//            user.addBookmark(recipe2);
+        bookmarksButton.setFont(new Font(AppConstants.FONT, Font.PLAIN, AppConstants.BUTTON_FONT_SIZE));
+        bookmarksButton.addActionListener(event -> {
             new BookmarkView(this.user, null);
         });
 
+        // Recently Viewed Button
         final JButton recentlyViewedButton = new JButton("Recently Viewed");
-        recentlyViewedButton.setFont(new Font("Arial", Font.PLAIN, 16));
-        recentlyViewedButton.addActionListener(e -> {
-            // User user = new User("Test_username", "Test_password");
-//            Ingredient ingredient1 = new Ingredient("Test_ingredient1");
-//            Ingredient ingredient2 = new Ingredient("Test_Ingredient2");
-//            String imageURL = "https://img.spoonacular.com/recipes/716429-556x370.jpg";
-//            Recipe recipe1 = new Recipe("name1", "url1", java.util.List.of(ingredient1, ingredient2), imageURL);
-//            Recipe recipe2 = new Recipe("name2", "url2", List.of(ingredient1, ingredient2), imageURL);
-//            user.addRecentlyViewed(recipe1);
-//            user.addRecentlyViewed(recipe2);
+        recentlyViewedButton.setFont(new Font(AppConstants.FONT, Font.PLAIN, AppConstants.BUTTON_FONT_SIZE));
+        recentlyViewedButton.addActionListener(event -> {
             new RecentlyViewedView(this.user, null);
         });
 
+        // Putting the buttons together
         final JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(2, 2, 10, 10));
         panel.add(startButton);
@@ -100,8 +81,7 @@ public class HomePage extends JFrame {
         panel.add(recentlyViewedButton);
         panel.add(shoppingListButton);
         add(panel, BorderLayout.SOUTH);
-//        add(startButton, BorderLayout.SOUTH);
-//        add(bookmarksButton, BorderLayout.SOUTH);
+        pack();
         setVisible(true);
     }
 }

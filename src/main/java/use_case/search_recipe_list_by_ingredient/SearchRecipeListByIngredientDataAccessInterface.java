@@ -1,0 +1,4 @@
+package use_case.search_recipe_list_by_ingredient;
+
+public interface SearchRecipeListByIngredientDataAccessInterface {
+}
