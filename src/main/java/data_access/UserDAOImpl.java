@@ -127,16 +127,22 @@ public class UserDAOImpl implements UserDAO {
                 }
 
                 // reconstructing folders as a map of folderNames and lists of recipes
-                JSONObject foldersJson = userObject.getJSONObject("folders");
-                Map<String, List<Recipe>> foldersMap = new HashMap<>();
+                JSONObject foldersJson = new JSONObject();
+                if (userObject.has("folders")) {
+                    foldersJson = userObject.getJSONObject("folders");
+                }
+                else {
+                    foldersJson.put("folders", new JSONArray());
+                }
+                final Map<String, List<Recipe>> foldersMap = new HashMap<>();
                 for (String folderName : foldersJson.keySet()) {
-                    JSONArray recipesArray = foldersJson.getJSONArray(folderName);
-                    List<Recipe> recipes = new ArrayList<>();
+                    final JSONArray recipesArray = foldersJson.getJSONArray(folderName);
+                    final List<Recipe> recipes = new ArrayList<>();
 
                     for (int t = 0; t < recipesArray.length(); t++) {
-                        JSONObject recipeJson = recipesArray.getJSONObject(t);
-                        JSONArray ingredientsJson = recipeJson.getJSONArray("ingredients");
-                        List<Ingredient> ingredients = new ArrayList<>();
+                        final JSONObject recipeJson = recipesArray.getJSONObject(t);
+                        final JSONArray ingredientsJson = recipeJson.getJSONArray("ingredients");
+                        final List<Ingredient> ingredients = new ArrayList<>();
 
                         for (int s = 0; s < ingredientsJson.length(); s++) {
                             JSONObject ingredientJson = ingredientsJson.getJSONObject(s);
@@ -147,7 +153,7 @@ public class UserDAOImpl implements UserDAO {
                             ingredients.add(ingredient);
                         }
 
-                        Recipe recipe = new Recipe(
+                        final Recipe recipe = new Recipe(
                                 recipeJson.getString("name"),
                                 recipeJson.getString("url"),
                                 ingredients,
@@ -163,13 +169,13 @@ public class UserDAOImpl implements UserDAO {
                 users.put(username, new User(username, password, recipeBookmarks, recipeRecentlyViewed, foldersMap));
                 System.out.println("Loaded user: " + username); // Debugging output
             }
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             e.printStackTrace();
             saveUsersToFile();
         }
         return users;
     }
-
 
     // Save users to JSON file using org.json
     private void saveUsersToFile() {
