@@ -4,23 +4,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 import entity.User;
-import use_case.change_password.ChangePasswordUserDataAccessInterface;
 import use_case.login.LoginUserDataAccessInterface;
 import use_case.logout.LogoutUserDataAccessInterface;
-import use_case.signup.SignupUserDataAccessInterface;
 
 /**
  * In-memory implementation of the DAO for storing user data. This implementation does
  * NOT persist data between runs of the program.
  */
-public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterface,
+public class InMemoryUserDataAccessObject implements
         LoginUserDataAccessInterface,
-        ChangePasswordUserDataAccessInterface,
         LogoutUserDataAccessInterface {
-
     private final Map<String, User> users = new HashMap<>();
 
-    private String currentUsername;
+    private String accessToken;
 
     @Override
     public boolean existsByName(String identifier) {
@@ -29,7 +25,7 @@ public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterfa
 
     @Override
     public void save(User user) {
-        users.put(user.getName(), user);
+        users.put(user.getAccessToken(), user);
     }
 
     @Override
@@ -38,18 +34,12 @@ public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterfa
     }
 
     @Override
-    public void changePassword(User user) {
-        // Replace the old entry with the new password
-        users.put(user.getName(), user);
+    public void setCurrentAccessToken(String accessToken) {
+        this.accessToken = accessToken;
     }
 
     @Override
-    public void setCurrentUsername(String name) {
-        this.currentUsername = name;
-    }
-
-    @Override
-    public String getCurrentUsername() {
-        return this.currentUsername;
+    public String getCurrentAccessToken() {
+        return this.accessToken;
     }
 }

@@ -3,7 +3,10 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 .idea/easycode.ignore
+.idea/
+homework-5.iml
 
+src/keys
 target/
 
 ### Eclipse ###
