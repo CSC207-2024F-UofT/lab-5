@@ -22,7 +22,7 @@ import interface_adapter.RecipeListState;
 import interface_adapter.RecipeListViewModel;
 import interface_adapter.search_recipe_list_by_ingredient.SearchRecipeListByIngredientController;
 import use_case.search_recipe_list_by_ingredient.SearchRecipeListByIngredientUseCase;
-import use_case.SearchRecipeListByNameUseCase;
+import use_case.search_recipe_list_by_name.SearchRecipeListByNameUseCase;
 
 public abstract class RecipeListView extends JFrame implements ActionListener, PropertyChangeListener {
     private static User user;

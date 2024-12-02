@@ -4,10 +4,12 @@ import entity.Ingredient;
 import entity.Recipe;
 import entity.User;
 import use_case.search_recipe_list_by_ingredient.SearchRecipeListByIngredientDataAccessInterface;
+import use_case.search_recipe_list_by_name.SearchRecipeListByNameDataAccessInterface;
 
 import java.util.*;
 
-public class InMemorySearchRecipeListDataAccessObject implements SearchRecipeListByIngredientDataAccessInterface {
+public class InMemorySearchRecipeListDataAccessObject implements SearchRecipeListByIngredientDataAccessInterface,
+        SearchRecipeListByNameDataAccessInterface {
     private final Map<String, User> users = new HashMap<>();
 
     private String currentUsername;
@@ -44,6 +46,33 @@ public class InMemorySearchRecipeListDataAccessObject implements SearchRecipeLis
             }
             if (match) {
                 results.add(recipe);
+            }
+        }
+        return results;
+    }
+
+    @Override
+    public List<Recipe> searchRecipeListByName(String recipeName, User user, String folder) {
+        final User userFromFile = users.get(user.getUsername());
+        final List<Recipe> results = new ArrayList<>();
+
+        List<Recipe> recipeList = new ArrayList<>();
+        if ("bookmarks".equals(folder)) {
+            recipeList.addAll(userFromFile.getBookmarks());
+        }
+        else if ("recentlyViewed".equals(folder)) {
+            recipeList.addAll(userFromFile.getRecentlyViewed());
+        }
+        else {
+            recipeList.addAll(userFromFile.getFolder(folder));
+        }
+
+        for (Recipe recipe : recipeList) {
+            final String[] words = recipe.getName().split(" ");
+            for (String word : words) {
+                if (word.equalsIgnoreCase(recipeName)) {
+                    results.add(recipe);
+                }
             }
         }
         return results;

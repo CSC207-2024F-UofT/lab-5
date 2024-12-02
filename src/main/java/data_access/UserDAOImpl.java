@@ -7,13 +7,15 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 import use_case.search_recipe_list_by_ingredient.SearchRecipeListByIngredientDataAccessInterface;
+import use_case.search_recipe_list_by_name.SearchRecipeListByNameDataAccessInterface;
 
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
-public class UserDAOImpl implements UserDAO, SearchRecipeListByIngredientDataAccessInterface {
+public class UserDAOImpl implements UserDAO, SearchRecipeListByIngredientDataAccessInterface,
+        SearchRecipeListByNameDataAccessInterface {
     private static final String FILE_PATH = "users.json";
     private Map<String, User> usersDatabase;
 
@@ -307,6 +309,34 @@ public class UserDAOImpl implements UserDAO, SearchRecipeListByIngredientDataAcc
             }
             if (match) {
                 results.add(recipe);
+            }
+        }
+        return results;
+    }
+
+    @Override
+    public List<Recipe> searchRecipeListByName(String recipeName, User user, String folder) {
+        final Map<String, User> users = loadUsersFromFile();
+        final User userFromFile = users.get(user.getUsername());
+        final List<Recipe> results = new ArrayList<>();
+
+        List<Recipe> recipeList = new ArrayList<>();
+        if ("bookmarks".equals(folder)) {
+            recipeList.addAll(userFromFile.getBookmarks());
+        }
+        else if ("recentlyViewed".equals(folder)) {
+            recipeList.addAll(userFromFile.getRecentlyViewed());
+        }
+        else {
+            recipeList.addAll(userFromFile.getFolder(folder));
+        }
+
+        for (Recipe recipe : recipeList) {
+            final String[] words = recipe.getName().split(" ");
+            for (String word : words) {
+                if (word.equalsIgnoreCase(recipeName)) {
+                    results.add(recipe);
+                }
             }
         }
         return results;

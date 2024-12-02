@@ -1,9 +1,7 @@
-package use_case;
+package use_case.search_recipe_list_by_name;
 
-import entity.Ingredient;
 import entity.Recipe;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
