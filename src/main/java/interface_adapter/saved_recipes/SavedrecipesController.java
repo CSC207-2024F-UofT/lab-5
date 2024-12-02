@@ -1,11 +1,11 @@
 package interface_adapter.saved_recipes;
 
-import entity.Recipe;
 import use_case.saved_recipes.SavedRecipeInputBoundary;
 import use_case.saved_recipes.SavedRecipeInputData;
 
-import java.util.Map;
-
+/**
+ * The controller for the Saved Recipes view.
+ */
 public class SavedrecipesController {
 
     private final SavedRecipeInputBoundary savedRecipeInputBoundary;
@@ -14,6 +14,10 @@ public class SavedrecipesController {
         this.savedRecipeInputBoundary = savedRecipeInputBoundary;
     }
 
+    /**
+     * Switch to the Profile view.
+     * @param username username of currently logged-in User.
+     */
     public void switchToProfileView(String username) {
         final SavedRecipeInputData savedRecipeInputData = new SavedRecipeInputData(username);
         savedRecipeInputBoundary.switchToProfileView(savedRecipeInputData);

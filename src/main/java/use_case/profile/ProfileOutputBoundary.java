@@ -1,10 +1,18 @@
 package use_case.profile;
 
-import use_case.signup.SignupOutputData;
-
+/**
+ * Output boundary for the Profile View.
+ */
 public interface ProfileOutputBoundary {
 
+    /**
+     * Executes SavedRecipes switch.
+     * @param response Profile Output data
+     */
     void switchtoSavedrecipeView(ProfileOutputData response);
 
+    /**
+     * Executes Recipe Search switch.
+     */
     void switchToRecipeSearchView();
 }

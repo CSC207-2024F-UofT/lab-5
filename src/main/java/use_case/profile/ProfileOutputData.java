@@ -1,9 +1,12 @@
 package use_case.profile;
 
-import entity.Recipe;
-
 import java.util.Map;
 
+import entity.Recipe;
+
+/**
+ * Output data of profile view.
+ */
 public class ProfileOutputData {
 
     private final Map<Recipe, Integer> recipes;

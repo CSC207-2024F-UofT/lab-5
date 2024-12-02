@@ -1,9 +1,12 @@
 package interface_adapter.saved_recipes;
 
-import entity.Recipe;
-
 import java.util.Map;
 
+import entity.Recipe;
+
+/**
+ * The state for the saved recipes View Model.
+ */
 public class SavedrecipesState {
     private String username;
     private Map<Recipe, Integer> recipes;
@@ -31,9 +34,5 @@ public class SavedrecipesState {
 
     public void setRecipes(Map<Recipe, Integer> recipes) {
         this.recipes = recipes;
-    }
-
-    public void addRecipe(Recipe recipe, Integer amount) {
-        this.recipes.put(recipe, amount);
     }
 }

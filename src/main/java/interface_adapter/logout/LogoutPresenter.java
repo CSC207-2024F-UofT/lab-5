@@ -1,10 +1,10 @@
 package interface_adapter.logout;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.profile.ProfileState;
-import interface_adapter.profile.ProfileViewModel;
 import interface_adapter.login.LoginState;
 import interface_adapter.login.LoginViewModel;
+import interface_adapter.profile.ProfileState;
+import interface_adapter.profile.ProfileViewModel;
 import use_case.logout.LogoutOutputBoundary;
 import use_case.logout.LogoutOutputData;
 

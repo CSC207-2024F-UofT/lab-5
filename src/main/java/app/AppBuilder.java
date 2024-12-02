@@ -10,18 +10,18 @@ import data_access.InMemoryUserDataAccessObject;
 import data_access.RecipeDataAccessObject;
 import entity.CommonUserFactory;
 import entity.UserFactory;
-import interface_adapter.ForgotPassword.ForgotPasswordViewModel;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.ChangePasswordPresenter;
-import interface_adapter.profile.ProfileController;
-import interface_adapter.profile.ProfilePresenter;
-import interface_adapter.profile.ProfileViewModel;
+import interface_adapter.forgotPassword.ForgotPasswordViewModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.logout.LogoutPresenter;
+import interface_adapter.profile.ProfileController;
+import interface_adapter.profile.ProfilePresenter;
+import interface_adapter.profile.ProfileViewModel;
 import interface_adapter.recipe_details.RecipeDetailsViewModel;
 import interface_adapter.recipe_search.RecipeSearchController;
 import interface_adapter.recipe_search.RecipeSearchPresenter;
@@ -59,7 +59,14 @@ import use_case.search_results.SearchResultsOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
-import view.*;
+import view.ForgotPasswordView;
+import view.LoginView;
+import view.ProfileView;
+import view.RecipeSearchView;
+import view.SavedrecipesView;
+import view.SearchResultsView;
+import view.SignupView;
+import view.ViewManager;
 
 /**
  * The AppBuilder class is responsible for putting together the pieces of
@@ -138,6 +145,10 @@ public class AppBuilder {
         return this;
     }
 
+    /**
+     * Adds the cut Forgot password View to the application.
+     * @return this builder
+     */
     public AppBuilder addForgotPasswordView() {
         forgotPasswordViewModel = new ForgotPasswordViewModel();
         forgotPasswordView = new ForgotPasswordView(forgotPasswordViewModel);
@@ -145,6 +156,10 @@ public class AppBuilder {
         return this;
     }
 
+    /**
+     * Adds the SavedRecipes View to the application.
+     * @return this builder
+     */
     public AppBuilder addSavedRecipesView() {
         savedrecipesViewModel = new SavedrecipesViewModel();
         savedrecipesView = new SavedrecipesView(savedrecipesViewModel);
@@ -152,6 +167,10 @@ public class AppBuilder {
         return this;
     }
 
+    /**
+     * Adds the Recipe Search View to the application.
+     * @return this builder
+     */
     public AppBuilder addRecipeSearchView() {
         recipeSearchViewModel = new RecipeSearchViewModel();
         recipeSearchView = new RecipeSearchView(recipeSearchViewModel);
@@ -159,6 +178,10 @@ public class AppBuilder {
         return this;
     }
 
+    /**
+     * Adds the Search Results View to the application.
+     * @return this builder
+     */
     public AppBuilder addSearchResultsView() {
         searchResultsViewModel = new SearchResultsViewModel();
         searchResultsView = new SearchResultsView(searchResultsViewModel);
@@ -181,9 +204,15 @@ public class AppBuilder {
         return this;
     }
 
+    /**
+     * Adds the Profile Use Case to the application.
+     * @return this builder
+     */
     public AppBuilder addProfileUseCase() {
-        final ProfileOutputBoundary profileOutputBoundary = new ProfilePresenter(savedrecipesViewModel, viewManagerModel, recipeSearchViewModel);
-        final ProfileInputBoundary userProfileInteractor = new ProfileInteractor(profileOutputBoundary, userDataAccessObject);
+        final ProfileOutputBoundary profileOutputBoundary = new ProfilePresenter(savedrecipesViewModel,
+                viewManagerModel, recipeSearchViewModel);
+        final ProfileInputBoundary userProfileInteractor = new ProfileInteractor(profileOutputBoundary,
+                userDataAccessObject);
 
         final ProfileController controller = new ProfileController(userProfileInteractor);
         profileView.setProfileController(controller);
@@ -205,6 +234,10 @@ public class AppBuilder {
         return this;
     }
 
+    /**
+     * Adds the Saved Recipes Use Case to the application.
+     * @return this builder
+     */
     public AppBuilder addSavedrecipesUseCase() {
         final SavedRecipeOutputBoundry savedRecipeOutputBoundry = new SavedrecipesPresenter(savedrecipesViewModel,
                 profileViewModel, viewManagerModel);
@@ -248,6 +281,10 @@ public class AppBuilder {
         return this;
     }
 
+    /**
+     * Adds the recipe Search Use Case to the application.
+     * @return this builder
+     */
     public AppBuilder addSearchUseCase() {
         final RecipeSearchOutputBoundary recipeSearchOutputBoundary = new RecipeSearchPresenter(
                 recipeSearchViewModel, searchResultsViewModel, viewManagerModel, profileViewModel);
@@ -259,6 +296,10 @@ public class AppBuilder {
         return this;
     }
 
+    /**
+     * Adds the Search results Use Case to the application.
+     * @return this builder
+     */
     public AppBuilder addSearchResultsUseCase() {
         final SearchResultsOutputBoundary searchResultsOutputBoundary = new SearchResultsPresenter(
                 searchResultsViewModel, recipeDetailsViewModel, viewManagerModel, recipeSearchViewModel);
@@ -275,7 +316,7 @@ public class AppBuilder {
      * @return the application
      */
     public JFrame build() {
-        final JFrame application = new JFrame("Login Example");
+        final JFrame application = new JFrame("Recipe Management System");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         application.add(cardPanel);

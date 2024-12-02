@@ -38,6 +38,9 @@ public class LoginInteractor implements LoginInputBoundary {
         }
     }
 
+    /**
+     * Executes the unimplemented forget password functionality.
+     */
     public void switchToForgotPasswordView() {
         loginPresenter.switchToForgotPasswordView();
     }

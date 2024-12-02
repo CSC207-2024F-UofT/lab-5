@@ -1,13 +1,18 @@
 package use_case.profile;
 
-import use_case.signup.SignupInputData;
-
+/**
+ * Input boundry of the Profile View.
+ */
 public interface ProfileInputBoundary {
 
     /**
-     * Executes the switch to login view use case.
+     * Executes the switch to savedRecipes use case.
+     * @param profileInputData The input data of the profile view
      */
     void switchToSavedRecipesView(ProfileInputData profileInputData);
 
+    /**
+     * Executes the switch to Recipesearch use case.
+     */
     void switchToRecipeSearchView();
 }

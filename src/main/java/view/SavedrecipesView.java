@@ -1,12 +1,8 @@
 package view;
 
-import entity.Recipe;
-import interface_adapter.saved_recipes.SavedrecipesController;
-import interface_adapter.saved_recipes.SavedrecipesState;
-import interface_adapter.saved_recipes.SavedrecipesViewModel;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -16,6 +12,21 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+
+import entity.Recipe;
+import interface_adapter.saved_recipes.SavedrecipesController;
+import interface_adapter.saved_recipes.SavedrecipesState;
+import interface_adapter.saved_recipes.SavedrecipesViewModel;
+
+/**
+ * The View for the SavedRecipes Use Case.
+ */
 public class SavedrecipesView extends JPanel implements PropertyChangeListener {
 
     private final String viewName = "SavedRecipes";
@@ -71,20 +82,24 @@ public class SavedrecipesView extends JPanel implements PropertyChangeListener {
         );
     }
 
+    /**
+     * This method shows the saved recipes of the users in this view.
+     * @param recipesWithRatings the saved recipes of the user with their rating
+     */
     public void populateRecipeList(Map<Recipe, Integer> recipesWithRatings) {
         recipeListPanel.removeAll();
 
         for (Map.Entry<Recipe, Integer> entry : recipesWithRatings.entrySet()) {
-            Recipe recipe = entry.getKey();
-            Integer rating = entry.getValue();
+            final Recipe recipe = entry.getKey();
+            final Integer rating = entry.getValue();
 
             // Create a panel for each recipe entry
-            JPanel recipePanel = new JPanel();
+            final JPanel recipePanel = new JPanel();
             recipePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-            recipePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 50)); // Ensure width fits
+            recipePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 50));
 
-            JLabel recipeLabel = new JLabel(recipe.getName() + " (Rating: " + rating + ")");
-            JButton detailsButton = new JButton("Details");
+            final JLabel recipeLabel = new JLabel(recipe.getName() + " (Rating: " + rating + ")");
+            final JButton detailsButton = new JButton("Details");
 
             recipePanel.add(recipeLabel);
             recipePanel.add(detailsButton);

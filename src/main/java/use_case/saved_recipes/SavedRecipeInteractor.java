@@ -1,9 +1,8 @@
 package use_case.saved_recipes;
 
-import entity.Recipe;
-
-import java.util.Map;
-
+/**
+ * Interactor for SavedRecipe View.
+ */
 public class SavedRecipeInteractor implements SavedRecipeInputBoundary {
 
     private final SavedRecipeOutputBoundry savedRecipeOutputBoundry;
@@ -12,8 +11,13 @@ public class SavedRecipeInteractor implements SavedRecipeInputBoundary {
         this.savedRecipeOutputBoundry = savedRecipeOutputBoundry;
     }
 
+    /**
+     * Switches to Profile View.
+     * @param savedRecipeInputData Input data associated with SavedRecipe View.
+     */
     public void switchToProfileView(SavedRecipeInputData savedRecipeInputData) {
-        final SavedRecipeOutputData savedRecipeOutputData = new SavedRecipeOutputData(savedRecipeInputData.getUsername(), false);
+        final SavedRecipeOutputData savedRecipeOutputData = new SavedRecipeOutputData(savedRecipeInputData
+                .getUsername(), false);
         savedRecipeOutputBoundry.switchToProfileView(savedRecipeOutputData);
     }
 }
