@@ -1,8 +1,12 @@
 package view;
 
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
+import entity.Recipe;
+import interface_adapter.saved_recipes.SavedrecipesController;
+import interface_adapter.saved_recipes.SavedrecipesState;
+import interface_adapter.saved_recipes.SavedrecipesViewModel;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -12,21 +16,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-
-import entity.Recipe;
-import interface_adapter.saved_recipes.SavedrecipesController;
-import interface_adapter.saved_recipes.SavedrecipesState;
-import interface_adapter.saved_recipes.SavedrecipesViewModel;
-
-/**
- * The View for the SavedRecipes Use Case.
- */
 public class SavedrecipesView extends JPanel implements PropertyChangeListener {
 
     private final String viewName = "SavedRecipes";
@@ -82,10 +71,6 @@ public class SavedrecipesView extends JPanel implements PropertyChangeListener {
         );
     }
 
-    /**
-     * This method shows the saved recipes of the users in this view.
-     * @param recipesWithRatings the saved recipes of the user with their rating
-     */
     public void populateRecipeList(Map<Recipe, Integer> recipesWithRatings) {
         recipeListPanel.removeAll();
 
@@ -96,20 +81,37 @@ public class SavedrecipesView extends JPanel implements PropertyChangeListener {
             // Create a panel for each recipe entry
             final JPanel recipePanel = new JPanel();
             recipePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-            recipePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 50));
+            recipePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 50)); // Ensure width fits
 
             final JLabel recipeLabel = new JLabel(recipe.getName() + " (Rating: " + rating + ")");
-            final JButton detailsButton = new JButton("Details");
+            final JButton linkButton = new JButton("View Recipe");
+
+            // Add an action listener to the link button
+            linkButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    try {
+                        Desktop.getDesktop().browse(new java.net.URI(recipe.getUrl()));
+                    }
+                    catch (Exception ex) {
+                        JOptionPane.showMessageDialog(
+                                SavedrecipesView.this,
+                                "Unable to open link: " + ex.getMessage(),
+                                "Error",
+                                JOptionPane.ERROR_MESSAGE
+                        );
+                    }
+                }
+            });
 
             recipePanel.add(recipeLabel);
-            recipePanel.add(detailsButton);
+            recipePanel.add(linkButton);
 
             recipeListPanel.add(recipePanel);
         }
 
         recipeListPanel.revalidate();
         recipeListPanel.repaint();
-
     }
 
     @Override

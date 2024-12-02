@@ -13,5 +13,5 @@ public interface SearchResultsOutputBoundary {
     /**
      * Switches to the Recipe Details View.
      */
-    void switchToRecipeDetailsView();
+    void switchToRecipeDetailsView(SearchResultsOutputData searchResultsOutputData);
 }

@@ -2,10 +2,11 @@ package view;
 
 import entity.CommonUser;
 import entity.Recipe;
+import entity.User;
 import interface_adapter.recipe_details.RecipeDetailsState;
 import interface_adapter.recipe_details.RecipeDetailsViewModel;
 import interface_adapter.recipe_review.RecipeReviewController;
-import use_case.review_recipe.RecipeReviewInputBoundary;
+import interface_adapter.saved_recipes.SavedrecipesState;
 import use_case.review_recipe.ReviewRecipeInputBoundary;
 
 import javax.swing.*;
@@ -19,11 +20,11 @@ import java.beans.PropertyChangeListener;
 import java.net.URI;
 import java.util.Map;
 
-public class RecipeDetailsView extends JPanel implements ActionListener, PropertyChangeListener {
+public class RecipeDetailsView extends JPanel implements PropertyChangeListener {
 
     private final RecipeDetailsViewModel recipeDetailsViewModel;
-    private final RecipeReviewController recipeReviewController;
-    private final CommonUser user;
+    private RecipeReviewController recipeReviewController;
+    private Recipe recipe;
 
     private JLabel recipeNameLabel;
     private JLabel caloriesLabel;
@@ -35,13 +36,10 @@ public class RecipeDetailsView extends JPanel implements ActionListener, Propert
 
     private final JLabel rating = new JLabel("Rating:");
     private final JTextField ratingInputField = new JTextField(15);
-    private final JButton saveButton = new JButton("Save");
+    private final JButton saveButton;
 
-    public RecipeDetailsView(RecipeDetailsViewModel recipeDetailsViewModel, RecipeReviewController recipeReviewController, CommonUser user) {
+    public RecipeDetailsView(RecipeDetailsViewModel recipeDetailsViewModel) {
         this.recipeDetailsViewModel = recipeDetailsViewModel;
-        this.recipeReviewController = recipeReviewController;
-        this.user = user;
-
         recipeDetailsViewModel.addPropertyChangeListener(this);
 
         // Title
@@ -51,32 +49,36 @@ public class RecipeDetailsView extends JPanel implements ActionListener, Propert
 
         // Recipe Name Panel
         final JPanel recipeNamePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        recipeNameLabel = new JLabel("Recipe: ");
+        recipeNameLabel = new JLabel();
         recipeNamePanel.add(recipeNameLabel);
 
         // Calories and Servings Panel
         final JPanel detailsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        caloriesLabel = new JLabel("Calories: ");
-        servingsLabel = new JLabel("Servings: ");
+        caloriesLabel = new JLabel();
+        servingsLabel = new JLabel();
         detailsPanel.add(caloriesLabel);
         detailsPanel.add(servingsLabel);
 
+        saveButton = new JButton("Save");
+
         // link panel
-        urlLabel = new JLabel("<html><a href=''>View Full Recipe</a></html>");
-        urlLabel.setFont(new Font("Arial", Font.PLAIN, 14));
-        urlLabel.setForeground(Color.BLUE);
-        urlLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        urlLabel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                try {
-                    Desktop.getDesktop().browse(new URI("http://")); // Replace with recipe URL
-                }
-                catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-            }
-        });
+//        urlLabel = new JLabel("<html><a href=''>View Full Recipe</a></html>");
+//        urlLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+//        urlLabel.setForeground(Color.BLUE);
+//        urlLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+//        urlLabel.addMouseListener(new MouseAdapter() {
+//            @Override
+//            public void mouseClicked(MouseEvent e) {
+//                try {
+//                    Desktop.getDesktop().browse(new URI(recipe.getUrl())); // Replace with recipe URL
+//                }
+//                catch (Exception ex) {
+//                    ex.printStackTrace();
+//                }
+//            }
+//        });
+
+        urlLabel = new JLabel();
 
         // Nutrients Panel
         nutrientsPanel = new JPanel();
@@ -101,43 +103,69 @@ public class RecipeDetailsView extends JPanel implements ActionListener, Propert
         this.add(ratingInfo);
         this.add(saveButton);
 
-        saveButton.addActionListener(this);
-    }
+//        saveButton.addActionListener(this);
 
+        saveButton.addActionListener(
+
+                evt -> {
+                    if (evt.getSource().equals(saveButton) && this.recipe != null) {
+                        final RecipeDetailsState recipeDetailsState = recipeDetailsViewModel.getState();
+                        String rating = ratingInputField.getText();
+                        Integer ratingInt = Integer.parseInt(rating);
+                        this.recipeReviewController.execute(recipe, ratingInt);
+                    }
+                }
+        );
+    }
 
     public String getViewName() {
         return viewName;
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == saveButton) {
-            handleSaveAction();
-        }
-    }
+//    @Override
+//    public void actionPerformed(ActionEvent e) {
+//        if (e.getSource() == saveButton) {
+//            handleSaveAction();
+//        }
+//    }
 
-    private void handleSaveAction() {
-        try {
-            final RecipeDetailsState currentState = recipeDetailsViewModel.getState();
-            if (currentState == null) {
-                JOptionPane.showMessageDialog(this, "No recipe selected to save.",
-                        "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            final Recipe recipe = currentState.getRecipe();
-            final int userRating = Integer.parseInt(ratingInputField.getText());
-            user.addRecipe(recipe, userRating);
-            recipeReviewController.switchToSavedrecipesView();
-        }
-        catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Please enter a valid number for the rating.",
-                    "Input Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
+//    private void handleSaveAction() {
+//        try {
+//            final RecipeDetailsState currentState = recipeDetailsViewModel.getState();
+//            if (currentState == null) {
+//                JOptionPane.showMessageDialog(this, "No recipe selected to save.",
+//                        "Error", JOptionPane.ERROR_MESSAGE);
+//                return;
+//            }
+//            final Recipe recipe = currentState.getRecipe();
+//            final int userRating = Integer.parseInt(ratingInputField.getText());
+//            user.addRecipe(recipe, userRating);
+//            recipeReviewController.switchToSavedrecipesView();
+//        }
+//        catch (NumberFormatException ex) {
+//            JOptionPane.showMessageDialog(this, "Please enter a valid number for the rating.",
+//                    "Input Error", JOptionPane.ERROR_MESSAGE);
+//        }
+//    }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if (evt.getPropertyName().equals("recipeDetails")) {
+        if (evt.getPropertyName().equals("state")) {
+            final RecipeDetailsState state = (RecipeDetailsState) evt.getNewValue();
+            recipeNameLabel.setText(state.getRecipe().getName());
+
+            this.recipe = state.getRecipe();
+
+            final Integer calories = state.getRecipe().getCalories();
+            final String caloriesString = calories.toString();
+            caloriesLabel.setText("Calories: " + caloriesString);
+
+            final Integer servings = state.getRecipe().getServings();
+            final String servingsString = servings.toString();
+            servingsLabel.setText("Servings: " + servingsString);
+
+            urlLabel.setText("URL: " + state.getRecipe().getUrl());
+
             updateView(recipeDetailsViewModel.getState());
         }
     }
@@ -159,27 +187,30 @@ public class RecipeDetailsView extends JPanel implements ActionListener, Propert
             }
         }
     }
-
-    public static void main(String[] args) {
-        // Create a dummy RecipeDetailsViewModel
-        final ReviewRecipeInputBoundary recipeReviewInputBoundary = null;
-        // recipeReviewInputBoundary = new RecipeReviewInputBoundary();
-        final RecipeDetailsViewModel viewModel = new RecipeDetailsViewModel();
-        final RecipeReviewController recipeReviewController = new RecipeReviewController(recipeReviewInputBoundary);
-        final CommonUser user = new CommonUser("Adya", "adya");
-
-        // Create an instance of RecipeDetailsView
-        final RecipeDetailsView recipeDetailsView = new RecipeDetailsView(viewModel, recipeReviewController, user);
-
-        // Create a JFrame to display the view
-        JFrame frame = new JFrame("Recipe Detail");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(500, 400);
-
-        // Add RecipeDetailsView to the frame
-        frame.add(recipeDetailsView);
-
-        // Make the frame visible
-        frame.setVisible(true);
+    public void setRecipeReviewController(RecipeReviewController recipeReviewController) {
+        this.recipeReviewController = recipeReviewController;
     }
+
+//    public static void main(String[] args) {
+//        // Create a dummy RecipeDetailsViewModel
+//        final ReviewRecipeInputBoundary recipeReviewInputBoundary = null;
+//        // recipeReviewInputBoundary = new RecipeReviewInputBoundary();
+//        final RecipeDetailsViewModel viewModel = new RecipeDetailsViewModel();
+//        final RecipeReviewController recipeReviewController = new RecipeReviewController(recipeReviewInputBoundary);
+//        final CommonUser user = new CommonUser("Adya", "adya");
+//
+//        // Create an instance of RecipeDetailsView
+//        final RecipeDetailsView recipeDetailsView = new RecipeDetailsView(viewModel, recipeReviewController, user);
+//
+//        // Create a JFrame to display the view
+//        JFrame frame = new JFrame("Recipe Detail");
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        frame.setSize(500, 400);
+//
+//        // Add RecipeDetailsView to the frame
+//        frame.add(recipeDetailsView);
+//
+//        // Make the frame visible
+//        frame.setVisible(true);
+//    }
 }

@@ -7,9 +7,6 @@ import interface_adapter.saved_recipes.SavedrecipesViewModel;
 import use_case.profile.ProfileOutputBoundary;
 import use_case.profile.ProfileOutputData;
 
-/**
- * The Presenter for the Profile View.
- */
 public class ProfilePresenter implements ProfileOutputBoundary {
 
     private final ProfileViewModel profileViewModel;
@@ -24,23 +21,16 @@ public class ProfilePresenter implements ProfileOutputBoundary {
         this.recipeSearchViewModel = recipeSearchViewModel;
     }
 
-    /**
-     * Switch to SavedRecipes View.
-     * @param response Output data of profile view
-     */
     public void switchtoSavedrecipeView(ProfileOutputData response) {
         final SavedrecipesState savedrecipesState = savedrecipesViewModel.getState();
         savedrecipesState.setUsername(response.getUsername());
-        savedrecipesState.setUsername(response.getUsername());
+        savedrecipesState.setRecipes(response.getRecipes());
         this.savedrecipesViewModel.setState(savedrecipesState);
         this.savedrecipesViewModel.firePropertyChanged();
         viewManagerModel.setState(savedrecipesViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
 
-    /**
-     * Switch to RecipeSearch View.
-     */
     public void switchToRecipeSearchView() {
         viewManagerModel.setState(recipeSearchViewModel.getViewName());
         viewManagerModel.firePropertyChanged();

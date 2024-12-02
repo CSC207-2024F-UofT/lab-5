@@ -1,6 +1,8 @@
 package interface_adapter.search_results;
 
+import entity.Recipe;
 import use_case.search_results.SearchResultsInputBoundary;
+import use_case.search_results.SearchResultsInputData;
 
 /**
  * The controller for the Search Results Use Case.
@@ -23,7 +25,8 @@ public class SearchResultsController {
     /**
      * Executes the "switch to RecipeDetailsView" Use Case.
      */
-    public void switchToRecipeDetailsView() {
-        this.searchResultsInputBoundary.switchToRecipeDetailsView();
+    public void switchToRecipeDetailsView(Recipe recipe) {
+        final SearchResultsInputData searchResultsInputData = new SearchResultsInputData(recipe);
+        this.searchResultsInputBoundary.switchToRecipeDetailsView(searchResultsInputData);
     }
 }
