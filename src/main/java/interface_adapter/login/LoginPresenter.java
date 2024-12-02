@@ -15,7 +15,6 @@ public class LoginPresenter implements LoginOutputBoundary {
     private final LoginViewModel loginViewModel;
     private final ProfileViewModel profileViewModel;
     private final ViewManagerModel viewManagerModel;
-//    private final ForgotPasswordViewModel forgotPasswordViewModel;
 
     public LoginPresenter(ViewManagerModel viewManagerModel,
                           ProfileViewModel profileViewModel,
@@ -24,7 +23,6 @@ public class LoginPresenter implements LoginOutputBoundary {
         this.viewManagerModel = viewManagerModel;
         this.profileViewModel = profileViewModel;
         this.loginViewModel = loginViewModel;
-//        this.forgotPasswordViewModel = forgotPasswordViewModel;
     }
 
     @Override
@@ -46,12 +44,8 @@ public class LoginPresenter implements LoginOutputBoundary {
         loginState.setLoginError(error);
         loginViewModel.firePropertyChanged();
     }
-
-    /**
-     * Unimplemented switch to cut forget password view.
-     */
-//    public void switchToForgotPasswordView() {
-//        viewManagerModel.setState(forgotPasswordViewModel.getViewName());
-//        viewManagerModel.firePropertyChanged();
-//    }
+    //    public void switchToForgotPasswordView() {
+    //        viewManagerModel.setState(forgotPasswordViewModel.getViewName());
+    //        viewManagerModel.firePropertyChanged();
+    //    }
 }
