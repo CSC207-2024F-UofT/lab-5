@@ -1,8 +1,7 @@
 package interface_adapter;
 
-import entity.Ingredient;
 import entity.Recipe;
-import use_case.SearchRecipeListByIngredientUseCase;
+import use_case.search_recipe_list_by_ingredient.SearchRecipeListByIngredientUseCase;
 import use_case.SearchRecipeListByNameUseCase;
 
 import java.util.List;

@@ -1,13 +1,11 @@
 package view;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Arrays;
 import java.util.List;
 
-import java.awt.*;
 import javax.swing.*;
 
 import entity.Recipe;
@@ -17,18 +15,18 @@ import interface_adapter.SearchRecipePresenter;
 import use_case.filter_recipes.FilterRecipesDataAccessInterface;
 
 public class RecipeView extends JFrame {
-    private JTextField ingredientInput;
-    private JButton searchButton;
-    // private JList<String> recipeList; - commented out for now to make the double click function work
-    private JList<Recipe> recipeList;
+    private static final int TEXTFIELD_COLUMNS = 20;
+
+    private final JTextField ingredientInput;
+    private final JList<Recipe> recipeList;
     private final DefaultListModel<Recipe> listModel;
     private final RecipeController controller;
     private final SearchRecipePresenter presenter;
     private final User user;
 
-    private FilterRecipesDataAccessInterface frDataAccessInterface;
-    private JComboBox<String> dietComboBox;
-    private JComboBox<String> cuisineComboBox;
+    private final FilterRecipesDataAccessInterface frDataAccessInterface;
+    private final JComboBox<String> dietComboBox;
+    private final JComboBox<String> cuisineComboBox;
     private final String defaultFilter;
 
     public RecipeView(RecipeController controller, SearchRecipePresenter presenter, User user,
@@ -40,11 +38,10 @@ public class RecipeView extends JFrame {
         this.defaultFilter = "Any";
 
         setTitle("Recipe Generator");
-        setSize(800, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        ingredientInput = new JTextField(20);
-        searchButton = new JButton("Find Recipes");
+        ingredientInput = new JTextField(TEXTFIELD_COLUMNS);
+        final JButton searchButton = new JButton("Find Recipes");
         recipeList = new JList<>();
         listModel = new DefaultListModel<>();
         recipeList.setModel(listModel);
@@ -94,12 +91,13 @@ public class RecipeView extends JFrame {
         dietComboBox.addActionListener(event -> applyFilters());
         cuisineComboBox.addActionListener(event -> applyFilters());
 
+        pack();
         setVisible(true);
     }
 
     private void handleSearch() {
-        String ingredientsText = ingredientInput.getText();
-        List<String> ingredients = Arrays.asList(ingredientsText.split(","));
+        final String ingredientsText = ingredientInput.getText();
+        final List<String> ingredients = Arrays.asList(ingredientsText.split(","));
         listModel.clear();
         // Delegate search to the controller when default filters applied
         if (defaultFilter.equals(dietComboBox.getSelectedItem())

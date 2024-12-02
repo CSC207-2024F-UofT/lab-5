@@ -1,8 +1,8 @@
 package data_access;
 
-import entity.Recipe;
-
 import java.util.List;
+
+import entity.Recipe;
 
 public interface RecipeDAO {
     List<Recipe> getRecipesByIngredients(List<String> ingredients);

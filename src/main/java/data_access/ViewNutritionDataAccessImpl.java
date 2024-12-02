@@ -1,59 +1,61 @@
 package data_access;
 
-import entity.Nutrition;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import use_case.ViewNutritionDataAccessInterface;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import entity.Nutrition;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import use_case.ViewNutritionDataAccessInterface;
+
 public class ViewNutritionDataAccessImpl implements ViewNutritionDataAccessInterface {
     private static final String BASE_URL = "https://api.spoonacular.com";
-    private static final String API_KEY = "5fcf2eef76af4e6893959ceefae0a087";
+    private static final String API_KEY = AppConstants.API_KEY;
 
     @Override
     public List<Nutrition> getNutritionDataForRecipe(int recipeId) {
-        OkHttpClient client = new OkHttpClient();
+        final OkHttpClient client = new OkHttpClient();
 
-        String endpoint = "/recipes/" + recipeId + "/nutritionWidget.json";
-        String url = BASE_URL + endpoint + "?apiKey=" + API_KEY;
+        final String endpoint = "/recipes/" + recipeId + "/nutritionWidget.json";
+        final String url = BASE_URL + endpoint + "?apiKey=" + API_KEY;
 
-        Request request = new Request.Builder().url(url).build();
+        final Request request = new Request.Builder().url(url).build();
 
-        List<Nutrition> nutritionList = new ArrayList<>();
+        final List<Nutrition> nutritionList = new ArrayList<>();
 
         try (Response response = client.newCall(request).execute()) {
             if (response.isSuccessful() && response.body() != null) {
 
-                String jsonResponse = response.body().string();
-                JSONObject jsonObject = new JSONObject(jsonResponse);
+                final String jsonResponse = response.body().string();
+                final JSONObject jsonObject = new JSONObject(jsonResponse);
 
                 if (jsonObject.has("nutrients")) {
-                    JSONArray nutrients = jsonObject.getJSONArray("nutrients");
+                    final JSONArray nutrients = jsonObject.getJSONArray("nutrients");
                     for (int i = 0; i < nutrients.length(); i++) {
-                        JSONObject nutrientJson = nutrients.getJSONObject(i);
+                        final JSONObject nutrientJson = nutrients.getJSONObject(i);
 
-                        String name = nutrientJson.getString("name");
-                        double amount = nutrientJson.getDouble("amount");
-                        String unit = nutrientJson.getString("unit");
-                        double percentOfDailyNeeds = nutrientJson.optDouble("percentOfDailyNeeds", 0);
+                        final String name = nutrientJson.getString("name");
+                        final double amount = nutrientJson.getDouble("amount");
+                        final String unit = nutrientJson.getString("unit");
+                        final double percentOfDailyNeeds = nutrientJson.optDouble("percentOfDailyNeeds", 0);
 
-                        Nutrition nutrition = new Nutrition(name, amount, unit, percentOfDailyNeeds);
+                        final Nutrition nutrition = new Nutrition(name, amount, unit, percentOfDailyNeeds);
                         nutritionList.add(nutrition);
                     }
                 }
-                return nutritionList;
-            } else {
+            }
+            else {
                 System.err.println("Request failed with code: " + response.code());
             }
 
-        } catch (IOException e) {
-            e.printStackTrace();
+        }
+        catch (IOException exception) {
+            exception.printStackTrace();
         }
         return nutritionList;
     }

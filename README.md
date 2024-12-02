@@ -38,7 +38,7 @@ Shuxin (Kate) Zhou
 
 *	Member 3: Another feature provides detailed nutritional information for each recipe. Users can click a button to access data such as calorie counts, macronutrients (carbs, proteins, fats), and other key nutrients. This feature supports those who are tracking their nutrition or following specific dietary goals. It is important for the system to present this information clearly, accounting for potential variations in portion sizes and ingredient substitutions.
 
-*	Member 4: The system will also allow users to bookmark recipes for future reference. This feature enables users to save recipes they find interesting or useful and organize them into categories like "Dinner" or "Favorites." Additionally, a "Recently Viewed" section can help users retrieve recipes they forgot to bookmark. The ability to sync bookmarks across devices ensures easy access whether users are on a phone or computer.
+*	Member 4: The system will also allow users to bookmark recipes for future reference. This feature enables users to save recipes they find interesting or useful and organize them into categories like "Dinner" or "Favorites." Additionally, a "Recently Viewed" section can help users retrieve recipes they forgot to bookmark.
 
 *	Member 5: Finally, the program offers a shopping list feature for adjacent recipes. When users are missing one or two ingredients for a recipe, the system will generate a shopping list with only the required items. This function can help users decide what to buy if they want to try new meals without doing extensive shopping. Export options, such as saving the list as a PDF or sharing it with other apps, enhance usability. The system will also need to distinguish between essential ingredients and common pantry staples to keep the lists concise.
 
@@ -78,14 +78,14 @@ you'd like.
 - ~~should the bookmarks and recently viewed lists of a user be stored in the user.json file?~~ - implemented
 - ~~individual recipe view only displays one ingredient right now~~ - fixed
 - add a find recipe by name search function in the main search page
-- make ingredients clickable in individual recipe view? Or at least display the amounts
+- ~~make ingredients clickable in individual recipe view? Or at least display the amounts~~
 - for the ingredient list in individual recipe view, split it into "used ingredients", "unused ingredients" and "missed ingredients" (right now there's only "missed ingredients")
 - ^ might be too complicated to do
 - when you double click on the recipes in the search view, you somehow get two copies of the individual recipe view??
 - ^ doesn't happen all the time tho
 - allow the user to choose how many recipes they want to see? Page flipping feature?
 - show random recipes feature?
-- allow users to create custom folders???
+- ~~**allow users to create custom folders???**~~
 - allow users to press enter instead of using the search button?
 - ~~*add clickable url to individual recipe view*~~
 - allow users to select ingredients from individual recipe view and add them to their shopping list?
@@ -94,4 +94,14 @@ you'd like.
 - change background colour?
 - *make the recipes in shopping list view clickable*
 - display no recipes found in search view
-- add clear recently viewed button
+~~- add clear recently viewed button~~
+- modify how the close button works - so that you don't terminate the program when you close one window
+- ~~auto adjust window size~~
+- **add the fire property changed thingy so that the lists update in real time**
+- allow users to delete a bookmark
+
+### folder view ###
+- [X] add create folder user interface - either create a new button on home page or in BookmarkView
+- [X] add dropdown menu of folders in IndividualRecipeView - name it "add recipe to xxx folder" - or make it a checklist instead?
+- [X] add a save folder to json file thingy in UserDAOImpl
+- ~~make the whole thing a tag and filter system instead??? This would then entail changing the Recipe class~~

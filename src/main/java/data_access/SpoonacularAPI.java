@@ -6,11 +6,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class SpoonacularAPI {
-    private final String apiKey = "9c13038e18cc407ca440bd756225cd13";
+    private static final String API_KEY = AppConstants.API_KEY;
+    private static final String RESPONSE_METHOD = "GET";
 
     // Define pantry staples
     private final List<String> pantryStaples = Arrays.asList(
@@ -19,36 +21,36 @@ public class SpoonacularAPI {
 
     // Fetch recipes based on the user's available ingredients
     public List<String> getRecipesContaining(List<String> availableIngredients) {
-        List<String> recipes = new ArrayList<>();
+        final List<String> recipes = new ArrayList<>();
         try {
-            String ingredients = String.join(",", availableIngredients);
+            final String ingredients = String.join(",", availableIngredients);
 
             // API call to fetch recipes based on available ingredients
-            String urlString = "https://api.spoonacular.com/recipes/findByIngredients?ingredients=" + ingredients
-                    + "&number=10&ranking=2&apiKey=" + apiKey;
-            URL url = new URL(urlString);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("GET");
+            final String urlString = "https://api.spoonacular.com/recipes/findByIngredients?ingredients=" + ingredients
+                    + "&number=10&ranking=2&apiKey=" + API_KEY;
+            final URL url = new URL(urlString);
+            final HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod(RESPONSE_METHOD);
 
-            Scanner scanner = new Scanner(conn.getInputStream());
-            StringBuilder jsonResponse = new StringBuilder();
+            final Scanner scanner = new Scanner(conn.getInputStream());
+            final StringBuilder jsonResponse = new StringBuilder();
             while (scanner.hasNext()) {
                 jsonResponse.append(scanner.nextLine());
             }
             scanner.close();
 
             // Parse the JSON response
-            JSONArray jsonArray = new JSONArray(jsonResponse.toString());
+            final JSONArray jsonArray = new JSONArray(jsonResponse.toString());
             for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject recipe = jsonArray.getJSONObject(i);
+                final JSONObject recipe = jsonArray.getJSONObject(i);
 
                 // Get the missed ingredients for the recipe
-                JSONArray missedIngredients = recipe.getJSONArray("missedIngredients");
+                final JSONArray missedIngredients = recipe.getJSONArray("missedIngredients");
 
                 // Count how many ingredients are truly missing
                 int missingCount = 0;
                 for (int j = 0; j < missedIngredients.length(); j++) {
-                    String ingredientName = missedIngredients.getJSONObject(j).getString("name").toLowerCase();
+                    final String ingredientName = missedIngredients.getJSONObject(j).getString("name").toLowerCase();
                     if (!availableIngredients.contains(ingredientName)) {
                         missingCount++;
                     }
@@ -59,57 +61,59 @@ public class SpoonacularAPI {
                     recipes.add(recipe.getString("title"));
                 }
             }
-        } catch (Exception e) {
-            System.err.println("Error fetching recipes: " + e.getMessage());
+        }
+        catch (Exception exception) {
+            System.err.println("Error fetching recipes: " + exception.getMessage());
         }
         return recipes;
     }
 
     // Fetch missing ingredients for selected recipes
     public List<String> getMissingIngredients(List<String> selectedRecipes, List<String> availableIngredients) {
-        List<String> shoppingList = new ArrayList<>();
+        final List<String> shoppingList = new ArrayList<>();
         try {
             for (String recipeTitle : selectedRecipes) {
-                String searchUrl = "https://api.spoonacular.com/recipes/complexSearch?query=" + recipeTitle
-                        + "&apiKey=" + apiKey;
-                URL searchRequest = new URL(searchUrl);
-                HttpURLConnection searchConn = (HttpURLConnection) searchRequest.openConnection();
-                searchConn.setRequestMethod("GET");
+                final String searchUrl = "https://api.spoonacular.com/recipes/complexSearch?query=" + recipeTitle
+                        + "&apiKey=" + API_KEY;
+                final URL searchRequest = new URL(searchUrl);
+                final HttpURLConnection searchConn = (HttpURLConnection) searchRequest.openConnection();
+                searchConn.setRequestMethod(RESPONSE_METHOD);
 
-                Scanner searchScanner = new Scanner(searchConn.getInputStream());
-                StringBuilder searchResponse = new StringBuilder();
+                final Scanner searchScanner = new Scanner(searchConn.getInputStream());
+                final StringBuilder searchResponse = new StringBuilder();
                 while (searchScanner.hasNext()) {
                     searchResponse.append(searchScanner.nextLine());
                 }
                 searchScanner.close();
 
-                JSONObject searchResult = new JSONObject(searchResponse.toString());
-                JSONArray results = searchResult.getJSONArray("results");
+                final JSONObject searchResult = new JSONObject(searchResponse.toString());
+                final JSONArray results = searchResult.getJSONArray("results");
 
-                if (results.length() > 0) {
-                    JSONObject recipe = results.getJSONObject(0);
-                    int id = recipe.getInt("id");
+                if (!results.isEmpty()) {
+                    final JSONObject recipe = results.getJSONObject(0);
+                    final int id = recipe.getInt("id");
 
                     // Fetch ingredients for the recipe using its ID
-                    String ingredientUrl = "https://api.spoonacular.com/recipes/" + id + "/information?includeNutrition=false&apiKey=" + apiKey;
-                    URL ingredientRequest = new URL(ingredientUrl);
-                    HttpURLConnection ingredientConn = (HttpURLConnection) ingredientRequest.openConnection();
-                    ingredientConn.setRequestMethod("GET");
+                    final String ingredientUrl = "https://api.spoonacular.com/recipes/" + id
+                            + "/information?includeNutrition=false&apiKey=" + API_KEY;
+                    final URL ingredientRequest = new URL(ingredientUrl);
+                    final HttpURLConnection ingredientConn = (HttpURLConnection) ingredientRequest.openConnection();
+                    ingredientConn.setRequestMethod(RESPONSE_METHOD);
 
-                    Scanner ingredientScanner = new Scanner(ingredientConn.getInputStream());
-                    StringBuilder ingredientResponse = new StringBuilder();
+                    final Scanner ingredientScanner = new Scanner(ingredientConn.getInputStream());
+                    final StringBuilder ingredientResponse = new StringBuilder();
                     while (ingredientScanner.hasNext()) {
                         ingredientResponse.append(ingredientScanner.nextLine());
                     }
                     ingredientScanner.close();
 
-                    JSONObject ingredientJson = new JSONObject(ingredientResponse.toString());
-                    JSONArray extendedIngredients = ingredientJson.getJSONArray("extendedIngredients");
+                    final JSONObject ingredientJson = new JSONObject(ingredientResponse.toString());
+                    final JSONArray extendedIngredients = ingredientJson.getJSONArray("extendedIngredients");
 
                     // Include missing ingredients that are not in the user's list and not pantry staples
                     for (int i = 0; i < extendedIngredients.length(); i++) {
-                        JSONObject ingredient = extendedIngredients.getJSONObject(i);
-                        String ingredientName = ingredient.getString("original").toLowerCase();
+                        final JSONObject ingredient = extendedIngredients.getJSONObject(i);
+                        final String ingredientName = ingredient.getString("original").toLowerCase();
 
                         // Check if the ingredient is not already available and not a pantry staple (substring match)
                         if (!availableIngredients.contains(ingredientName) && !containsPantryStaple(ingredientName)) {
@@ -118,8 +122,9 @@ public class SpoonacularAPI {
                     }
                 }
             }
-        } catch (Exception e) {
-            System.err.println("Error fetching missing ingredients: " + e.getMessage());
+        }
+        catch (Exception exception) {
+            System.err.println("Error fetching missing ingredients: " + exception.getMessage());
         }
         return shoppingList;
     }
