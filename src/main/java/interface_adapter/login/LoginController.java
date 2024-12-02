@@ -29,7 +29,7 @@ public class LoginController {
     /**
      * Unimplemented switch to cut forget password view.
      */
-    public void switchToForgotPasswordView() {
-        loginUseCaseInteractor.switchToForgotPasswordView();
-    }
+//    public void switchToForgotPasswordView() {
+//        loginUseCaseInteractor.switchToForgotPasswordView();
+//    }
 }

@@ -19,5 +19,5 @@ public interface LoginOutputBoundary {
     /**
      * Executes the unimplemented forget password functionality.
      */
-    void switchToForgotPasswordView();
+//    void switchToForgotPasswordView();
 }
