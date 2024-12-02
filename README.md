@@ -33,7 +33,7 @@ one to five, with one being the lowest and five being the highest, and an option
   - Nutrients (Protein, Carbs, Fat)
 
 
- <img src="./images/search_example.png" alt="Search Example" width="400">
+ <img src="./images/recipe search screenshot.png" alt="Search Example" width="400">
 
 
 ### Recipe Interaction
