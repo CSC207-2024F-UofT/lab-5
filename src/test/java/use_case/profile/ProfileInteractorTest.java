@@ -111,4 +111,59 @@ class ProfileInteractorTest {
         // Validate the ViewManagerModel state
         assertEquals(savedrecipesViewModel.getViewName(), viewManagerModel.getState());
     }
+
+    @Test
+    void switchToSavedRecipesViewEmptyRecipeMapTest() {
+        // Prepare test data
+        String username = "TestUser";
+
+        // Create a mock user with an empty saved recipes map
+        CommonUser mockUser = new CommonUser(username, "password123"); // No recipes added
+
+        // Mock the ProfileDataAccessInterface
+        ProfileDataAccessInterface mockDataAccess = new ProfileDataAccessInterface() {
+            @Override
+            public CommonUser get(String username) {
+                assertEquals("TestUser", username);
+                return mockUser;
+            }
+        };
+
+        // Setup view models
+        SavedrecipesViewModel savedrecipesViewModel = new SavedrecipesViewModel();
+        ViewManagerModel viewManagerModel = new ViewManagerModel();
+        RecipeSearchViewModel recipeSearchViewModel = new RecipeSearchViewModel();
+
+        // Add property change listener to ViewManagerModel for verification
+        PropertyChangeListener viewManagerListener = new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent event) {
+                assertEquals("state", event.getPropertyName());
+                assertEquals(savedrecipesViewModel.getViewName(), event.getNewValue());
+            }
+        };
+        viewManagerModel.addPropertyChangeListener(viewManagerListener);
+
+        // Create the presenter
+        ProfilePresenter presenter = new ProfilePresenter(savedrecipesViewModel, viewManagerModel, recipeSearchViewModel);
+
+        // Instantiate the interactor
+        ProfileInteractor interactor = new ProfileInteractor(presenter, mockDataAccess);
+
+        // Input data for the test
+        ProfileInputData inputData = new ProfileInputData(username);
+
+        // Execute the method being tested
+        interactor.switchToSavedRecipesView(inputData);
+
+        // Validate the SavedrecipesViewModel state
+        SavedrecipesState savedrecipesState = savedrecipesViewModel.getState();
+        assertEquals(username, savedrecipesState.getUsername());
+        assertNotNull(savedrecipesState.getRecipes()); // Ensure recipes map is initialized
+        assertTrue(savedrecipesState.getRecipes().isEmpty(), "Recipes map should be empty");
+
+        // Validate the ViewManagerModel state
+        assertEquals(savedrecipesViewModel.getViewName(), viewManagerModel.getState());
+    }
+
 }
