@@ -2,7 +2,7 @@ package data_access;
 
 public final class AppConstants {
 
-    public static final String API_KEY = "9c13038e18cc407ca440bd756225cd13";
+    public static final String API_KEY = "38143f425a9f4698bd2e63550825a4ce";
     public static final String NUMBER_OF_RESULTS = "5";
     public static final String FONT = "Arial";
     public static final int WELCOME_FONT_SIZE = 18;
