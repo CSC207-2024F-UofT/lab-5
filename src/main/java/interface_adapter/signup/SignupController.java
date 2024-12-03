@@ -28,9 +28,17 @@ public class SignupController {
     }
 
     /**
-     * Executes the "switch to LoginView" Use Case.
+     * Executes the "switch to Survey1" Use Case.
+     * @param uname newly created user
+     */
+    public void switchToSurvey1View(String uname) {
+        this.userSignupUseCaseInteractor.switchToSurvey1View(uname);
+    }
+
+    /**
+     * Executes the "switch to Login" Use Case.
      */
     public void switchToLoginView() {
-        userSignupUseCaseInteractor.switchToLoginView();
+        this.userSignupUseCaseInteractor.switchToLoginView();
     }
 }

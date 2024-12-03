@@ -8,6 +8,7 @@ import entity.User;
 public class LoginInteractor implements LoginInputBoundary {
     private final LoginUserDataAccessInterface userDataAccessObject;
     private final LoginOutputBoundary loginPresenter;
+    private User loggedInUser;
 
     public LoginInteractor(LoginUserDataAccessInterface userDataAccessInterface,
                            LoginOutputBoundary loginOutputBoundary) {
@@ -29,12 +30,21 @@ public class LoginInteractor implements LoginInputBoundary {
             }
             else {
 
-                final User user = userDataAccessObject.get(loginInputData.getUsername());
+                final User loggedInUser = userDataAccessObject.get(loginInputData.getUsername());
 
-                userDataAccessObject.setCurrentUsername(user.getName());
-                final LoginOutputData loginOutputData = new LoginOutputData(user.getName(), false);
+                userDataAccessObject.setCurrentUsername(loggedInUser.getName());
+                final LoginOutputData loginOutputData = new LoginOutputData(loggedInUser.getName(), false);
                 loginPresenter.prepareSuccessView(loginOutputData);
             }
         }
+    }
+
+    public User getLoggedInUser(){ return this.loggedInUser; }
+    /**
+     * Executes the switch to signup view use case.
+     */
+    @Override
+    public void switchToSignUpView() {
+        loginPresenter.switchToSignUpView();
     }
 }

@@ -1,5 +1,6 @@
 package use_case.signup;
 
+import data_access.DBUserDataAccessObject;
 import entity.User;
 import entity.UserFactory;
 
@@ -30,10 +31,16 @@ public class SignupInteractor implements SignupInputBoundary {
         else {
             final User user = userFactory.create(signupInputData.getUsername(), signupInputData.getPassword());
             userDataAccessObject.save(user);
+            userDataAccessObject.savePwl(user);
 
             final SignupOutputData signupOutputData = new SignupOutputData(user.getName(), false);
             userPresenter.prepareSuccessView(signupOutputData);
         }
+    }
+
+    @Override
+    public void switchToSurvey1View(String uname) {
+        userPresenter.switchToSurvey1View(uname);
     }
 
     @Override

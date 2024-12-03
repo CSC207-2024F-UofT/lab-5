@@ -1,6 +1,6 @@
 package view;
 
-import java.awt.Component;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -34,27 +34,37 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     private final JLabel passwordErrorField = new JLabel();
 
     private final JButton logIn;
-    private final JButton cancel;
+    private final JButton toSignUp;
     private LoginController loginController;
 
     public LoginView(LoginViewModel loginViewModel) {
+
+        // styling
+        final Font font = new Font("Georgia", Font.PLAIN, 20);
 
         this.loginViewModel = loginViewModel;
         this.loginViewModel.addPropertyChangeListener(this);
 
         final JLabel title = new JLabel("Login Screen");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        title.setFont(new Font("Georgia", Font.BOLD, 24));
 
+        final JLabel userNameLabel = new JLabel("Username");
+        userNameLabel.setFont(font);
         final LabelTextPanel usernameInfo = new LabelTextPanel(
-                new JLabel("Username"), usernameInputField);
+                userNameLabel, usernameInputField);
+        final JLabel passwordLabel = new JLabel("Password");
+        passwordLabel.setFont(font);
         final LabelTextPanel passwordInfo = new LabelTextPanel(
-                new JLabel("Password"), passwordInputField);
+                passwordLabel, passwordInputField);
 
         final JPanel buttons = new JPanel();
-        logIn = new JButton("log in");
+        toSignUp = new JButton("Create an account");
+        toSignUp.setFont(font);
+        buttons.add(toSignUp);
+        logIn = new JButton("Log in");
+        logIn.setFont(font);
         buttons.add(logIn);
-        cancel = new JButton("cancel");
-        buttons.add(cancel);
 
         logIn.addActionListener(
                 new ActionListener() {
@@ -71,7 +81,12 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                 }
         );
 
-        cancel.addActionListener(this);
+        toSignUp.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        loginController.switchToSignUpView();
+                    }
+                });
 
         usernameInputField.getDocument().addDocumentListener(new DocumentListener() {
 
@@ -123,11 +138,21 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
             }
         });
 
+        // styling
+        this.setPreferredSize(new Dimension(450, 500));
+        final Color backcolor = new Color(255, 255, 255);
+        this.setBackground(backcolor);
+        title.setBackground(backcolor);
+        usernameInfo.setBackground(backcolor);
+        passwordInfo.setBackground(backcolor);
+        buttons.setBackground(backcolor);
+
         this.add(title);
         this.add(usernameInfo);
         this.add(usernameErrorField);
         this.add(passwordInfo);
         this.add(buttons);
+
     }
 
     /**
