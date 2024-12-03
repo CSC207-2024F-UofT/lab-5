@@ -7,12 +7,6 @@ import java.util.List;
  */
 public interface FilterRecipesInputBoundary {
 
-    // /**
-    //  * Execute the filter recipes use case.
-    //  * @param filterRecipesInputData the input data for this use case
-    //  */
-    // void execute(FilterRecipesInputData filterRecipesInputData);
-
     /**
      * Get available diets.
      * @return list of available diets

@@ -180,7 +180,7 @@ public class SpoonacularRecipeDAO implements RecipeDAO, FilterRecipesDataAccessI
             urlBuilder.append("&cuisine=").append(cuisine);
         }
 
-        // Build the request **REPEAT OF ABOVE SHOULD REFACTOR
+        // Build the request
         final Request request = new Request.Builder()
                 .url(String.valueOf(urlBuilder))
                 .build();
@@ -201,13 +201,12 @@ public class SpoonacularRecipeDAO implements RecipeDAO, FilterRecipesDataAccessI
                     final int id = recipeJson.getInt("id");
                     final JSONObject completeRecipe = getCompleteRecipe(id);
 
+                    // for testing purposes
                     String title = recipeJson.getString("title");
-                    // String recipeUrl = BASE_URL + "/recipes/" + recipeJson.getInt("id") + "/information"; // URL to recipe details
                     final String recipeUrl = completeRecipe.getString("spoonacularSourceUrl");
                     final JSONArray missedIngredientsJson = recipeJson.getJSONArray("missedIngredients");
                     final JSONArray usedIngredientsJson = recipeJson.getJSONArray("usedIngredients");
                     final JSONArray unusedIngredientsJson = recipeJson.getJSONArray("unusedIngredients");
-                    System.out.println(missedIngredientsJson); // for testing
                     String image = recipeJson.getString("image");
 
                     // Collect ingredients from the JSON response
@@ -224,19 +223,21 @@ public class SpoonacularRecipeDAO implements RecipeDAO, FilterRecipesDataAccessI
                     }
 
                     // Create and add Recipe object to the list
-                    Recipe recipe = new Recipe(title, recipeUrl, recipeIngredients, image);
+                    final Recipe recipe = new Recipe(title, recipeUrl, recipeIngredients, image);
                     recipes.add(recipe);
                 }
-            } else {
+            }
+            else {
                 System.out.println("Request failed with code: " + response.code());
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        }
+        catch (IOException exception) {
+            exception.printStackTrace();
         }
         return recipes;
     }
 
-    // hard-coded for now
+    // hard-coded
     @Override
     public List<String> getAvailableDiets() {
         final List<String> diets = new ArrayList<>();
