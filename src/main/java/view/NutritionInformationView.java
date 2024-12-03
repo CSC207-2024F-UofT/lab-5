@@ -47,7 +47,7 @@ public class NutritionInformationView extends JFrame {
     }
 
     /**
-     * Loads nutrition data using the controller and updates the UI.
+     * Load nutrition data using the controller and updates the UI.
      */
     private void loadNutritionData() {
         // Fetch nutrition data through the controller

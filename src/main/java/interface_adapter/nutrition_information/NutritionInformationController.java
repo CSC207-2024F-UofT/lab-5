@@ -19,7 +19,7 @@ public class NutritionInformationController {
     /**
      * Executes the Nutrition Information Use Case.
      * @param recipeId The ID of the recipe for which nutrition information is to be fetched.
-     * @return List of Nutrition objects representing the processed nutrition data.
+     * @return List of Nutrition object representing the processed nutrition data.
      */
     public List<Nutrition> execute(int recipeId) {
         // Create the input data object

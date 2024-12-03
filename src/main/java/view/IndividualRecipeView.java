@@ -51,7 +51,7 @@ public class IndividualRecipeView extends JFrame implements ActionListener {
         bookmarkButton = new JButton("Bookmark");
         urlButton = new JButton("Open Recipe in Browser");
 
-        // Initialize image
+        // Initialize image.
         try {
             // Specify the image URL
             if (recipe.getImage() == null) {
