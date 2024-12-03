@@ -7,6 +7,9 @@ import entity.User;
 import use_case.change_password.ChangePasswordUserDataAccessInterface;
 import use_case.login.LoginUserDataAccessInterface;
 import use_case.logout.LogoutUserDataAccessInterface;
+import use_case.profile.ProfileDataAccessInterface;
+import use_case.review_recipe.RecipeReviewDataAccessInterface;
+import use_case.search_results.SearchResultsDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
 
 /**
@@ -16,7 +19,10 @@ import use_case.signup.SignupUserDataAccessInterface;
 public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterface,
         LoginUserDataAccessInterface,
         ChangePasswordUserDataAccessInterface,
-        LogoutUserDataAccessInterface {
+        LogoutUserDataAccessInterface,
+        ProfileDataAccessInterface,
+        SearchResultsDataAccessInterface,
+        RecipeReviewDataAccessInterface {
 
     private final Map<String, User> users = new HashMap<>();
 
