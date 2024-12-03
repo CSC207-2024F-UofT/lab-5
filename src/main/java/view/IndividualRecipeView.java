@@ -8,11 +8,14 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
+import data_access.NutritionInformationDAO;
+import data_access.RecipeIdDAO;
 import data_access.UserDAOImpl;
 import entity.*;
+import interface_adapter.nutrition_information.NutritionInformationController;
+import interface_adapter.nutrition_information.NutritionInformationPresenter;
+import use_case.nutrition_information.NutritionInformationInteractor;
 
 public class IndividualRecipeView extends JFrame implements ActionListener {
     private final JButton nutritionButton;
@@ -48,7 +51,7 @@ public class IndividualRecipeView extends JFrame implements ActionListener {
         bookmarkButton = new JButton("Bookmark");
         urlButton = new JButton("Open Recipe in Browser");
 
-        // Initialize image
+        // Initialize image.
         try {
             // Specify the image URL
             if (recipe.getImage() == null) {
@@ -127,11 +130,15 @@ public class IndividualRecipeView extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent event) {
-//        if (event.getSource() == nutritionButton) {
-//            RecipeIdDAO getRecipeIdDAO = new RecipeIdDAO();
-//            int recipeId = getRecipeIdDAO.getRecipeIdByName(recipe.getName());
-//            new NutritionInformationView(recipeId);
-//        }
+        if (event.getSource() == nutritionButton) {
+            final RecipeIdDAO getRecipeIdDAO = new RecipeIdDAO();
+            final int recipeId = getRecipeIdDAO.getRecipeIdByName(recipe.getName());
+            final NutritionInformationPresenter presenter = new NutritionInformationPresenter();
+            final NutritionInformationDAO dataFetcher = new NutritionInformationDAO();
+            final NutritionInformationInteractor interactor = new NutritionInformationInteractor(dataFetcher, presenter);
+            final NutritionInformationController controller = new NutritionInformationController(interactor);
+            new NutritionInformationView(recipeId,controller);
+        }
         if (event.getSource() == bookmarkButton) {
             if (!user.getBookmarks().contains(recipe)) {
                 userDAO.addBookmarkToFile(user.getUsername(), recipe);

@@ -80,5 +80,3 @@ public class NutritionInformationInteractor implements NutritionInformationInput
         return nutritionList;
     }
 }
-
-
