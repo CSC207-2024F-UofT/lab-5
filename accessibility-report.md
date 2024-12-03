@@ -1,10 +1,10 @@
 # Accessibility Report
 
 ## Question 1
-For each Principle of Universal Design, write 2-3 sentences — or point form notes — explaining which features of your program adhere to that principle. If you do not have any such features, you can either:   
+*For each Principle of Universal Design, write 2-3 sentences — or point form notes — explaining which features of your program adhere to that principle. If you do not have any such features, you can either:*   
 
-(a) Describe features that you could implement in the future that would adhere to the principle or  
-(b) Explain why the principle does not apply to a program like yours.
+*(a) Describe features that you could implement in the future that would adhere to the principle or*  
+*(b) Explain why the principle does not apply to a program like yours.*
 
 ### Principle 1: Equitable Use
 - this software can be accessed from any smart device - it does not require any special hardware or plugins
@@ -26,17 +26,27 @@ For each Principle of Universal Design, write 2-3 sentences — or point form no
 ### Principle 7: Size and Space for Approach and Use
 - not applicable here since the software is not connect to any hardware  
 
-
-*(for Q2 and 3, just wrote down some bullet points for now)*
-
 ## Question 2
-- university students learning to cook
-- busy parents who are too busy for meal planning
-- people looking to explore new cuisines and recipes
-- athletes who are conscious about nutrition
+*Write a paragraph (3-6 sentences) about who you would market your program towards, if you were to sell or license your program to customers. This could be a specific category of users, such as "students", or more vague, such as "people who like games". Try to give a bit more detail along with the category.*  
+
+This software could be market towards a variety of users who have a similar need - to find recipes based on the ingredients
+they had on hand. Users might seek out this program for a variety of reasons: for example, university students learning to cook
+would find it useful, since they might not know what dishes can be made from the ingredients they have. They are also likely
+to need instructions when cooking, which the software can provide by opening details of recipes in a browsers. This software 
+could also be helpful for busy professionals or parents who are too busy for meal planning. They can use the software to find 
+last-minute recipes they can make. People exploring new cuisines and recipes can also benefit from this software, since it 
+provides features like filtering by cuisines. Finally, this software is useful to those on special diets or are conscious about
+nutrition, since it allows users to filter recipes by diet and view the nutrition breakdown of each recipe.
 
 ## Question 3  
-Write a paragraph about whether or not your program is less likely to be used by certain demographics. Your discussion here should be informed by the content of our embedded ethics modules this term.
-- older people living alone who are not familiar with technology, or are more familiar with traditional recipes
-- people from cultural groups whose cuisines are not represented in the recipe database
-- people with religious dietary restrictions (no filters for halal, kosher, etc.)
+*Write a paragraph about whether or not your program is less likely to be used by certain demographics. Your discussion here should be informed by the content of our embedded ethics modules this term.*  
+
+This software could be challenging to use by older people who are not familiar with technology or who might prefer traditional
+recipes. They might suffer more tangible harm from the lack of access to practical recipes, since it is more likely for them to 
+have mobility impairments and thus a more limited stock of ingredients. Those with visual impairments might also have difficulty
+using the software, since it does not currently have features such as speech-to-text and alternate captions, which allow for 
+hands-free usage. This is an intervention that stems from a social model of disability, since it would also allow users to use
+the software when their hands are occupied with cooking. Furthermore, the software might not be favoured by people form cultural
+groups whose cuisines are not well-represented in the recipe database from Spoonacular. This potentially causes relational harm, 
+since users from those cultural groups might feel like their cuisines are marginalized. A similar reasoning applies for users
+with religious dietary restrictions, since there are no filters for categories such as halal and kosher.

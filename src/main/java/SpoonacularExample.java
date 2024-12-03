@@ -32,11 +32,6 @@ public class SpoonacularExample {
                 // Loop through the results and print recipe titles and IDs
                 for (int i = 0; i < results.length(); i++) {
                     final JSONObject recipe = results.getJSONObject(i);
-                    System.out.println("Recipe: " + recipe.getString("title"));
-                    System.out.println("ID: " + recipe.getInt("id"));
-                    System.out.println("Image: " + recipe.getString("image"));
-                    // Not sure what data type is "cuisines"...
-                    // System.out.println("Cuisines: " + recipe.getString("cuisines"));
                 }
             }
             else {

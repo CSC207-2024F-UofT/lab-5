@@ -17,7 +17,6 @@ import data_access.SpoonacularRecipeDAO;
 import data_access.UserDAOImpl;
 import entity.Recipe;
 import entity.User;
-import interface_adapter.RecipeListController;
 import interface_adapter.RecipeListState;
 import interface_adapter.RecipeListViewModel;
 import interface_adapter.search_recipe_list_by_ingredient.SearchRecipeListByIngredientController;
@@ -27,17 +26,14 @@ import interface_adapter.search_recipe_list_by_name.SearchRecipeListByNamePresen
 import use_case.search_recipe_list_by_ingredient.SearchRecipeListByIngredientInputBoundary;
 import use_case.search_recipe_list_by_ingredient.SearchRecipeListByIngredientInteractor;
 import use_case.search_recipe_list_by_ingredient.SearchRecipeListByIngredientOutputBoundary;
-import use_case.search_recipe_list_by_ingredient.SearchRecipeListByIngredientUseCase;
 import use_case.search_recipe_list_by_name.SearchRecipeListByNameInputBoundary;
 import use_case.search_recipe_list_by_name.SearchRecipeListByNameInteractor;
 import use_case.search_recipe_list_by_name.SearchRecipeListByNameOutputBoundary;
-import use_case.search_recipe_list_by_name.SearchRecipeListByNameUseCase;
 
 public abstract class RecipeListView extends JFrame implements ActionListener, PropertyChangeListener {
     protected static UserDAOImpl userDAO;
     protected final JList<Recipe> recipeList;
     protected final DefaultListModel<Recipe> listModel;
-    private final RecipeListController controller;
     private final User user;
 
     private JTextField ingredientSearchField;
@@ -65,9 +61,6 @@ public abstract class RecipeListView extends JFrame implements ActionListener, P
         this.userDAO = new UserDAOImpl();
         this.recipeList = new JList<>();
         this.listModel = new DefaultListModel<>();
-        this.controller = new RecipeListController(new SearchRecipeListByIngredientUseCase(
-                getRecipeList(userDAO.findUserByUsername(user.getUsername()))),
-                new SearchRecipeListByNameUseCase(getRecipeList(userDAO.findUserByUsername(user.getUsername()))));
         this.spoonacularRecipeDAO = new SpoonacularRecipeDAO();
 
         this.recipeListViewModel = recipeListViewModel;
@@ -193,14 +186,6 @@ public abstract class RecipeListView extends JFrame implements ActionListener, P
         if (event.getSource() == ingredientSearchButton) {
             final String userInput = ingredientSearchField.getText();
             final List<String> ingredients = Arrays.asList(userInput.split(","));
-            // TODO double check then delete
-//            List<Recipe> recipes = controller.getRecipesByIngredients(ingredients);
-//            final DefaultListModel<Recipe> ingredientSearchListModel = new DefaultListModel<>();
-//            for (Recipe recipe : recipes) {
-//                ingredientSearchListModel.addElement(recipe);
-//            }
-//            recipeList.setModel(ingredientSearchListModel);
-
             final RecipeListState currentState = recipeListViewModel.getState();
             currentState.setFolder(folderName);
             currentState.setUser(user);
@@ -215,16 +200,9 @@ public abstract class RecipeListView extends JFrame implements ActionListener, P
         }
         if (event.getSource() == recipeSearchButton) {
             final String userInput = recipeSearchField.getText();
-            // TODO double check then delete
-//            final List<Recipe> recipes = controller.getRecipesByName(userInput);
-
             final RecipeListState currentState = recipeListViewModel.getState();
             currentState.setFolder(folderName);
             currentState.setUser(user);
-            System.out.println("recipe list view");
-            System.out.println(folderName);
-            System.out.println(userInput);
-            System.out.println(user.getUsername());
             this.searchRecipeListByNameController.execute(
                     userInput, currentState.getUser(), currentState.getFolder());
             recipeListViewModel.setState(currentState);
