@@ -1,5 +1,7 @@
 package use_case.change_password;
 
+import java.util.ArrayList;
+
 import entity.User;
 import entity.UserFactory;
 
@@ -22,7 +24,9 @@ public class ChangePasswordInteractor implements ChangePasswordInputBoundary {
     @Override
     public void execute(ChangePasswordInputData changePasswordInputData) {
         final User user = userFactory.create(changePasswordInputData.getUsername(),
-                                             changePasswordInputData.getPassword());
+                                             changePasswordInputData.getPassword(),
+                                             new ArrayList<>(),
+                                             new ArrayList<>());
         userDataAccessObject.changePassword(user);
 
         final ChangePasswordOutputData changePasswordOutputData = new ChangePasswordOutputData(user.getName(),

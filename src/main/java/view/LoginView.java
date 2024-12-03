@@ -15,6 +15,7 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import interface_adapter.ViewManagerModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginState;
 import interface_adapter.login.LoginViewModel;
@@ -33,12 +34,13 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     private final JPasswordField passwordInputField = new JPasswordField(15);
     private final JLabel passwordErrorField = new JLabel();
 
+    private final JButton signUp;
     private final JButton logIn;
-    private final JButton cancel;
+    private final ViewManagerModel viewManagerModel;
     private LoginController loginController;
 
-    public LoginView(LoginViewModel loginViewModel) {
-
+    public LoginView(LoginViewModel loginViewModel, ViewManagerModel viewManagerModel) {
+        this.viewManagerModel = viewManagerModel;
         this.loginViewModel = loginViewModel;
         this.loginViewModel.addPropertyChangeListener(this);
 
@@ -51,10 +53,19 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                 new JLabel("Password"), passwordInputField);
 
         final JPanel buttons = new JPanel();
-        logIn = new JButton("log in");
+        signUp = new JButton("Sign Up");
+        buttons.add(signUp);
+
+        logIn = new JButton("Log In");
         buttons.add(logIn);
-        cancel = new JButton("cancel");
-        buttons.add(cancel);
+
+        signUp.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        loginController.switchToSignUpView();
+                    }
+                }
+        );
 
         logIn.addActionListener(
                 new ActionListener() {
@@ -70,8 +81,6 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                     }
                 }
         );
-
-        cancel.addActionListener(this);
 
         usernameInputField.getDocument().addDocumentListener(new DocumentListener() {
 
