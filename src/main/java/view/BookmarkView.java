@@ -39,7 +39,6 @@ public class BookmarkView extends RecipeListView {
 
         dropdown.addActionListener(event -> {
             final String selectedOption = (String) dropdown.getSelectedItem();
-            System.out.println(selectedOption + "folder name in bookmark view");
             new FolderView(user, selectedOption, new RecipeListViewModel());
         });
         return dropdown;

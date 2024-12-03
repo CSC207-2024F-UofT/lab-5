@@ -1,10 +1,13 @@
 package use_case.search_recipe_list_by_name;
 
+import java.util.List;
+
 import entity.Recipe;
 import entity.User;
 
-import java.util.List;
-
+/**
+ * The Interactor for the Search Recipe List By Name Use Case.
+ */
 public class SearchRecipeListByNameInteractor implements SearchRecipeListByNameInputBoundary {
 
     /**
@@ -22,14 +25,17 @@ public class SearchRecipeListByNameInteractor implements SearchRecipeListByNameI
 
     @Override
     public void execute(SearchRecipeListByNameInputData searchRecipeListByNameInputData) {
-        String recipeName = searchRecipeListByNameInputData.getRecipeName();
+        // Obtain the parameters for the search from the input data object
+        final String recipeName = searchRecipeListByNameInputData.getRecipeName();
         final User user = searchRecipeListByNameInputData.getUser();
         final String folder = searchRecipeListByNameInputData.getFolder();
+        // Obtain the results of the search from the userDAO
         final List<Recipe> recipes = userDataAccessObject.searchRecipeListByName(recipeName, user, folder);
-
+        // Put the results in the output data object
         final SearchRecipeListByNameOutputData searchRecipeListByNameOutputData =
                 new SearchRecipeListByNameOutputData(recipes,
                 false);
+        // Pass the output data to the presenter
         userPresenter.prepareSuccessView(searchRecipeListByNameOutputData);
     }
 }

@@ -87,17 +87,11 @@ public class SpoonacularRecipeDAO implements RecipeDAO, FilterRecipesDataAccessI
                         System.out.println("Request failed with code: " + response.code());
                     }
 
-                    // for testing purposes
-                    System.out.println(recipeJson.keySet());
-                    System.out.println(completeRecipe.keySet());
-                    System.out.println(recipeJson.getInt("missedIngredientCount"));
                     String title = recipeJson.getString("title");
-                    // String recipeUrl = BASE_URL + "/recipes/" + recipeJson.getInt("id") + "/information"; // URL to recipe details
                     final String recipeUrl = completeRecipe.getString("spoonacularSourceUrl");
                     final JSONArray missedIngredientsJson = recipeJson.getJSONArray("missedIngredients");
                     final JSONArray usedIngredientsJson = recipeJson.getJSONArray("usedIngredients");
                     final JSONArray unusedIngredientsJson = recipeJson.getJSONArray("unusedIngredients");
-                    System.out.println(missedIngredientsJson); // for testing
                     String image = recipeJson.getString("image");
 
                     // Collect ingredients from the JSON response

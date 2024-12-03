@@ -334,7 +334,7 @@ public class UserDAOImpl implements UserDAO, SearchRecipeListByIngredientDataAcc
         for (Recipe recipe : recipeList) {
             final String[] words = recipe.getName().split(" ");
             for (String word : words) {
-                if (word.equalsIgnoreCase(recipeName)) {
+                if (word.toLowerCase().contains(recipeName.trim().toLowerCase())) {
                     results.add(recipe);
                 }
             }
