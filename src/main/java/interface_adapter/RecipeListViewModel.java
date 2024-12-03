@@ -7,7 +7,7 @@ public class RecipeListViewModel extends ViewModel<RecipeListState> {
 
     public RecipeListViewModel() {
         // TODO
-        super("???");
+        super("bookmarks");
         setState(new RecipeListState());
     }
 

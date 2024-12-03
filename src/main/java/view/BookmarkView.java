@@ -27,6 +27,7 @@ public class BookmarkView extends RecipeListView {
         folderPanel.add(createFolderPanel);
 
         add(folderPanel);
+        pack();
     }
 
     @NotNull
@@ -53,6 +54,7 @@ public class BookmarkView extends RecipeListView {
         addFolderButton.addActionListener(event -> {
             final String folderName = textField.getText();
             userDAO.addFolderToFile(user.getUsername(), folderName);
+            JOptionPane.showMessageDialog(null, "Folder created successfully");
         });
         createFolderPanel.add(textField);
         createFolderPanel.add(addFolderButton);
@@ -66,6 +68,6 @@ public class BookmarkView extends RecipeListView {
 
     @Override
     protected List<Recipe> getRecipeList(User user1, String folderName) {
-        return List.of();
+        return userDAO.getRecentlyViewedFromFile(user1.getUsername());
     }
 }

@@ -1,5 +1,6 @@
 package interface_adapter.search_recipe_list_by_ingredient;
 
+import interface_adapter.RecipeListState;
 import interface_adapter.RecipeListViewModel;
 import use_case.search_recipe_list_by_ingredient.SearchRecipeListByIngredientOutputBoundary;
 import use_case.search_recipe_list_by_ingredient.SearchRecipeListByIngredientOutputData;
@@ -18,7 +19,9 @@ public class SearchRecipeListByIngredientPresenter implements SearchRecipeListBy
     @Override
     public void prepareSuccessView(SearchRecipeListByIngredientOutputData outputData) {
         // TODO
-        recipeListViewModel.firePropertyChanged("???");
+        final RecipeListState recipeListState = recipeListViewModel.getState();
+        recipeListState.setRecipeList(outputData.getRecipes());
+        recipeListViewModel.firePropertyChanged("recipes");
     }
 
     @Override
