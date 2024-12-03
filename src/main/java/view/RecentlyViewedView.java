@@ -10,10 +10,12 @@ import interface_adapter.RecipeListViewModel;
 
 public class RecentlyViewedView extends RecipeListView {
 
+    private final JButton clearButton;
+
     public RecentlyViewedView(User user, String folderName, RecipeListViewModel recipeListViewModel) {
         super(user, folderName, recipeListViewModel);
         setTitle(user.getUsername() + "'s Recently Viewed");
-        final JButton clearButton = new JButton("Clear Recently Viewed");
+        clearButton = new JButton("Clear Recently Viewed");
         clearButton.addActionListener(event -> {
             userDAO.clearRecentlyViewed(user.getUsername());
             recipeList.setModel(listModel);
