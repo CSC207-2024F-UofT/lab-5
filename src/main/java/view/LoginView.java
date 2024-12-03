@@ -1,17 +1,12 @@
 package view;
 
-import java.awt.Component;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -27,14 +22,12 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     private final String viewName = "log in";
     private final LoginViewModel loginViewModel;
 
-    private final JTextField usernameInputField = new JTextField(15);
-    private final JLabel usernameErrorField = new JLabel();
+    private final JTextField loginTokenInputField = new JTextField(15);
+    private final JLabel accessTokenErrorField = new JLabel();
 
-    private final JPasswordField passwordInputField = new JPasswordField(15);
-    private final JLabel passwordErrorField = new JLabel();
+    private ImageIcon spotifyIcon = new ImageIcon("images/spotify2.png");
 
     private final JButton logIn;
-    private final JButton cancel;
     private LoginController loginController;
 
     public LoginView(LoginViewModel loginViewModel) {
@@ -42,19 +35,18 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         this.loginViewModel = loginViewModel;
         this.loginViewModel.addPropertyChangeListener(this);
 
-        final JLabel title = new JLabel("Login Screen");
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        final LabelTextPanel usernameInfo = new LabelTextPanel(
-                new JLabel("Username"), usernameInputField);
-        final LabelTextPanel passwordInfo = new LabelTextPanel(
-                new JLabel("Password"), passwordInputField);
+        final LabelTextPanel AccessTokenInfo = new LabelTextPanel(
+                new JLabel("Access Token"), loginTokenInputField);
 
         final JPanel buttons = new JPanel();
         logIn = new JButton("log in");
         buttons.add(logIn);
-        cancel = new JButton("cancel");
-        buttons.add(cancel);
+
+        final Image spotifyImage = spotifyIcon.getImage();
+        final Image finalImage = spotifyImage.getScaledInstance(100, 80, java.awt.Image.SCALE_SMOOTH);
+        spotifyIcon = new ImageIcon(finalImage);
+        final JLabel spotifylabel = new JLabel(spotifyIcon);
+        spotifylabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         logIn.addActionListener(
                 new ActionListener() {
@@ -63,21 +55,18 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                             final LoginState currentState = loginViewModel.getState();
 
                             loginController.execute(
-                                    currentState.getUsername(),
-                                    currentState.getPassword()
+                                    currentState.getLoginToken()
                             );
                         }
                     }
                 }
         );
 
-        cancel.addActionListener(this);
-
-        usernameInputField.getDocument().addDocumentListener(new DocumentListener() {
+        loginTokenInputField.getDocument().addDocumentListener(new DocumentListener() {
 
             private void documentListenerHelper() {
                 final LoginState currentState = loginViewModel.getState();
-                currentState.setUsername(usernameInputField.getText());
+                currentState.setLoginToken(loginTokenInputField.getText());
                 loginViewModel.setState(currentState);
             }
 
@@ -99,34 +88,9 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        passwordInputField.getDocument().addDocumentListener(new DocumentListener() {
-
-            private void documentListenerHelper() {
-                final LoginState currentState = loginViewModel.getState();
-                currentState.setPassword(new String(passwordInputField.getPassword()));
-                loginViewModel.setState(currentState);
-            }
-
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                documentListenerHelper();
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                documentListenerHelper();
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                documentListenerHelper();
-            }
-        });
-
-        this.add(title);
-        this.add(usernameInfo);
-        this.add(usernameErrorField);
-        this.add(passwordInfo);
+        this.add(spotifylabel);
+        this.add(AccessTokenInfo);
+        this.add(accessTokenErrorField);
         this.add(buttons);
     }
 
@@ -142,12 +106,12 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     public void propertyChange(PropertyChangeEvent evt) {
         final LoginState state = (LoginState) evt.getNewValue();
         setFields(state);
-        usernameErrorField.setText(state.getLoginError());
+        accessTokenErrorField.setText(state.getLoginError());
     }
 
     private void setFields(LoginState state) {
-        usernameInputField.setText(state.getUsername());
-        passwordInputField.setText(state.getPassword());
+        loginTokenInputField.setText(state.getLoginToken());
+
     }
 
     public String getViewName() {
