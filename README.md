@@ -112,34 +112,3 @@ To provide feedback or suggestions, go to the `Issues` tab on GitHub to create a
 your main points and a description of what you think could be changed. Feel free to mention specific files if
 you'd like.
 
-## Notes
-- ~~should the bookmarks and recently viewed lists of a user be stored in the user.json file?~~ - implemented
-- ~~individual recipe view only displays one ingredient right now~~ - fixed
-- add a find recipe by name search function in the main search page
-- ~~make ingredients clickable in individual recipe view? Or at least display the amounts~~
-- for the ingredient list in individual recipe view, split it into "used ingredients", "unused ingredients" and "missed ingredients" (right now there's only "missed ingredients")
-- ^ might be too complicated to do
-- when you double click on the recipes in the search view, you somehow get two copies of the individual recipe view??
-- ^ doesn't happen all the time tho
-- allow the user to choose how many recipes they want to see? Page flipping feature?
-- show random recipes feature?
-- ~~**allow users to create custom folders???**~~
-- allow users to press enter instead of using the search button?
-- ~~*add clickable url to individual recipe view*~~
-- allow users to select ingredients from individual recipe view and add them to their shopping list?
-- ^ would be difficult to implement
-- have an ingredient list where users can record the ingredients they have in their fridge
-- change background colour?
-- *make the recipes in shopping list view clickable*
-- display no recipes found in search view
-~~- add clear recently viewed button~~
-- modify how the close button works - so that you don't terminate the program when you close one window
-- ~~auto adjust window size~~
-- **add the fire property changed thingy so that the lists update in real time**
-- allow users to delete a bookmark
-
-### folder view ###
-- [X] add create folder user interface - either create a new button on home page or in BookmarkView
-- [X] add dropdown menu of folders in IndividualRecipeView - name it "add recipe to xxx folder" - or make it a checklist instead?
-- [X] add a save folder to json file thingy in UserDAOImpl
-- ~~make the whole thing a tag and filter system instead??? This would then entail changing the Recipe class~~
