@@ -1,28 +1,40 @@
 package app;
 
-import javax.swing.JFrame;
+import app.AppBuilder;
 
-/**
- * The Main class of our application.
- */
+import javax.swing.*;
+
 public class Main {
-    /**
-     * Builds and runs the CA architecture of the application.
-     * @param args unused arguments
-     */
     public static void main(String[] args) {
-        final AppBuilder appBuilder = new AppBuilder();
-        // TODO: add the Logout Use Case to the app using the appBuilder
-        final JFrame application = appBuilder
-                                            .addLoginView()
-                                            .addSignupView()
-                                            .addLoggedInView()
-                                            .addSignupUseCase()
-                                            .addLoginUseCase()
-                                            .addChangePasswordUseCase()
-                                            .build();
+        AppBuilder appBuilder = new AppBuilder();
 
-        application.pack();
-        application.setVisible(true);
+        // Add necessary views
+        appBuilder
+                .addSignupView()
+                .addLoginView()
+                .addHomeView()
+                .addLoggedInView()
+                .addTimerView()
+                .addEnterTaskView()
+                .addTaskEnteredView()
+                .addReportView()
+                .addQuoteView();
+
+        // Add necessary use cases
+        appBuilder
+                .addSignupUseCase()
+                .addHomeUseCase()
+                .addLoginUseCase()
+                .addEnterTaskUseCase()
+                .addChangePasswordUseCase()
+                .addLogoutUseCase()
+                .addEnterTaskUseCase()
+                .addReportUseCase()
+                .addQuoteUseCase();
+
+        // Build and display the application
+        JFrame appFrame = appBuilder.build();
+        appFrame.setSize(500, 500); // Adjust size as needed
+        appFrame.setVisible(true);
     }
 }

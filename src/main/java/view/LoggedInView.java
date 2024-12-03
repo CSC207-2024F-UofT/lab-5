@@ -17,6 +17,7 @@ import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.LoggedInState;
 import interface_adapter.change_password.LoggedInViewModel;
 import interface_adapter.logout.LogoutController;
+import interface_adapter.ViewManagerModel;
 
 /**
  * The View for when the user is logged into the program.
@@ -36,8 +37,14 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     private final JTextField passwordInputField = new JTextField(15);
     private final JButton changePassword;
 
-    public LoggedInView(LoggedInViewModel loggedInViewModel) {
+//    private final JButton goToTimer;
+    private final JButton goToHomeView;
+
+    private final ViewManagerModel viewManagerModel;
+
+    public LoggedInView(LoggedInViewModel loggedInViewModel, ViewManagerModel viewManagerModel) {
         this.loggedInViewModel = loggedInViewModel;
+        this.viewManagerModel = viewManagerModel;
         this.loggedInViewModel.addPropertyChangeListener(this);
 
         final JLabel title = new JLabel("Logged In Screen");
@@ -55,6 +62,9 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
         changePassword = new JButton("Change Password");
         buttons.add(changePassword);
+
+        goToHomeView = new JButton("Home");
+        buttons.add(goToHomeView);
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -100,12 +110,18 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
                 // This creates an anonymous subclass of ActionListener and instantiates it.
                 evt -> {
                     if (evt.getSource().equals(logOut)) {
-                        // TODO: execute the logout use case through the Controller
-                        // 1. get the state out of the loggedInViewModel. It contains the username.
-                        // 2. Execute the logout Controller.
+                        final LoggedInState currentState = loggedInViewModel.getState();
+                        this.logoutController.execute(currentState.getUsername());
                     }
                 }
         );
+
+        goToHomeView.addActionListener(evt -> {
+            if (evt.getSource().equals(goToHomeView)) {
+                viewManagerModel.setState("Home View");
+                viewManagerModel.firePropertyChanged();
+            }
+        });
 
         this.add(title);
         this.add(usernameInfo);
@@ -138,6 +154,6 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     }
 
     public void setLogoutController(LogoutController logoutController) {
-        // TODO: save the logout controller in the instance variable.
+        this.logoutController = logoutController;
     }
 }
