@@ -1,13 +1,26 @@
 package data_access;
 
+import java.util.ArrayList;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import entity.MovieReview;
 import entity.User;
-import use_case.change_password.ChangePasswordUserDataAccessInterface;
+import entity.UserWatchlist;
+import entity.Watchlist;
+import use_case.home.HomeUserDataAccessInterface;
+import use_case.leave_a_review.LeaveReviewDataAccessInterface;
 import use_case.login.LoginUserDataAccessInterface;
 import use_case.logout.LogoutUserDataAccessInterface;
+import use_case.my_reviews.MyReviewsDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
+import use_case.survey1.Survey1UserDataAccessInterface;
+import use_case.watchlists.WatchlistsUserDataAccessInterface;
+import use_case.watchlists.delete.DeleteWatchlistUserDataAccessInterface;
+import use_case.watchlists.rename.RenameUserDataAccessInterface;
+
 
 /**
  * In-memory implementation of the DAO for storing user data. This implementation does
@@ -15,11 +28,16 @@ import use_case.signup.SignupUserDataAccessInterface;
  */
 public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterface,
         LoginUserDataAccessInterface,
-        ChangePasswordUserDataAccessInterface,
-        LogoutUserDataAccessInterface {
+        HomeUserDataAccessInterface,
+        MyReviewsDataAccessInterface,
+        LogoutUserDataAccessInterface,
+        WatchlistsUserDataAccessInterface,
+        Survey1UserDataAccessInterface,
+        RenameUserDataAccessInterface,
+        DeleteWatchlistUserDataAccessInterface {
 
     private final Map<String, User> users = new HashMap<>();
-
+    private final Map<String, List<MovieReview>> userReviews = new HashMap<>();
     private String currentUsername;
 
     @Override
@@ -38,10 +56,53 @@ public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterfa
     }
 
     @Override
-    public void changePassword(User user) {
-        // Replace the old entry with the new password
-        users.put(user.getName(), user);
+    public boolean savePreferredGenres(User user, Map<String, Integer> preferredGenres) {
+        if (user == null || preferredGenres == null) {
+            System.out.println("InMemoryUserDataAccessObject: User or preferredGenres is null.");
+            return false;
+        }
+
+        // Update the user's preferredGenres
+        try {
+            System.out.println("InMemoryUserDataAccessObject: Saving preferred genres for user: " + user.getName());
+            System.out.println("Preferred genres: " + preferredGenres);
+
+            // Iterate over the preferredGenres map and update the user's genres
+            for (Map.Entry<String, Integer> entry : preferredGenres.entrySet()) {
+                String genre = entry.getKey();
+                int count = entry.getValue();
+
+                // Increment the genre count using the user's addPreferredGenres method
+                for (int i = 0; i < count; i++) {
+                    user.addPreferredGenres(genre);
+                }
+            }
+
+            // Reflect the changes in the in-memory user repository
+            users.put(user.getName(), user);
+
+            System.out.println("Preferred genres saved successfully for user: " + user.getName());
+            return true;
+        } catch (Exception e) {
+            System.err.println("InMemoryUserDataAccessObject: Error saving preferred genres: " + e.getMessage());
+            return false;
+        }
     }
+
+
+    // Add a review for a specific user
+    public void addReview(User user, MovieReview review) {
+        if (!users.containsKey(user.getName())) {
+            throw new IllegalArgumentException("User not found: " + user.getName());
+        }
+        userReviews.computeIfAbsent(user.getName(), k -> new ArrayList<>()).add(review);
+    }
+
+    public List<MovieReview> getReviews(User user) {
+        return userReviews.getOrDefault(user.getName(), new ArrayList<>());
+    }
+
+
 
     @Override
     public void setCurrentUsername(String name) {
@@ -52,4 +113,23 @@ public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterfa
     public String getCurrentUsername() {
         return this.currentUsername;
     }
+
+    @Override
+    public ArrayList<Watchlist> getWatchlists(User user) {
+        return user.getWatchlists();
+    }
+
+    @Override
+    public boolean deleteWatchlist(User user, int ind) {
+
+        return true;
+    }
+
+    @Override
+    public boolean renameWatchlist(User user, int ind, String newName) {
+        final UserWatchlist watchlist = (UserWatchlist) user.getWatchlists().get(ind);
+        watchlist.changeListName(newName);
+        return newName.equals(user.getWatchlists().get(ind).getListName());
+    }
+
 }

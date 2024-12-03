@@ -32,6 +32,11 @@ class SignupInteractorTest {
             }
 
             @Override
+            public void switchToSurvey1View(String uname) {
+                // This is expected
+            }
+
+            @Override
             public void switchToLoginView() {
                 // This is expected
             }
@@ -57,6 +62,11 @@ class SignupInteractorTest {
             @Override
             public void prepareFailView(String error) {
                 assertEquals("Passwords don't match.", error);
+            }
+
+            @Override
+            public void switchToSurvey1View(String uname) {
+                // This is expected
             }
 
             @Override
@@ -90,6 +100,11 @@ class SignupInteractorTest {
             @Override
             public void prepareFailView(String error) {
                 assertEquals("User already exists.", error);
+            }
+
+            @Override
+            public void switchToSurvey1View(String uname) {
+                // This is expected
             }
 
             @Override

@@ -12,7 +12,13 @@ public interface SignupInputBoundary {
     void execute(SignupInputData signupInputData);
 
     /**
-     * Executes the switch to login view use case.
+     * Executes the switch to Survey1View use case.
+     * @param uname newly created user
+     */
+    void switchToSurvey1View(String uname);
+
+    /**
+     * Executes the switch to LoginView use case.
      */
     void switchToLoginView();
 }
