@@ -70,7 +70,6 @@ public class User {
 
     public List<Recipe> getFolder(String folder) {
         if (!folders.containsKey(folder)) {
-            System.out.println("No such folder: " + folder);
             return List.of();
         }
         else {

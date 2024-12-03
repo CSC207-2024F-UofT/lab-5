@@ -11,9 +11,12 @@ import data_access.SpoonacularAPI;
 import data_access.SpoonacularRecipeDAO;
 import entity.User;
 import interface_adapter.RecipeController;
+import interface_adapter.RecipeListViewModel;
 import interface_adapter.SearchRecipePresenter;
 import interface_adapter.ShoppingListController;
+import interface_adapter.filter_recipes.FilterRecipesController;
 import use_case.ShoppingListUseCase;
+import use_case.filter_recipes.FilterRecipesInteractor;
 import use_case.search_recipe.SearchRecipeUseCase;
 
 public class HomePage extends JFrame {
@@ -40,7 +43,10 @@ public class HomePage extends JFrame {
             // Create the controller
             final RecipeController controller = new RecipeController(interactor);
             // Open the RecipeView and pass dependencies
-            new RecipeView(controller, presenter, user, new SpoonacularRecipeDAO());
+            // new RecipeView(controller, presenter, user, new SpoonacularRecipeDAO());
+            final FilterRecipesInteractor filterInteractor = new FilterRecipesInteractor(new SpoonacularRecipeDAO());
+            final FilterRecipesController filterController = new FilterRecipesController(filterInteractor);
+            new RecipeView(controller, presenter, user, filterController, new SpoonacularRecipeDAO());
         });
 
         // Shopping List Button
@@ -63,14 +69,14 @@ public class HomePage extends JFrame {
         final JButton bookmarksButton = new JButton("Bookmarks");
         bookmarksButton.setFont(new Font(AppConstants.FONT, Font.PLAIN, AppConstants.BUTTON_FONT_SIZE));
         bookmarksButton.addActionListener(event -> {
-            new BookmarkView(this.user, null);
+            new BookmarkView(this.user, "bookmarks", new RecipeListViewModel());
         });
 
         // Recently Viewed Button
         final JButton recentlyViewedButton = new JButton("Recently Viewed");
         recentlyViewedButton.setFont(new Font(AppConstants.FONT, Font.PLAIN, AppConstants.BUTTON_FONT_SIZE));
         recentlyViewedButton.addActionListener(event -> {
-            new RecentlyViewedView(this.user, null);
+            new RecentlyViewedView(this.user, "recentlyViewed", new RecipeListViewModel());
         });
 
         // Putting the buttons together

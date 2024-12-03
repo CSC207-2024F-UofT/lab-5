@@ -6,16 +6,16 @@ import entity.User;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
+import use_case.search_recipe_list_by_ingredient.SearchRecipeListByIngredientDataAccessInterface;
+import use_case.search_recipe_list_by_name.SearchRecipeListByNameDataAccessInterface;
 
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-public class UserDAOImpl implements UserDAO {
+public class UserDAOImpl implements UserDAO, SearchRecipeListByIngredientDataAccessInterface,
+        SearchRecipeListByNameDataAccessInterface {
     private static final String FILE_PATH = "users.json";
     private Map<String, User> usersDatabase;
 
@@ -134,15 +134,15 @@ public class UserDAOImpl implements UserDAO {
                 else {
                     foldersJson.put("folders", new JSONArray());
                 }
-                final Map<String, List<Recipe>> foldersMap = new HashMap<>();
+                Map<String, List<Recipe>> foldersMap = new HashMap<>();
                 for (String folderName : foldersJson.keySet()) {
-                    final JSONArray recipesArray = foldersJson.getJSONArray(folderName);
-                    final List<Recipe> recipes = new ArrayList<>();
+                    JSONArray recipesArray = foldersJson.getJSONArray(folderName);
+                    List<Recipe> recipes = new ArrayList<>();
 
                     for (int t = 0; t < recipesArray.length(); t++) {
-                        final JSONObject recipeJson = recipesArray.getJSONObject(t);
-                        final JSONArray ingredientsJson = recipeJson.getJSONArray("ingredients");
-                        final List<Ingredient> ingredients = new ArrayList<>();
+                        JSONObject recipeJson = recipesArray.getJSONObject(t);
+                        JSONArray ingredientsJson = recipeJson.getJSONArray("ingredients");
+                        List<Ingredient> ingredients = new ArrayList<>();
 
                         for (int s = 0; s < ingredientsJson.length(); s++) {
                             JSONObject ingredientJson = ingredientsJson.getJSONObject(s);
@@ -153,7 +153,7 @@ public class UserDAOImpl implements UserDAO {
                             ingredients.add(ingredient);
                         }
 
-                        final Recipe recipe = new Recipe(
+                        Recipe recipe = new Recipe(
                                 recipeJson.getString("name"),
                                 recipeJson.getString("url"),
                                 ingredients,
@@ -169,8 +169,7 @@ public class UserDAOImpl implements UserDAO {
                 users.put(username, new User(username, password, recipeBookmarks, recipeRecentlyViewed, foldersMap));
                 System.out.println("Loaded user: " + username); // Debugging output
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
             saveUsersToFile();
         }
@@ -275,5 +274,71 @@ public class UserDAOImpl implements UserDAO {
         final User user = users.get(username);
         System.out.println("Loaded folder: " + user.getFolder(folder));
         return user.getFolder(folder);
+    }
+
+    @Override
+    public List<Recipe> searchRecipeListByIngredient(List<String> ingredients, User user, String folder) {
+        final Map<String, User> users = loadUsersFromFile();
+        final User userFromFile = users.get(user.getUsername());
+        List<Recipe> recipeList = new ArrayList<>();
+        final List<Recipe> results = new ArrayList<>();
+        if ("bookmarks".equals(folder)) {
+            recipeList.addAll(userFromFile.getBookmarks());
+        }
+        else if ("recentlyViewed".equals(folder)) {
+            recipeList.addAll(userFromFile.getRecentlyViewed());
+        }
+        else {
+            recipeList.addAll(userFromFile.getFolder(folder));
+        }
+        for (Recipe recipe : recipeList) {
+            boolean match = false;
+            final List<Ingredient> recipeIngredients = recipe.getIngredients();
+            final List<String> recipeIngredientsString = new ArrayList<>();
+            for (Ingredient ingredient : recipeIngredients) {
+                final String[] words = ingredient.getName().split(" ");
+                recipeIngredientsString.addAll(Arrays.asList(words));
+            }
+            for (String recipeIngredient : recipeIngredientsString) {
+                for (String enteredIngredient : ingredients) {
+                    if (recipeIngredient.equalsIgnoreCase(enteredIngredient)) {
+                        match = true;
+                    }
+                }
+
+            }
+            if (match) {
+                results.add(recipe);
+            }
+        }
+        return results;
+    }
+
+    @Override
+    public List<Recipe> searchRecipeListByName(String recipeName, User user, String folder) {
+        final Map<String, User> users = loadUsersFromFile();
+        final User userFromFile = users.get(user.getUsername());
+        final List<Recipe> results = new ArrayList<>();
+
+        List<Recipe> recipeList = new ArrayList<>();
+        if ("bookmarks".equals(folder)) {
+            recipeList.addAll(userFromFile.getBookmarks());
+        }
+        else if ("recentlyViewed".equals(folder)) {
+            recipeList.addAll(userFromFile.getRecentlyViewed());
+        }
+        else {
+            recipeList.addAll(userFromFile.getFolder(folder));
+        }
+
+        for (Recipe recipe : recipeList) {
+            final String[] words = recipe.getName().split(" ");
+            for (String word : words) {
+                if (word.toLowerCase().contains(recipeName.trim().toLowerCase())) {
+                    results.add(recipe);
+                }
+            }
+        }
+        return results;
     }
 }

@@ -15,7 +15,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class SpoonacularRecipeDAO implements RecipeDAO, FilterRecipesDataAccessInterface {
-    private static final String API_KEY = "5fcf2eef76af4e6893959ceefae0a087"; // Replace with your Spoonacular API key
+
+    private static final String API_KEY = AppConstants.API_KEY;
     private static final String BASE_URL = "https://api.spoonacular.com";
     private final OkHttpClient client;
 
@@ -47,7 +48,8 @@ public class SpoonacularRecipeDAO implements RecipeDAO, FilterRecipesDataAccessI
 
         // Construct the URL with the ingredients query
         String endpoint = "/recipes/findByIngredients";
-        String url = BASE_URL + endpoint + "?apiKey=" + API_KEY + "&ingredients=" + ingredientsQuery + "&number=20";
+        String url = BASE_URL + endpoint + "?apiKey=" + API_KEY + "&ingredients=" + ingredientsQuery + "&number="
+                + AppConstants.NUMBER_OF_RESULTS;
 
         // Build the request
         Request request = new Request.Builder()
@@ -86,17 +88,11 @@ public class SpoonacularRecipeDAO implements RecipeDAO, FilterRecipesDataAccessI
                         System.out.println("Request failed with code: " + response.code());
                     }
 
-                    // for testing purposes
-                    System.out.println(recipeJson.keySet());
-                    System.out.println(completeRecipe.keySet());
-                    System.out.println(recipeJson.getInt("missedIngredientCount"));
                     String title = recipeJson.getString("title");
-                    // String recipeUrl = BASE_URL + "/recipes/" + recipeJson.getInt("id") + "/information"; // URL to recipe details
                     final String recipeUrl = completeRecipe.getString("spoonacularSourceUrl");
                     final JSONArray missedIngredientsJson = recipeJson.getJSONArray("missedIngredients");
                     final JSONArray usedIngredientsJson = recipeJson.getJSONArray("usedIngredients");
                     final JSONArray unusedIngredientsJson = recipeJson.getJSONArray("unusedIngredients");
-                    System.out.println(missedIngredientsJson); // for testing
                     String image = recipeJson.getString("image");
 
                     // Collect ingredients from the JSON response
@@ -185,7 +181,7 @@ public class SpoonacularRecipeDAO implements RecipeDAO, FilterRecipesDataAccessI
             urlBuilder.append("&cuisine=").append(cuisine);
         }
 
-        // Build the request **REPEAT OF ABOVE SHOULD REFACTOR
+        // Build the request
         final Request request = new Request.Builder()
                 .url(String.valueOf(urlBuilder))
                 .build();
@@ -207,16 +203,11 @@ public class SpoonacularRecipeDAO implements RecipeDAO, FilterRecipesDataAccessI
                     final JSONObject completeRecipe = getCompleteRecipe(id);
 
                     // for testing purposes
-                    System.out.println(recipeJson.keySet());
-                    // System.out.println(completeRecipe.keySet());
-                    System.out.println(recipeJson.getInt("missedIngredientCount"));
                     String title = recipeJson.getString("title");
-                    // String recipeUrl = BASE_URL + "/recipes/" + recipeJson.getInt("id") + "/information"; // URL to recipe details
                     final String recipeUrl = completeRecipe.getString("spoonacularSourceUrl");
                     final JSONArray missedIngredientsJson = recipeJson.getJSONArray("missedIngredients");
                     final JSONArray usedIngredientsJson = recipeJson.getJSONArray("usedIngredients");
                     final JSONArray unusedIngredientsJson = recipeJson.getJSONArray("unusedIngredients");
-                    System.out.println(missedIngredientsJson); // for testing
                     String image = recipeJson.getString("image");
 
                     // Collect ingredients from the JSON response
@@ -233,19 +224,21 @@ public class SpoonacularRecipeDAO implements RecipeDAO, FilterRecipesDataAccessI
                     }
 
                     // Create and add Recipe object to the list
-                    Recipe recipe = new Recipe(title, recipeUrl, recipeIngredients, image);
+                    final Recipe recipe = new Recipe(title, recipeUrl, recipeIngredients, image);
                     recipes.add(recipe);
                 }
-            } else {
+            }
+            else {
                 System.out.println("Request failed with code: " + response.code());
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        }
+        catch (IOException exception) {
+            exception.printStackTrace();
         }
         return recipes;
     }
 
-    // hard-coded for now
+    // hard-coded
     @Override
     public List<String> getAvailableDiets() {
         final List<String> diets = new ArrayList<>();

@@ -18,7 +18,7 @@ public class NutritionInformationDAO implements NutritionInformationAccessInterf
     private static final String BASE_URL = "https://api.spoonacular.com";
 
     // API key for authenticating requests to the Spoonacular API
-    private static final String API_KEY = "5fcf2eef76af4e6893959ceefae0a087";
+    private static final String API_KEY = AppConstants.API_KEY;
 
     /**
      * Fetches nutrition information for a specific recipe from the API.

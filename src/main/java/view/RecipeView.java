@@ -12,6 +12,7 @@ import entity.Recipe;
 import entity.User;
 import interface_adapter.RecipeController;
 import interface_adapter.SearchRecipePresenter;
+import interface_adapter.filter_recipes.FilterRecipesController;
 import use_case.filter_recipes.FilterRecipesDataAccessInterface;
 
 public class RecipeView extends JFrame {
@@ -21,6 +22,7 @@ public class RecipeView extends JFrame {
     private final JList<Recipe> recipeList;
     private final DefaultListModel<Recipe> listModel;
     private final RecipeController controller;
+    private final FilterRecipesController filterController;
     private final SearchRecipePresenter presenter;
     private final User user;
 
@@ -29,11 +31,21 @@ public class RecipeView extends JFrame {
     private final JComboBox<String> cuisineComboBox;
     private final String defaultFilter;
 
+//    public RecipeView(RecipeController controller, SearchRecipePresenter presenter, User user,
+//                      FilterRecipesDataAccessInterface frDataAccessInterface) {
+//        this.controller = controller;
+//        this.presenter = presenter;
+//        this.user = user;
+//        this.frDataAccessInterface = frDataAccessInterface;
+//        this.defaultFilter = "Any";
+
     public RecipeView(RecipeController controller, SearchRecipePresenter presenter, User user,
+                      FilterRecipesController filterController,
                       FilterRecipesDataAccessInterface frDataAccessInterface) {
         this.controller = controller;
         this.presenter = presenter;
         this.user = user;
+        this.filterController = filterController;
         this.frDataAccessInterface = frDataAccessInterface;
         this.defaultFilter = "Any";
 
@@ -138,4 +150,5 @@ public class RecipeView extends JFrame {
                 frDataAccessInterface.filterSearchRecipes(ingredients, selectedDiet, selectedCuisine);
         return recipesFiltered;
     }
+
 }

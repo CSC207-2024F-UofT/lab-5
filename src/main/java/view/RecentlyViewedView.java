@@ -6,13 +6,16 @@ import javax.swing.*;
 
 import entity.Recipe;
 import entity.User;
+import interface_adapter.RecipeListViewModel;
 
 public class RecentlyViewedView extends RecipeListView {
 
-    public RecentlyViewedView(User user, String folderName) {
-        super(user, folderName);
+    private final JButton clearButton;
+
+    public RecentlyViewedView(User user, String folderName, RecipeListViewModel recipeListViewModel) {
+        super(user, folderName, recipeListViewModel);
         setTitle(user.getUsername() + "'s Recently Viewed");
-        final JButton clearButton = new JButton("Clear Recently Viewed");
+        clearButton = new JButton("Clear Recently Viewed");
         clearButton.addActionListener(event -> {
             userDAO.clearRecentlyViewed(user.getUsername());
             recipeList.setModel(listModel);
@@ -27,6 +30,6 @@ public class RecentlyViewedView extends RecipeListView {
 
     @Override
     protected List<Recipe> getRecipeList(User user1, String folderName) {
-        return List.of();
+        return userDAO.getRecentlyViewedFromFile(user1.getUsername());
     }
 }
