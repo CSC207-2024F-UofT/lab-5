@@ -15,7 +15,6 @@ public class FilterRecipesController {
         this.filterRecipesInteractor = filterRecipesInteractor;
     }
 
-
     /**
      * Executes the filter recipes use case.
      * @param ingredients list of ingredients
@@ -28,15 +27,4 @@ public class FilterRecipesController {
         filterRecipesInteractor.filterSearchRecipes(filterRecipesInputData);
     }
 
-//    /**
-//     * Filter searches recipes.
-//     * @param ingredients list of ingredients
-//     * @param selectedDiet diet choice
-//     * @param selectedCuisine cuisine choice
-//     */
-//    public void filterSearchRecipes(List<String> ingredients, String selectedDiet, String selectedCuisine) {
-//        final FilterRecipesInputData filterRecipesInputData =
-//                new FilterRecipesInputData(ingredients, selectedDiet, selectedCuisine);
-//        filterRecipesInputBoundary.filterSearchRecipes(filterRecipesInputData);
-//    }
 }
