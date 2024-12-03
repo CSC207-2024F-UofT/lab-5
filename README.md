@@ -1,181 +1,145 @@
-# Lab 5: Logout
+# CSC207 Project - Recipe Generator
 
-## Preamble
+## Project Contributors
 
-In the current homework, you added code to the login use case to save the currently-logged-in
-user by saving the user in the Data Access Layer. You also added a unit test for this.
+⁠Farshad Haddadi 
+* GitHub username: farshad-haddadi
+* Email:⁠⁠ farshad.haddadi@mail.utoronto.ca
 
-In this lab, you will complete a logout use case as a team. You will also begin to discuss your project
-and the use cases that need to be implemented. 
+Hongcheng (Morgan）Huo
+* Github username: hhcgoodluck
+* Email: hhcgoodluck@outlook.com
 
-We have created all the Clean Architecture classes necessary for the logout use case.
+Sung-chi (William) Wu
+* GitHub username: ⁠⁠wusungch 
+* Email:⁠⁠ sungchi2024@outlook.com
 
-By Friday, your team will submit:
-- your completed lab code [for credit]
-- a draft of your project blueprint proposal. [required, but not for credit]
+Xinyu (Cindy) Zhang
+* GitHub username: Cindyzzz616
+* Email: cxy.zhang16@gmail.com
 
-# Phase 2 [for credit]
-_(recall, Phase 1 was your solo task of adding the storage of the currently-logged-in user)_
+Shuxin (Kate) Zhou
+* GitHub username: kayzoo8
+* Email: katezhou2005@gmail.com
 
-## Task 0: Fork this repo on GitHub
-**To get started, one team member should fork this repo on GitHub and share it with the team. 
-All of you should then clone it.**
+## Purpose
+This project generates a list of recipes from user-inputted ingredients (up to 20 char long). Users can focus on 
+ingredients they have and generate recipes that meets their needs, rather than coming up with a specific dish 
+that might use those ingredients. If the user had specific dietary needs and a unique ingredient, it may be difficult
+to know what to search for. Each recipe will have the option to display its full nutritional information for those
+who have specific health requirements. This project allows users to bookmark their favourite recipes as well as 
+organize them into folders for easy access. Oftentimes, one may find a recipe but only be missing a couple of 
+ingredients, our program can generate a shopping list for the user available for export. (*double check)
 
-* * *
+## Table of Contents
+1) [Features](#features-of-the-project)
+2) [Installation Instructions](#installation-instructions)
+3) [Usage](#usage)
+4) [License](#license)
+5) [Feedback and Contributions](#feedback-and-contributions)
 
-Suggested logistics: One of you should invite the others to collaborate on their fork of the
-original repo on GitHub. You can do this in your repo on GitHub under `Settings -> Collaborators`.
-This will allow you to push branches to a common repo and then use pull requests to contribute
-your code and review. To prevent others from pushing directly to the main branch,
-we recommend you set branch protection rules on GitHub. Below are how the settings might look if you
-add branch protection rules:
 
-![image of branch protection rules for main with the
-requirement of two approvers to merge in pull requests.
-](images/branch_protection_rules.png)
+## Features of the Project
+### User Stories (that each contributor was mainly responsible for)
+*	**William**: The core feature of the program allows users to input ingredients they have on hand and receive 
+recipe suggestions. Users can enter ingredients separated by commas, and the system will generate relevant 
+recipes. If some ingredients are missing, the system can suggest close alternatives or highlight what else is 
+needed. This feature helps users efficiently use the ingredients they already own, potentially reducing food 
+waste and unnecessary shopping trips.
 
-* * *
 
-Open the project in IntelliJ and make sure you can successfully run `app/Main.java`.
-Note: you may need to set the Project SDK in the `Project Structure...` menu, and possibly
-also manually link the Maven project, as you did in Phase 1.
+*	**Kate**: A key component of the system is the ability for users to filter recipes by diet and cuisine. 
+This feature allows users to customize results based on dietary needs—such as vegan, gluten-free, or keto—or 
+by preferred cuisines like Italian or Mexican. Users can apply multiple filters simultaneously to find recipes 
+that meet both dietary restrictions and taste preferences. Managing these filters effectively ensures that the 
+results remain useful even when dietary and cultural preferences overlap.
 
-## Task 1: Understanding the Program
 
-You may notice that we have refactored the CA engine code _slightly_ since Phase 1, but the
-way we build the engine is drastically different: we have switched from using Factories to
-using the Builder design pattern, which we'll be discussing in lecture soon. 
+*	**Hongcheng**: Another feature provides detailed nutritional information for each recipe. Users can click a button 
+to access data such as calorie counts, macronutrients (carbs, proteins, fats), and other key nutrients. This 
+feature supports those who are tracking their nutrition or following specific dietary goals. It is important 
+for the system to present this information clearly, accounting for potential variations in portion sizes and 
+ingredient substitutions.
 
-Open up `app.Main` and read it as a team.
-- What are the Views and what are the current Use Cases?
-- Which Uses Cases are triggered from each View?
-- Which version of the DAO is `app.Main` using?
 
-The major change since Phase 1 is that we have added the `app.AppBuilder` class which makes
-it easier to understand how our CA engine is being constructed — it also makes `app.Main` nice and concise!
-- Why do all those `addX` methods end in `return this;`? 
+*	**Cindy**: The system will also allow users to bookmark recipes for future reference. This feature enables 
+users to save recipes they find interesting or useful and organize them into categories like "Dinner" or 
+"Favorites." Additionally, a "Recently Viewed" section can help users retrieve recipes they forgot to bookmark.
 
-Run the program and make sure the signup and login Use Cases work.
 
-Currently, you'll notice that the "Log Out" button still doesn't actually log you out. It's time to fix
-that button, which is part of the `LoggedInView`.
-We have created all the classes for you, but some of the code is missing.
-As a team, your task is to fill in the missing code so that the Logout Use Case is implemented.
-**The next part of the readme describes how your team will do this.**
+*	**Farshad**: Finally, the program offers a shopping list feature for adjacent recipes. When users are missing 
+one or two ingredients for a recipe, the system will generate a shopping list with only the required items. This 
+function can help users decide what to buy if they want to try new meals without doing extensive shopping. 
+Export options, such as saving the list as a PDF or sharing it with other apps, enhance usability. The system 
+will also need to distinguish between essential ingredients and common pantry staples to keep the lists concise.
 
-* * *
+### Software
+This project closely follows Clean Architecture, so the program is divided from high-level to low-level layers,
+from entities to the database. This program makes use of the Spoonacular API to retrieve recipes and their
+details, like ingredients, nutrition, diet, etc. The Recipe Generator is displayed using the Java Swing GUI in
+a user-friendly manner with instructions at each step.
 
-**Your team will know when you are done when:**
+![Screenshot of "Welcome" homepage for Recipe Generator](images/Welcome_Homepage.png)
 
-- Clicking the "Log Out" button takes the user back to the Login View when you use the program.
-- The provided `LogoutInteractorTest` test passes.
+## Installation Instructions
+Ensure that you have Java installed on your machine. This program was developed with the version Java 22, so 
+ensure you are up-to-date. This program is guaranteed to run on macOS or Windows, 
+other OS or hardware has not been tested. Fork the Recipe Generator repository by clicking the 'Fork' button
+on GitHub and select 'copy the `main` branch only'. Then, create a local copy by coping the web URL, open your 
+preferred IDE, and create a new project from version control by pasting the link.
 
-The "Log Out" button is an instance variable in class `LoggedInVew`. Go find it.
-Also look at the `interface_adapter.change_password.LoggedInViewModel`, which contains any
-data showing on the `LoggedInVew`.
+The `pom.xml` file contains the project configuration. The IDE should have detected this file and run the 
+maven commands. If src/main/java isn't 'blue' (or marked as the Sources Root) and src/test/java isn't 'green', 
+you may need to right click `pom.xml` and select 'Maven -> Reload project'.
 
-* * *
+## Usage
+To run the application, go to the `src` folder, then open up `main`, click `java`, then `app`, and run `Main.java`.
+The app will automatically load, then follow the prompts. Closing the application will close the 
+entire program.
 
-## Task 2: Dividing up the work
+## License
+This project has the Creative Commons License. See [LICENSE](LICENSE) for more information.
 
-There are `TODO` comments left in the files
-Recall that you can use the TODO tool window to conveniently pull up a complete list.
+## Feedback and Contributions
+Contributions are welcome! If you find any issues or have suggestions for improvement, 
+please open an issue.
 
-Once the TODOs are all complete, the "Log Out" button _should_ work!
+If you wish to contribute, fork the repository by clicking the `Fork` button on GitHub
+and copy the `main` branch only. Then, create a local copy by coping the web URL, open your preferred IDE, 
+and create a new project from version control by pasting the link.
 
-As a team, split up the TODOs (see below) between the members of your team.
+To provide feedback or suggestions, go to the `Issues` tab on GitHub to create an issue. Add a title highlighting
+your main points and a description of what you think could be changed. Feel free to mention specific files if
+you'd like.
 
-There are TODOs in seven of the files.
-Make sure each member has at least one TODO which they will be responsible for completing.
-If your team prefers to work in pairs, that is fine too. Your individual branches
-will not be graded for this — only the final, working version.
+## Notes
+- ~~should the bookmarks and recently viewed lists of a user be stored in the user.json file?~~ - implemented
+- ~~individual recipe view only displays one ingredient right now~~ - fixed
+- add a find recipe by name search function in the main search page
+- ~~make ingredients clickable in individual recipe view? Or at least display the amounts~~
+- for the ingredient list in individual recipe view, split it into "used ingredients", "unused ingredients" and "missed ingredients" (right now there's only "missed ingredients")
+- ^ might be too complicated to do
+- when you double click on the recipes in the search view, you somehow get two copies of the individual recipe view??
+- ^ doesn't happen all the time tho
+- allow the user to choose how many recipes they want to see? Page flipping feature?
+- show random recipes feature?
+- ~~**allow users to create custom folders???**~~
+- allow users to press enter instead of using the search button?
+- ~~*add clickable url to individual recipe view*~~
+- allow users to select ingredients from individual recipe view and add them to their shopping list?
+- ^ would be difficult to implement
+- have an ingredient list where users can record the ingredients they have in their fridge
+- change background colour?
+- *make the recipes in shopping list view clickable*
+- display no recipes found in search view
+~~- add clear recently viewed button~~
+- modify how the close button works - so that you don't terminate the program when you close one window
+- ~~auto adjust window size~~
+- **add the fire property changed thingy so that the lists update in real time**
+- allow users to delete a bookmark
 
-The TODOs are summarized below (by file) to help your team decide how to split them up:
-
-* * *
-
-- `Main.java`
-
-  - [ ] TODO: add the Logout Use Case to the app using the appBuilder
-
-* * *
-
-- `LoggedInView.java` (tip: refer to the other views for similar code)
-
-  - [ ] TODO: save the logout controller in the instance variable.
-  - [ ] TODO: execute the logout use case through the Controller
-
-* * *
-
-- `LogoutController.java` (tip: refer to the other controllers for similar code)
-
-  - [ ] TODO: Save the interactor in the instance variable.
-  - [ ] TODO: run the use case interactor for the logout use case
-
-* * *
-
-- `LogoutInputData.java` (should be done with the LogoutInteractor TODOs below)
-
-  - [ ] TODO: save the current username in an instance variable and add a getter.
-
-- `LogoutInteractor.java` (tip: refer to `ChangePasswordInteractor.java` for similar code)
-
-  - [ ] TODO: save the DAO and Presenter in the instance variables.
-  - [ ] TODO: implement the logic of the Logout Use Case
-
-* * *
-
-- `LogoutOutputData.java`
-
-  - [ ] TODO: save the parameters in the instance variables.
-
-* * *
-
-- `LogoutPresenter.java` (tip: refer to `SignupPresenter.java` for similar code)
-
-  - [ ] TODO: assign to the three instance variables.
-  - [ ] TODO: have prepareSuccessView update the LoggedInState
-  - [ ] TODO: have prepareSuccessView update the LoginState
-
-* * *
-
-1. Make a branch named the first part of your UofT email address, everything before the `@`.
-For example, if your email address is `paul.gries@mail.utoronto.ca`, then the branch name would
-be `paul.gries`.
-
-Make sure you switch to the new branch.
-
-In the terminal, this would look like below, but replaced with your own information:
-```
-git branch paul.gries
-git switch paul.gries
-```
-
-2. Complete your assigned TODOs and make a pull request on GitHub. In your pull request,
-   briefly describe what your TODOs were and how you implemented them. If you aren't sure
-   about part of it, include this in your pull request so everyone knows what to look
-   for when reviewing — or you can of course discuss with your team before making your
-   pull request since you are physically working in the same space.
-   - **Important: don't push any changes to the `.idea` folder, as that
-     may cause issues for your other teammates, as some files contain
-     configurations specific to your individual IntelliJ projects.**
-
-3. Review each other's pull requests to ensure each TODO is correctly implemented and that
-   there are no Checkstyle issues in the files that were modified.
-
-4. Once all TODOs are completed, your team should debug as needed to ensure the
-   correctness of the code. Setting a breakpoint where the log-out use case
-   interactor starts its work will likely be a great place to start when debugging.
-
-And that's it; you now have a working Logout Use Case! Instructions for
-how to submit your work on MarkUs will be posted later.
-
-Your team should spend the rest of the lab working on your project blueprint.
-
-* * *
-
-# Project Blueprint
-
-See Quercus for details about the project blueprint! By the end of the week,
-the goal is for your team to have a fully drafted blueprint so that your team
-will be ready to get started on your project after Reading Week.
+### folder view ###
+- [X] add create folder user interface - either create a new button on home page or in BookmarkView
+- [X] add dropdown menu of folders in IndividualRecipeView - name it "add recipe to xxx folder" - or make it a checklist instead?
+- [X] add a save folder to json file thingy in UserDAOImpl
+- ~~make the whole thing a tag and filter system instead??? This would then entail changing the Recipe class~~
