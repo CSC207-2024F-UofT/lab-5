@@ -5,7 +5,7 @@ import entity.User;
 import java.util.List;
 
 /**
- * The input data for the Change Password Use Case.
+ * The input data for the Search Recipe List By Ingredient Use Case.
  */
 public class SearchRecipeListByIngredientInputData {
 

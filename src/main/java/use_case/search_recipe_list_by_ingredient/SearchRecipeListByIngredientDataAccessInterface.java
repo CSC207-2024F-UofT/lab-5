@@ -6,7 +6,7 @@ import entity.User;
 import java.util.List;
 
 /**
- * The interface of the DAO for the Change Password Use Case.
+ * The interface of the DAO for the Search Recipe List By Ingredient Use Case.
  */
 public interface SearchRecipeListByIngredientDataAccessInterface {
 

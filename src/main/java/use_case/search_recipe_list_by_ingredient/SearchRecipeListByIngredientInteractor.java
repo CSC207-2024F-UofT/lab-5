@@ -8,7 +8,7 @@ import java.util.List;
 public class SearchRecipeListByIngredientInteractor implements SearchRecipeListByIngredientInputBoundary {
 
     /**
-     * The Change Password Interactor.
+     * The Search Recipe List By Ingredient Interactor.
      */
     private final SearchRecipeListByIngredientDataAccessInterface userDataAccessObject;
     private final SearchRecipeListByIngredientOutputBoundary userPresenter;

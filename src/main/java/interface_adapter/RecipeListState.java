@@ -1,37 +1,33 @@
 package interface_adapter;
 
+import entity.User;
+
 /**
  * The State information representing the recipe list.
  */
 public class RecipeListState {
-    private String username = "";
-
-    private String password = "";
-    private String passwordError;
+    private User user;
+    private String folder;
 
     public RecipeListState() {
-//        username = copy.username;
-//        password = copy.password;
-//        passwordError = copy.passwordError;
+        // TODO change this
+        this.user = null;
+        this.folder = null;
     }
 
-    public String getUsername() {
-        return username;
+    public User getUser() {
+        return this.user;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public String getFolder() {
+        return this.folder;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public void setPasswordError(String passwordError) {
-        this.passwordError = passwordError;
-    }
-
-    public String getPassword() {
-        return password;
+    public void setFolder(String folder) {
+        this.folder = folder;
     }
 }
