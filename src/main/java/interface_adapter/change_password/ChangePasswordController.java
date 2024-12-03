@@ -23,4 +23,11 @@ public class ChangePasswordController {
 
         userChangePasswordUseCaseInteractor.execute(changePasswordInputData);
     }
+
+    /**
+     * Executes the "switch to BookmarkView" Use Case.
+     */
+    public void switchToBookmarkView() {
+        userChangePasswordUseCaseInteractor.switchToBookmarkView();
+    }
 }

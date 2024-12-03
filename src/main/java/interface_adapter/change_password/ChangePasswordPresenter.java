@@ -1,5 +1,7 @@
 package interface_adapter.change_password;
 
+import interface_adapter.ViewManagerModel;
+import interface_adapter.bookmark.BookmarkViewModel;
 import use_case.change_password.ChangePasswordOutputBoundary;
 import use_case.change_password.ChangePasswordOutputData;
 
@@ -9,9 +11,15 @@ import use_case.change_password.ChangePasswordOutputData;
 public class ChangePasswordPresenter implements ChangePasswordOutputBoundary {
 
     private final LoggedInViewModel loggedInViewModel;
+    private final ViewManagerModel viewManagerModel;
+    private final BookmarkViewModel bookmarkViewModel;
 
-    public ChangePasswordPresenter(LoggedInViewModel loggedInViewModel) {
+    public ChangePasswordPresenter(LoggedInViewModel loggedInViewModel,
+                                   ViewManagerModel viewManagerModel,
+                                   BookmarkViewModel bookmarkViewModel) {
         this.loggedInViewModel = loggedInViewModel;
+        this.viewManagerModel = viewManagerModel;
+        this.bookmarkViewModel = bookmarkViewModel;
     }
 
     @Override
@@ -27,5 +35,11 @@ public class ChangePasswordPresenter implements ChangePasswordOutputBoundary {
     @Override
     public void prepareFailView(String error) {
         // note: this use case currently can't fail
+    }
+
+    @Override
+    public void switchToBookmarkView() {
+        viewManagerModel.setState(bookmarkViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
     }
 }
