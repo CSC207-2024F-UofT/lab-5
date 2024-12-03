@@ -4,11 +4,12 @@ import java.util.List;
 
 import entity.Recipe;
 import entity.User;
+import interface_adapter.RecipeListViewModel;
 
 public class FolderView extends RecipeListView {
 
-    public FolderView(User user, String folderName) {
-        super(user, folderName);
+    public FolderView(User user, String folderName, RecipeListViewModel recipeListViewModel) {
+        super(user, folderName, recipeListViewModel);
         setTitle(folderName);
     }
 

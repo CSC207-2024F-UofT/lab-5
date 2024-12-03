@@ -11,6 +11,7 @@ import data_access.SpoonacularAPI;
 import data_access.SpoonacularRecipeDAO;
 import entity.User;
 import interface_adapter.RecipeController;
+import interface_adapter.RecipeListViewModel;
 import interface_adapter.SearchRecipePresenter;
 import interface_adapter.ShoppingListController;
 import use_case.ShoppingListUseCase;
@@ -63,14 +64,14 @@ public class HomePage extends JFrame {
         final JButton bookmarksButton = new JButton("Bookmarks");
         bookmarksButton.setFont(new Font(AppConstants.FONT, Font.PLAIN, AppConstants.BUTTON_FONT_SIZE));
         bookmarksButton.addActionListener(event -> {
-            new BookmarkView(this.user, null);
+            new BookmarkView(this.user, "bookmarks", new RecipeListViewModel());
         });
 
         // Recently Viewed Button
         final JButton recentlyViewedButton = new JButton("Recently Viewed");
         recentlyViewedButton.setFont(new Font(AppConstants.FONT, Font.PLAIN, AppConstants.BUTTON_FONT_SIZE));
         recentlyViewedButton.addActionListener(event -> {
-            new RecentlyViewedView(this.user, null);
+            new RecentlyViewedView(this.user, "recentlyViewed", new RecipeListViewModel());
         });
 
         // Putting the buttons together

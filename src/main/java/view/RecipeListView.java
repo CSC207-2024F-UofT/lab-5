@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,15 +18,27 @@ import data_access.UserDAOImpl;
 import entity.Recipe;
 import entity.User;
 import interface_adapter.RecipeListController;
+import interface_adapter.RecipeListState;
+import interface_adapter.RecipeListViewModel;
+import interface_adapter.search_recipe_list_by_ingredient.SearchRecipeListByIngredientController;
+import interface_adapter.search_recipe_list_by_ingredient.SearchRecipeListByIngredientPresenter;
+import interface_adapter.search_recipe_list_by_name.SearchRecipeListByNameController;
+import interface_adapter.search_recipe_list_by_name.SearchRecipeListByNamePresenter;
+import use_case.search_recipe_list_by_ingredient.SearchRecipeListByIngredientInputBoundary;
+import use_case.search_recipe_list_by_ingredient.SearchRecipeListByIngredientInteractor;
+import use_case.search_recipe_list_by_ingredient.SearchRecipeListByIngredientOutputBoundary;
 import use_case.search_recipe_list_by_ingredient.SearchRecipeListByIngredientUseCase;
-import use_case.SearchRecipeListByNameUseCase;
+import use_case.search_recipe_list_by_name.SearchRecipeListByNameInputBoundary;
+import use_case.search_recipe_list_by_name.SearchRecipeListByNameInteractor;
+import use_case.search_recipe_list_by_name.SearchRecipeListByNameOutputBoundary;
+import use_case.search_recipe_list_by_name.SearchRecipeListByNameUseCase;
 
-public abstract class RecipeListView extends JFrame implements ActionListener {
-    private static User user;
+public abstract class RecipeListView extends JFrame implements ActionListener, PropertyChangeListener {
     protected static UserDAOImpl userDAO;
     protected final JList<Recipe> recipeList;
     protected final DefaultListModel<Recipe> listModel;
     private final RecipeListController controller;
+    private final User user;
 
     private JTextField ingredientSearchField;
     private JButton ingredientSearchButton;
@@ -36,11 +50,18 @@ public abstract class RecipeListView extends JFrame implements ActionListener {
     private JComboBox<String> cuisineComboBox;
     private SpoonacularRecipeDAO spoonacularRecipeDAO;
 
+    private final String folderName;
+
+    private final RecipeListViewModel recipeListViewModel;
+    private SearchRecipeListByIngredientController searchRecipeListByIngredientController;
+    private SearchRecipeListByNameController searchRecipeListByNameController;
+
     /*
     Generates the default view of a list of recipes associated with a User.
      */
-    public RecipeListView(User user, String folderName) {
+    public RecipeListView(User user, String folderName, RecipeListViewModel recipeListViewModel) {
         this.user = user;
+        this.folderName = folderName;
         this.userDAO = new UserDAOImpl();
         this.recipeList = new JList<>();
         this.listModel = new DefaultListModel<>();
@@ -49,10 +70,29 @@ public abstract class RecipeListView extends JFrame implements ActionListener {
                 new SearchRecipeListByNameUseCase(getRecipeList(userDAO.findUserByUsername(user.getUsername()))));
         this.spoonacularRecipeDAO = new SpoonacularRecipeDAO();
 
+        this.recipeListViewModel = recipeListViewModel;
+        this.recipeListViewModel.addPropertyChangeListener(this);
+
+        final SearchRecipeListByIngredientOutputBoundary searchRecipeListByIngredientOutputBoundary =
+                new SearchRecipeListByIngredientPresenter(recipeListViewModel);
+        final SearchRecipeListByIngredientInputBoundary searchRecipeListByIngredientInteractor =
+                new SearchRecipeListByIngredientInteractor(
+                        userDAO, searchRecipeListByIngredientOutputBoundary);
+        this.searchRecipeListByIngredientController =
+                new SearchRecipeListByIngredientController(searchRecipeListByIngredientInteractor);
+
+        final SearchRecipeListByNameOutputBoundary searchRecipeListByNameOutputBoundary =
+                new SearchRecipeListByNamePresenter(recipeListViewModel);
+        final SearchRecipeListByNameInputBoundary searchRecipeListByNameInteractor =
+                new SearchRecipeListByNameInteractor(
+                        userDAO, searchRecipeListByNameOutputBoundary);
+        this.searchRecipeListByNameController =
+                new SearchRecipeListByNameController(searchRecipeListByNameInteractor);
+
         // Initialize recipe list to display
         List<Recipe> recipes = new ArrayList<>();
         // Split into cases: BookmarkView/RecentlyViewedView and FolderView
-        if (folderName == null) {
+        if (folderName == "bookmarks" || folderName == "recentlyViewed") {
             recipes = getRecipeList(userDAO.findUserByUsername(user.getUsername()));
         }
         else {
@@ -66,15 +106,6 @@ public abstract class RecipeListView extends JFrame implements ActionListener {
         final JScrollPane scrollPane = new JScrollPane(recipeList);
         scrollPane.setPreferredSize(recipeList.getPreferredScrollableViewportSize());
         add(scrollPane, BorderLayout.SOUTH);
-
-        // TODO fix the layout
-//        // Main panel with vertical BoxLayout
-//        final JPanel mainPanel = new JPanel();
-//        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-//        setContentPane(mainPanel);
-//
-//        // Add components to the main panel
-//        mainPanel.add(scrollPane);
 
         // Make the recipe list clickable
         recipeList.addMouseListener(new MouseAdapter() {
@@ -133,7 +164,7 @@ public abstract class RecipeListView extends JFrame implements ActionListener {
         filterPanel.add(cuisineComboBox);
 
         add(filterPanel, BorderLayout.EAST);
-      
+
         dietComboBox.addActionListener(e -> applyFilters());
         cuisineComboBox.addActionListener(e -> applyFilters());
 
@@ -161,19 +192,44 @@ public abstract class RecipeListView extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent event) {
         if (event.getSource() == ingredientSearchButton) {
             final String userInput = ingredientSearchField.getText();
-            List<String> ingredients = Arrays.asList(userInput.split(","));
-            List<Recipe> recipes = controller.getRecipesByIngredients(ingredients);
-            final DefaultListModel<Recipe> ingredientSearchListModel = new DefaultListModel<>();
-            for (Recipe recipe : recipes) {
-                ingredientSearchListModel.addElement(recipe);
+            final List<String> ingredients = Arrays.asList(userInput.split(","));
+            // TODO double check then delete
+//            List<Recipe> recipes = controller.getRecipesByIngredients(ingredients);
+//            final DefaultListModel<Recipe> ingredientSearchListModel = new DefaultListModel<>();
+//            for (Recipe recipe : recipes) {
+//                ingredientSearchListModel.addElement(recipe);
+//            }
+//            recipeList.setModel(ingredientSearchListModel);
+
+            final RecipeListState currentState = recipeListViewModel.getState();
+            currentState.setFolder(folderName);
+            currentState.setUser(user);
+            this.searchRecipeListByIngredientController.execute(
+                    ingredients, currentState.getUser(), currentState.getFolder());
+            recipeListViewModel.setState(currentState);
+            final DefaultListModel<Recipe> recipeSearchListModel = new DefaultListModel<>();
+            for (Recipe recipe : currentState.getRecipeList()) {
+                recipeSearchListModel.addElement(recipe);
             }
-            recipeList.setModel(ingredientSearchListModel);
+            recipeList.setModel(recipeSearchListModel);
         }
         if (event.getSource() == recipeSearchButton) {
             final String userInput = recipeSearchField.getText();
-            List<Recipe> recipes = controller.getRecipesByName(userInput);
+            // TODO double check then delete
+//            final List<Recipe> recipes = controller.getRecipesByName(userInput);
+
+            final RecipeListState currentState = recipeListViewModel.getState();
+            currentState.setFolder(folderName);
+            currentState.setUser(user);
+            System.out.println("recipe list view");
+            System.out.println(folderName);
+            System.out.println(userInput);
+            System.out.println(user.getUsername());
+            this.searchRecipeListByNameController.execute(
+                    userInput, currentState.getUser(), currentState.getFolder());
+            recipeListViewModel.setState(currentState);
             final DefaultListModel<Recipe> recipeSearchListModel = new DefaultListModel<>();
-            for (Recipe recipe : recipes) {
+            for (Recipe recipe : currentState.getRecipeList()) {
                 recipeSearchListModel.addElement(recipe);
             }
             recipeList.setModel(recipeSearchListModel);
@@ -224,4 +280,24 @@ public abstract class RecipeListView extends JFrame implements ActionListener {
     protected abstract List<Recipe> getRecipeList(User user1);
 
     protected abstract List<Recipe> getRecipeList(User user1, String folderName);
+
+    @Override
+    public void propertyChange(PropertyChangeEvent event) {
+        if (event.getPropertyName().equals("state")) {
+            final RecipeListState state = (RecipeListState) event.getNewValue();
+            // TODO recipeList.setModel(ingredientSearchListModel);
+        }
+        // TODO add other cases
+    }
+
+    // TODO only need these if there's an appbuilder
+    public void setSearchRecipeListByIngredientController(
+            SearchRecipeListByIngredientController SearchRecipeListByIngredientController) {
+        this.searchRecipeListByIngredientController = SearchRecipeListByIngredientController;
+    }
+
+    public void setSearchRecipeListByNameController(
+            SearchRecipeListByNameController SearchRecipeListByNameController) {
+        this.searchRecipeListByNameController = SearchRecipeListByNameController;
+    }
 }

@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.swing.*;
 
+import interface_adapter.RecipeListViewModel;
 import org.jetbrains.annotations.NotNull;
 
 import entity.Recipe;
@@ -12,8 +13,8 @@ import entity.User;
 
 public class BookmarkView extends RecipeListView {
 
-    public BookmarkView(User user, String folderName) {
-        super(user, folderName);
+    public BookmarkView(User user, String folderName, RecipeListViewModel recipeListViewModel) {
+        super(user, folderName, recipeListViewModel);
         setTitle(user.getUsername() + "'s Bookmarks");
 
         final JPanel folderPanel = new JPanel();
@@ -26,6 +27,7 @@ public class BookmarkView extends RecipeListView {
         folderPanel.add(createFolderPanel);
 
         add(folderPanel);
+        pack();
     }
 
     @NotNull
@@ -38,7 +40,7 @@ public class BookmarkView extends RecipeListView {
         dropdown.addActionListener(event -> {
             final String selectedOption = (String) dropdown.getSelectedItem();
             System.out.println(selectedOption + "folder name in bookmark view");
-            new FolderView(user, selectedOption);
+            new FolderView(user, selectedOption, new RecipeListViewModel());
         });
         return dropdown;
     }
@@ -52,6 +54,7 @@ public class BookmarkView extends RecipeListView {
         addFolderButton.addActionListener(event -> {
             final String folderName = textField.getText();
             userDAO.addFolderToFile(user.getUsername(), folderName);
+            JOptionPane.showMessageDialog(null, "Folder created successfully");
         });
         createFolderPanel.add(textField);
         createFolderPanel.add(addFolderButton);
@@ -65,6 +68,6 @@ public class BookmarkView extends RecipeListView {
 
     @Override
     protected List<Recipe> getRecipeList(User user1, String folderName) {
-        return List.of();
+        return userDAO.getRecentlyViewedFromFile(user1.getUsername());
     }
 }

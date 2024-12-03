@@ -4,7 +4,7 @@ package app;
 import view.LoginSignupPage;
 
 /**
- * This is where the application starts. ..
+ * This is where the application starts.
  */
 public class Main {
 

@@ -2,7 +2,7 @@
 //
 //import interface_adapter.RecipeListController;
 //import use_case.search_recipe_list_by_ingredient.SearchRecipeListByIngredientUseCase;
-//import use_case.SearchRecipeListByNameUseCase;
+//import use_case.search_recipe_list_by_name.SearchRecipeListByNameUseCase;
 //
 //public class BookmarkController extends RecipeListController {
 //    private final BookmarkInputBoundary bookmarkUseCaseInteractor;
