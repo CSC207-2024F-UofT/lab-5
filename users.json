@@ -1,37 +1,101 @@
-[{
-    "bookmarks": [],
-    "recentlyViewed": [{
-        "image": "https://img.spoonacular.com/recipes/648368-312x231.jpg",
-        "name": "Jalapeno Queso With Goat Cheese",
-        "ingredients": [
+[
+    {
+        "bookmarks": [],
+        "recentlyViewed": [
             {
-                "unit": "oz",
-                "amount": 8,
-                "name": "canned tomatoes",
-                "id": 0
+                "image": "https://img.spoonacular.com/recipes/655589-312x231.jpg",
+                "name": "Penne with Goat Cheese and Basil",
+                "ingredients": [
+                    {
+                        "amount": 12,
+                        "unit": "ounces",
+                        "name": "penne pasta"
+                    },
+                    {
+                        "amount": 1,
+                        "unit": "cup",
+                        "name": "basil leaves"
+                    },
+                    {
+                        "amount": 4,
+                        "unit": "ounces",
+                        "name": "goat cheese"
+                    }
+                ],
+                "cuisineType": "",
+                "dietaryType": "",
+                "url": "https://spoonacular.com/penne-with-goat-cheese-and-basil-655589"
             },
             {
-                "unit": "oz",
-                "amount": 5.3,
-                "name": "goat cheese",
-                "id": 0
+                "image": "https://img.spoonacular.com/recipes/650132-312x231.jpg",
+                "name": "Linguine With Chick Peas and Bacon",
+                "ingredients": [
+                    {
+                        "amount": 4,
+                        "unit": "ounces",
+                        "name": "linguini"
+                    },
+                    {
+                        "amount": 2,
+                        "unit": "servings",
+                        "name": "asiago cheese"
+                    },
+                    {
+                        "amount": 1,
+                        "unit": "slice",
+                        "name": "bacon"
+                    },
+                    {
+                        "amount": 0.5,
+                        "unit": "cup",
+                        "name": "chick peas"
+                    }
+                ],
+                "cuisineType": "",
+                "dietaryType": "",
+                "url": "https://spoonacular.com/linguine-with-chick-peas-and-bacon-650132"
             },
             {
-                "unit": "",
-                "amount": 1,
-                "name": "ea. jalapeno pepper",
-                "id": 0
-            },
-            {
-                "unit": "teaspoons",
-                "amount": 2,
-                "name": "hot sauce",
-                "id": 0
+                "image": "https://img.spoonacular.com/recipes/631807-312x231.jpg",
+                "name": "Toasted\" Agnolotti (or Ravioli)",
+                "ingredients": [
+                    {
+                        "amount": 13,
+                        "unit": "oz",
+                        "name": "g pre-made agnolotti/ravioli"
+                    },
+                    {
+                        "amount": 1,
+                        "unit": "",
+                        "name": "egg"
+                    },
+                    {
+                        "amount": 1.5,
+                        "unit": "cup",
+                        "name": "breadcrumbs"
+                    }
+                ],
+                "cuisineType": "",
+                "dietaryType": "",
+                "url": "https://spoonacular.com/toasted-agnolotti-or-ravioli-631807"
             }
         ],
-        "id": 0,
-        "url": "https://spoonacular.com/jalapeno-queso-with-goat-cheese-648368"
-    }],
-    "password": "hhcgoodluck",
-    "username": "hhc"
-}]
+        "password": "csc207",
+        "folders": {},
+        "username": "John_Smith"
+    },
+    {
+        "bookmarks": [],
+        "recentlyViewed": [],
+        "password": "csc207",
+        "folders": {},
+        "username": "John_Fox"
+    },
+    {
+        "bookmarks": [],
+        "recentlyViewed": [],
+        "password": "csc207",
+        "folders": {},
+        "username": "James_Smith"
+    }
+]
