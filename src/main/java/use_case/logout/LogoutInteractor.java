@@ -4,22 +4,45 @@ package use_case.logout;
  * The Logout Interactor.
  */
 public class LogoutInteractor implements LogoutInputBoundary {
+    /**
+     * The userDataAccessObject.
+     */
     private LogoutUserDataAccessInterface userDataAccessObject;
+    /**
+     * The logoutPresenter.
+     */
     private LogoutOutputBoundary logoutPresenter;
 
-    public LogoutInteractor(LogoutUserDataAccessInterface userDataAccessInterface,
-                            LogoutOutputBoundary logoutOutputBoundary) {
-        // TODO: save the DAO and Presenter in the instance variables.
-        // Which parameter is the DAO and which is the presenter?
+    /**
+     * LogoutInteractor method.
+     * @param userDataAccessInterface the userDataAccessInterface
+     * @param logoutOutputBoundary the logoutOutputBoundary
+     */
+    public LogoutInteractor(final LogoutUserDataAccessInterface userDataAccessInterface,
+                            final LogoutOutputBoundary logoutOutputBoundary) {
+        this.userDataAccessObject = userDataAccessInterface;
+        this.logoutPresenter = logoutOutputBoundary;
     }
 
+    /**
+     * Override execute method.
+     * @param logoutInputData the input data
+     */
     @Override
-    public void execute(LogoutInputData logoutInputData) {
-        // TODO: implement the logic of the Logout Use Case (depends on the LogoutInputData.java TODO)
-        // * get the username out of the input data,
-        // * set the username to null in the DAO
-        // * instantiate the `LogoutOutputData`, which needs to contain the username.
-        // * tell the presenter to prepare a success view.
+    public void execute(final LogoutInputData logoutInputData) {
+        final String username = logoutInputData.getUsername();
+
+        // If the username is null, you can log a message or handle the error gracefully instead of triggering a failure
+        if (username == null || username.isEmpty()) {
+            logoutPresenter.prepareFailView("Username not found.");
+        }
+        else {
+            // Proceed with logging out
+            userDataAccessObject.setCurrentUsername(null);
+
+            final LogoutOutputData logoutOutputData = new LogoutOutputData(username, false);
+            logoutPresenter.prepareSuccessView(logoutOutputData);
+        }
     }
 }
 

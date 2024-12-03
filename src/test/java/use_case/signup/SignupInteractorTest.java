@@ -1,21 +1,28 @@
 package use_case.signup;
 
-import data_access.InMemoryUserDataAccessObject;
-import entity.CommonUserFactory;
-import entity.User;
-import entity.UserFactory;
+import entity.user.CommonUserFactory;
+import entity.user.User;
 import org.junit.jupiter.api.Test;
-
-import java.time.LocalDateTime;
+import org.junit.jupiter.api.BeforeEach;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 class SignupInteractorTest {
+
+    SignupUserDataAccessInterface mockUserRepository;
+
+    @BeforeEach
+    void setUp() {
+        // Create the mock user repository
+        mockUserRepository = mock(SignupUserDataAccessInterface.class);
+    }
 
     @Test
     void successTest() {
         SignupInputData inputData = new SignupInputData("Paul", "password", "password");
-        SignupUserDataAccessInterface userRepository = new InMemoryUserDataAccessObject();
+
+        when(mockUserRepository.existsByName("Paul")).thenReturn(false);
 
         // This creates a successPresenter that tests whether the test case is as we expect.
         SignupOutputBoundary successPresenter = new SignupOutputBoundary() {
@@ -23,7 +30,7 @@ class SignupInteractorTest {
             public void prepareSuccessView(SignupOutputData user) {
                 // 2 things to check: the output data is correct, and the user has been created in the DAO.
                 assertEquals("Paul", user.getUsername());
-                assertTrue(userRepository.existsByName("Paul"));
+                when(mockUserRepository.existsByName("Paul")).thenReturn(true);
             }
 
             @Override
@@ -37,14 +44,18 @@ class SignupInteractorTest {
             }
         };
 
-        SignupInputBoundary interactor = new SignupInteractor(userRepository, successPresenter, new CommonUserFactory());
+        SignupInputBoundary interactor = new SignupInteractor(mockUserRepository, successPresenter, new CommonUserFactory());
         interactor.execute(inputData);
+
+        verify(mockUserRepository).existsByName("Paul");
+        verify(mockUserRepository).save(any(User.class));
     }
 
     @Test
     void failurePasswordMismatchTest() {
         SignupInputData inputData = new SignupInputData("Paul", "password", "wrong");
-        SignupUserDataAccessInterface userRepository = new InMemoryUserDataAccessObject();
+
+        when(mockUserRepository.existsByName("Paul")).thenReturn(false);
 
         // This creates a presenter that tests whether the test case is as we expect.
         SignupOutputBoundary failurePresenter = new SignupOutputBoundary() {
@@ -65,19 +76,17 @@ class SignupInteractorTest {
             }
         };
 
-        SignupInputBoundary interactor = new SignupInteractor(userRepository, failurePresenter, new CommonUserFactory());
+        SignupInputBoundary interactor = new SignupInteractor(mockUserRepository, failurePresenter, new CommonUserFactory());
         interactor.execute(inputData);
+
+        verify(mockUserRepository).existsByName("Paul");
     }
 
     @Test
     void failureUserExistsTest() {
         SignupInputData inputData = new SignupInputData("Paul", "password", "wrong");
-        SignupUserDataAccessInterface userRepository = new InMemoryUserDataAccessObject();
 
-        // Add Paul to the repo so that when we check later they already exist
-        UserFactory factory = new CommonUserFactory();
-        User user = factory.create("Paul", "pwd");
-        userRepository.save(user);
+        when(mockUserRepository.existsByName("Paul")).thenReturn(true);
 
         // This creates a presenter that tests whether the test case is as we expect.
         SignupOutputBoundary failurePresenter = new SignupOutputBoundary() {
@@ -98,7 +107,9 @@ class SignupInteractorTest {
             }
         };
 
-        SignupInputBoundary interactor = new SignupInteractor(userRepository, failurePresenter, new CommonUserFactory());
+        SignupInputBoundary interactor = new SignupInteractor(mockUserRepository, failurePresenter, new CommonUserFactory());
         interactor.execute(inputData);
+
+        verify(mockUserRepository).existsByName("Paul");
     }
 }
