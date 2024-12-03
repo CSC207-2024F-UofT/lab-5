@@ -1,11 +1,17 @@
 package use_case.login;
 
+import data_access.FileUserDataAccessObject;
 import entity.User;
+import interface_adapter.change_password.IsLoggedIn;
+import view.HomeView;
 
 /**
  * The Login Interactor.
  */
 public class LoginInteractor implements LoginInputBoundary {
+    // Add DAO
+    private final FileUserDataAccessObject dataAccessObject;
+
     private final LoginUserDataAccessInterface userDataAccessObject;
     private final LoginOutputBoundary loginPresenter;
 
@@ -13,6 +19,7 @@ public class LoginInteractor implements LoginInputBoundary {
                            LoginOutputBoundary loginOutputBoundary) {
         this.userDataAccessObject = userDataAccessInterface;
         this.loginPresenter = loginOutputBoundary;
+        this.dataAccessObject = new FileUserDataAccessObject();
     }
 
     @Override
@@ -28,6 +35,8 @@ public class LoginInteractor implements LoginInputBoundary {
                 loginPresenter.prepareFailView("Incorrect password for \"" + username + "\".");
             }
             else {
+                dataAccessObject.setUserLoggedIn(true);
+                dataAccessObject.saveUserLoginStatus();
 
                 final User user = userDataAccessObject.get(loginInputData.getUsername());
 
@@ -36,5 +45,10 @@ public class LoginInteractor implements LoginInputBoundary {
                 loginPresenter.prepareSuccessView(loginOutputData);
             }
         }
+    }
+
+    @Override
+    public void switchToSignUpView() {
+        loginPresenter.switchToSignUpView();
     }
 }
