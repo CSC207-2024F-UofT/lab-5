@@ -1,6 +1,5 @@
 package nutrition_information_test;
 
-import data_access.NutritionInformationDAO;
 import entity.Nutrition;
 import use_case.nutrition_information.*;
 
