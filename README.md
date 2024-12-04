@@ -29,7 +29,7 @@ that might use those ingredients. If the user had specific dietary needs and a u
 to know what to search for. Each recipe will have the option to display its full nutritional information for those
 who have specific health requirements. This project allows users to bookmark their favourite recipes as well as 
 organize them into folders for easy access. Oftentimes, one may find a recipe but only be missing a couple of 
-ingredients, our program can generate a shopping list for the user available for export. (*double check)
+ingredients, our program can generate a shopping list for the user.
 
 ## Table of Contents
 1) [Features](#features-of-the-project)
