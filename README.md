@@ -1,181 +1,83 @@
-# Lab 5: Logout
+# Page Turners: A Virtual Book-Club
 
-## Preamble
+## Table of Contents
 
-In the current homework, you added code to the login use case to save the currently-logged-in
-user by saving the user in the Data Access Layer. You also added a unit test for this.
+1. [Introduction to Page Turners](#page-turners-a-general-introduction)
+2. [Contributors](#contributors)
+3. [Installation Instructions](#installation-instructions)
+4. [Features of the Software](#features-of-the-software)
+5. [Simple User Guide](#usage-guide)
+6. [Feedback](#feedback)
+7. [If You'd Like to Contribute](#contributions)
+8. [License](#license)
 
-In this lab, you will complete a logout use case as a team. You will also begin to discuss your project
-and the use cases that need to be implemented. 
+* * *
+## Page Turners: A General Introduction:
+Page Turners is a virtual book-club that lets you join book-clubs that you are interested in or create book-clubs if you
+don't find something suitable to your liking. Additionally, you can maintain personal notes about the current books that
+you are reading and access the list of books in a book-club. The search function lets you search for your next big read.
+Our project has the primary goal of enhancing a book lover's dream.
 
-We have created all the Clean Architecture classes necessary for the logout use case.
+* * *
+## Contributors
 
-By Friday, your team will submit:
-- your completed lab code [for credit]
-- a draft of your project blueprint proposal. [required, but not for credit]
-
-# Phase 2 [for credit]
-_(recall, Phase 1 was your solo task of adding the storage of the currently-logged-in user)_
-
-## Task 0: Fork this repo on GitHub
-**To get started, one team member should fork this repo on GitHub and share it with the team. 
-All of you should then clone it.**
+| Name                 | GitHub Username                                  |
+|----------------------|--------------------------------------------------|
+| Meldy Bile           | [@meldy04](https://github.com/meldy04)           |
+| Jason Han            | [@jason101111](https://github.com/jason101111)   |
+| Vishaka Rajani       | [@vishraj12](https://github.com/vishraj12)       |
+| Ali Shaikh           | [@alihassan200](https://github.com/alihassan200) |
+| Yodishtr Vythilingum | [@Yodishtr](https://github.com/Yodishtr)         |
+| Ali Zeitoun          | [@zeitoun1](https://github.com/zeitoun1)         |
 
 * * *
 
-Suggested logistics: One of you should invite the others to collaborate on their fork of the
-original repo on GitHub. You can do this in your repo on GitHub under `Settings -> Collaborators`.
-This will allow you to push branches to a common repo and then use pull requests to contribute
-your code and review. To prevent others from pushing directly to the main branch,
-we recommend you set branch protection rules on GitHub. Below are how the settings might look if you
-add branch protection rules:
-
-![image of branch protection rules for main with the
-requirement of two approvers to merge in pull requests.
-](images/branch_protection_rules.png)
+## Installation Instructions
+1. Make a fork of the Github repo and clone it.
+2. Ensure that the pom file has been downloaded.
+3. Reload the project after adding dependencies.
+4. Ensure that JDK 17 or above is installed on Intellij.
+5. The software makes use of OpenLibraryClient API to call out API link points.
+6. The program runs on all systems and the Jackson 2.16.2, Gson 2.11.0, Junit 4.13.1 packages should be downloaded to 
+run this software.
 
 * * *
 
-Open the project in IntelliJ and make sure you can successfully run `app/Main.java`.
-Note: you may need to set the Project SDK in the `Project Structure...` menu, and possibly
-also manually link the Maven project, as you did in Phase 1.
-
-## Task 1: Understanding the Program
-
-You may notice that we have refactored the CA engine code _slightly_ since Phase 1, but the
-way we build the engine is drastically different: we have switched from using Factories to
-using the Builder design pattern, which we'll be discussing in lecture soon. 
-
-Open up `app.Main` and read it as a team.
-- What are the Views and what are the current Use Cases?
-- Which Uses Cases are triggered from each View?
-- Which version of the DAO is `app.Main` using?
-
-The major change since Phase 1 is that we have added the `app.AppBuilder` class which makes
-it easier to understand how our CA engine is being constructed — it also makes `app.Main` nice and concise!
-- Why do all those `addX` methods end in `return this;`? 
-
-Run the program and make sure the signup and login Use Cases work.
-
-Currently, you'll notice that the "Log Out" button still doesn't actually log you out. It's time to fix
-that button, which is part of the `LoggedInView`.
-We have created all the classes for you, but some of the code is missing.
-As a team, your task is to fill in the missing code so that the Logout Use Case is implemented.
-**The next part of the readme describes how your team will do this.**
+## Features of the Software
+1. You can join a book-club by browsing the list of current book clubs and it will show up in your clubs.
+   <img height="500" src="images/joinaclubview.png" width="300"/>
+   <img height="500" src="images/joinedaclubview.png" width="300"/>
+2. You can create a book-club about any topic and it'll automatically show up in your clubs once joined.
+   <img height="450" src="images/createclubview.png" width="300"/>
+3. From the My Clubs tab, you can access each individual book club's books and your own personal notes.
+   <img height="500" src="images/notes.png" width="300"/>
+   <img height="500" src="images/bookslist.png" width="300"/>
+4. If you decide to not be a part of a bookclub anymore, you can click exit bookclub in the bottom panel and it'll 
+disappear from your clubs and you won't be a member anymore. 
+5. With our search, you can look for books that cater to your interests, or you can search for a specific title.
+   <img height="500" src="images/searchview.png" width="300"/>
 
 * * *
 
-**Your team will know when you are done when:**
-
-- Clicking the "Log Out" button takes the user back to the Login View when you use the program.
-- The provided `LogoutInteractorTest` test passes.
-
-The "Log Out" button is an instance variable in class `LoggedInVew`. Go find it.
-Also look at the `interface_adapter.change_password.LoggedInViewModel`, which contains any
-data showing on the `LoggedInVew`.
+## Usage Guide
+1. Run main which will prompt you to sign up. After signing up, you get logged into the home-screen.
+   <img height="450" src="images/homescreen.png" width="300"/>
+2. From your home-screen, you can access all the functions listed in [the major features](#features-of-the-software) 
+including creating a book-club, joining a book-club, searching for books, accessing personal notes and book-lists.
+3. Once you're done with the program, please click logout. Your bookclubs will be saved for the next time you want to 
+access them.
+* * *
+# Feedback
+If you'd like to provide feedback on our program, please reach out to us at alihassan.shaikh@mail.utoronto.ca. Please 
+include Page Turners in the subject line and we will try our best to get back to you in a week. 
+* * *
+# Contributions
+If you'd like to contribute, please fork our repository from Github and make a clone using the HTTPS link. Create a branch 
+and add in your own code. If you are contributing to our software for the first time, please email us with the changes you
+would like to make and a detailed plain for them at the email listed in [feedback](#feedback). However, you are not 
+allowed to make changes to the base program.
 
 * * *
+# License
+To view our license, please click the following [link](LICENSE).
 
-## Task 2: Dividing up the work
-
-There are `TODO` comments left in the files
-Recall that you can use the TODO tool window to conveniently pull up a complete list.
-
-Once the TODOs are all complete, the "Log Out" button _should_ work!
-
-As a team, split up the TODOs (see below) between the members of your team.
-
-There are TODOs in seven of the files.
-Make sure each member has at least one TODO which they will be responsible for completing.
-If your team prefers to work in pairs, that is fine too. Your individual branches
-will not be graded for this — only the final, working version.
-
-The TODOs are summarized below (by file) to help your team decide how to split them up:
-
-* * *
-
-- `Main.java`
-
-  - [ ] TODO: add the Logout Use Case to the app using the appBuilder
-
-* * *
-
-- `LoggedInView.java` (tip: refer to the other views for similar code)
-
-  - [ ] TODO: save the logout controller in the instance variable.
-  - [ ] TODO: execute the logout use case through the Controller
-
-* * *
-
-- `LogoutController.java` (tip: refer to the other controllers for similar code)
-
-  - [ ] TODO: Save the interactor in the instance variable.
-  - [ ] TODO: run the use case interactor for the logout use case
-
-* * *
-
-- `LogoutInputData.java` (should be done with the LogoutInteractor TODOs below)
-
-  - [ ] TODO: save the current username in an instance variable and add a getter.
-
-- `LogoutInteractor.java` (tip: refer to `ChangePasswordInteractor.java` for similar code)
-
-  - [ ] TODO: save the DAO and Presenter in the instance variables.
-  - [ ] TODO: implement the logic of the Logout Use Case
-
-* * *
-
-- `LogoutOutputData.java`
-
-  - [ ] TODO: save the parameters in the instance variables.
-
-* * *
-
-- `LogoutPresenter.java` (tip: refer to `SignupPresenter.java` for similar code)
-
-  - [ ] TODO: assign to the three instance variables.
-  - [ ] TODO: have prepareSuccessView update the LoggedInState
-  - [ ] TODO: have prepareSuccessView update the LoginState
-
-* * *
-
-1. Make a branch named the first part of your UofT email address, everything before the `@`.
-For example, if your email address is `paul.gries@mail.utoronto.ca`, then the branch name would
-be `paul.gries`.
-
-Make sure you switch to the new branch.
-
-In the terminal, this would look like below, but replaced with your own information:
-```
-git branch paul.gries
-git switch paul.gries
-```
-
-2. Complete your assigned TODOs and make a pull request on GitHub. In your pull request,
-   briefly describe what your TODOs were and how you implemented them. If you aren't sure
-   about part of it, include this in your pull request so everyone knows what to look
-   for when reviewing — or you can of course discuss with your team before making your
-   pull request since you are physically working in the same space.
-   - **Important: don't push any changes to the `.idea` folder, as that
-     may cause issues for your other teammates, as some files contain
-     configurations specific to your individual IntelliJ projects.**
-
-3. Review each other's pull requests to ensure each TODO is correctly implemented and that
-   there are no Checkstyle issues in the files that were modified.
-
-4. Once all TODOs are completed, your team should debug as needed to ensure the
-   correctness of the code. Setting a breakpoint where the log-out use case
-   interactor starts its work will likely be a great place to start when debugging.
-
-And that's it; you now have a working Logout Use Case! Instructions for
-how to submit your work on MarkUs will be posted later.
-
-Your team should spend the rest of the lab working on your project blueprint.
-
-* * *
-
-# Project Blueprint
-
-See Quercus for details about the project blueprint! By the end of the week,
-the goal is for your team to have a fully drafted blueprint so that your team
-will be ready to get started on your project after Reading Week.

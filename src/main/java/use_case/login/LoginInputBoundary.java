@@ -10,4 +10,10 @@ public interface LoginInputBoundary {
      * @param loginInputData the input data
      */
     void execute(LoginInputData loginInputData);
+
+    /**
+     * Switches to create club view.
+     */
+    void switchToCreateClubView();
+
 }

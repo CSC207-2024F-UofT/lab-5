@@ -1,12 +1,9 @@
 package use_case.login;
 
 import data_access.InMemoryUserDataAccessObject;
-import entity.CommonUserFactory;
-import entity.User;
 import entity.UserFactory;
+import entity.User;
 import org.junit.jupiter.api.Test;
-
-import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,7 +15,7 @@ class LoginInteractorTest {
         LoginUserDataAccessInterface userRepository = new InMemoryUserDataAccessObject();
 
         // For the success test, we need to add Paul to the data access repository before we log in.
-        UserFactory factory = new CommonUserFactory();
+        UserFactory factory = new UserFactory();
         User user = factory.create("Paul", "password");
         userRepository.save(user);
 
@@ -30,8 +27,11 @@ class LoginInteractorTest {
             }
 
             @Override
-            public void prepareFailView(String error) {
-                fail("Use case failure is unexpected.");
+            public void prepareFailView(String error) {fail("Use case failure is unexpected.");}
+
+            @Override
+            public void switchToCreateClubView() {
+
             }
         };
 
@@ -45,7 +45,7 @@ class LoginInteractorTest {
         LoginUserDataAccessInterface userRepository = new InMemoryUserDataAccessObject();
 
         // For the success test, we need to add Paul to the data access repository before we log in.
-        UserFactory factory = new CommonUserFactory();
+        UserFactory factory = new UserFactory();
         User user = factory.create("Paul", "password");
         userRepository.save(user);
 
@@ -59,6 +59,11 @@ class LoginInteractorTest {
             @Override
             public void prepareFailView(String error) {
                 fail("Use case failure is unexpected.");
+            }
+
+            @Override
+            public void switchToCreateClubView() {
+
             }
         };
 
@@ -75,7 +80,7 @@ class LoginInteractorTest {
 
         // For this failure test, we need to add Paul to the data access repository before we log in, and
         // the passwords should not match.
-        UserFactory factory = new CommonUserFactory();
+        UserFactory factory = new UserFactory();
         User user = factory.create("Paul", "password");
         userRepository.save(user);
 
@@ -90,6 +95,11 @@ class LoginInteractorTest {
             @Override
             public void prepareFailView(String error) {
                 assertEquals("Incorrect password for \"Paul\".", error);
+            }
+
+            @Override
+            public void switchToCreateClubView() {
+                fail("Use case switch is unexpected.");
             }
         };
 
@@ -115,6 +125,11 @@ class LoginInteractorTest {
             @Override
             public void prepareFailView(String error) {
                 assertEquals("Paul: Account does not exist.", error);
+            }
+
+            @Override
+            public void switchToCreateClubView() {
+                fail("Use case switch is unexpected.");
             }
         };
 

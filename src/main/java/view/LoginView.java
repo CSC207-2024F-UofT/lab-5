@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -38,7 +39,6 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     private LoginController loginController;
 
     public LoginView(LoginViewModel loginViewModel) {
-
         this.loginViewModel = loginViewModel;
         this.loginViewModel.addPropertyChangeListener(this);
 
@@ -123,11 +123,19 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
             }
         });
 
+        title.setBackground(Color.WHITE);
+        usernameInfo.setBackground(Color.WHITE);
+        usernameErrorField.setBackground(Color.WHITE);
+        passwordInfo.setBackground(Color.WHITE);
+        buttons.setBackground(Color.WHITE);
+        this.setBackground(Color.WHITE);
+
         this.add(title);
         this.add(usernameInfo);
         this.add(usernameErrorField);
         this.add(passwordInfo);
         this.add(buttons);
+
     }
 
     /**
@@ -157,4 +165,5 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     public void setLoginController(LoginController loginController) {
         this.loginController = loginController;
     }
+
 }

@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -49,7 +50,6 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                 new JLabel(SignupViewModel.PASSWORD_LABEL), passwordInputField);
         final LabelTextPanel repeatPasswordInfo = new LabelTextPanel(
                 new JLabel(SignupViewModel.REPEAT_PASSWORD_LABEL), repeatPasswordInputField);
-
         final JPanel buttons = new JPanel();
         toLogin = new JButton(SignupViewModel.TO_LOGIN_BUTTON_LABEL);
         buttons.add(toLogin);
@@ -90,6 +90,12 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         addRepeatPasswordListener();
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        title.setBackground(Color.WHITE);
+        repeatPasswordInfo.setBackground(Color.WHITE);
+        usernameInfo.setBackground(Color.WHITE);
+        this.setBackground(Color.WHITE);
+        passwordInfo.setBackground(Color.WHITE);
+        buttons.setBackground(Color.WHITE);
 
         this.add(title);
         this.add(usernameInfo);
