@@ -1,181 +1,288 @@
-# Lab 5: Logout
+# Joe's Bookstore
+## Contributors:
+* William Gao (williamrygao)
+* Roy Gal (graoly)
+* Victor Li (VictorLJZ)
+* Tanush Arora (tanusharora)
+* Zefeng Wu (ZefW)
 
-## Preamble
+## Purpose
+Joe's Bookstore is an online marketplace for books. It permits browsing and selling books of any kind. Born out
+of an elementary desire for quality literature, Joe has designed a state-of-the-art software for discovering and
+purchasing books.
 
-In the current homework, you added code to the login use case to save the currently-logged-in
-user by saving the user in the Data Access Layer. You also added a unit test for this.
+## Table of Contents
+* [Features](#features)
+* [Installation Instructions](#installation-instructions)
+* [Usage Guide](#usage-guide)
+* [License](#license)
+* [Give Us Feedback](#give-us-feedback)
+* [Want To Contribute?](#want-to-contribute)
 
-In this lab, you will complete a logout use case as a team. You will also begin to discuss your project
-and the use cases that need to be implemented. 
+## Features
 
-We have created all the Clean Architecture classes necessary for the logout use case.
+Joe's Bookstore is designed to make the process of browsing and selling books as simple and efficient as possible. Below are the core features of the software:
 
-By Friday, your team will submit:
-- your completed lab code [for credit]
-- a draft of your project blueprint proposal. [required, but not for credit]
+**1. User Authentication**
 
-# Phase 2 [for credit]
-_(recall, Phase 1 was your solo task of adding the storage of the currently-logged-in user)_
+- Secure sign-up and login functionality.<br>
+- User data is securely stored for easy access to wishlists, and more.
 
-## Task 0: Fork this repo on GitHub
-**To get started, one team member should fork this repo on GitHub and share it with the team. 
-All of you should then clone it.**
+![User Authentication](images/User-Authentication.png)
 
-* * *
+**2. Browse Listings**
 
-Suggested logistics: One of you should invite the others to collaborate on their fork of the
-original repo on GitHub. You can do this in your repo on GitHub under `Settings -> Collaborators`.
-This will allow you to push branches to a common repo and then use pull requests to contribute
-your code and review. To prevent others from pushing directly to the main branch,
-we recommend you set branch protection rules on GitHub. Below are how the settings might look if you
-add branch protection rules:
+- View detailed information on all available listings, with the ability to sort by title, author, genre, price, rating, and wishlist status.
 
-![image of branch protection rules for main with the
-requirement of two approvers to merge in pull requests.
-](images/branch_protection_rules.png)
+![Home Page](images/HomePage.png)
 
-* * *
+**3. Refine Search**
 
-Open the project in IntelliJ and make sure you can successfully run `app/Main.java`.
-Note: you may need to set the Project SDK in the `Project Structure...` menu, and possibly
-also manually link the Maven project, as you did in Phase 1.
+- Restrict the displayed listings by setting a maximum price or minimum rating.<br>
+- Search listings using specific queries such as book title, author, genre and more.
 
-## Task 1: Understanding the Program
+![Filter By Price](images/Filter-By-Price.png)
+![Filter By Price](images/Filter-By-Genre.png)
 
-You may notice that we have refactored the CA engine code _slightly_ since Phase 1, but the
-way we build the engine is drastically different: we have switched from using Factories to
-using the Builder design pattern, which we'll be discussing in lecture soon. 
+**4. Discover and Sell Books**
 
-Open up `app.Main` and read it as a team.
-- What are the Views and what are the current Use Cases?
-- Which Uses Cases are triggered from each View?
-- Which version of the DAO is `app.Main` using?
+- User can build a wishlist of books they wish to buy.<br>
+- Users can list their own books for sale.
 
-The major change since Phase 1 is that we have added the `app.AppBuilder` class which makes
-it easier to understand how our CA engine is being constructed — it also makes `app.Main` nice and concise!
-- Why do all those `addX` methods end in `return this;`? 
+![Retail Price](images/Retail-Price.png)
 
-Run the program and make sure the signup and login Use Cases work.
+![Wishlist](images/Wishlist.png)
 
-Currently, you'll notice that the "Log Out" button still doesn't actually log you out. It's time to fix
-that button, which is part of the `LoggedInView`.
-We have created all the classes for you, but some of the code is missing.
-As a team, your task is to fill in the missing code so that the Logout Use Case is implemented.
-**The next part of the readme describes how your team will do this.**
+## Installation Instructions
 
-* * *
+Prerequisites:
+Before installing Joe's Bookstore, ensure you have/can access the following:
 
-**Your team will know when you are done when:**
+**1. Install IntelliJ (Preferred IDE)**
 
-- Clicking the "Log Out" button takes the user back to the Login View when you use the program.
-- The provided `LogoutInteractorTest` test passes.
+   Purpose: IntelliJ is an integrated development environment (IDE) tailored for Java development and is highly recommended for this project.
+   While it’s not strictly required, it offers advanced features that will enhance your productivity. 
+   [Software installation guide](https://www.jetbrains.com/help/idea/installation-guide.html)
+   
+   **Notes:**
+   
+   **Ultimate vs Community:** 
+   The Ultimate version includes features like generating UML diagrams and more advanced integrations.
+   While the Community Edition is sufficient to get started, the Ultimate version is preferred for full functionality.
+   
+   **Plugins:** Install plugins for enhanced functionality (e.g., UML diagram generation, code analysis).
+   Instructions for [installing plugins](https://www.jetbrains.com/help/idea/managing-plugins.html#install_plugin_from_repo)
+   
+   **Recommended Plugins:**
+   
+   - Code Style & Best Practices: CheckStyle-IDEA, SonarLint
+   - Visualization & UML: Java Visualizer, PlantUML Integration, Diagrams.net Integration
+   
+**3. Install Java**
 
-The "Log Out" button is an instance variable in class `LoggedInVew`. Go find it.
-Also look at the `interface_adapter.change_password.LoggedInViewModel`, which contains any
-data showing on the `LoggedInVew`.
+   Install JDK 11+ (JDK 17+ recommended) via [IntelliJ]( https://www.jetbrains.com/help/idea/sdk.html#manage_sdks).
+   Follow these instructions to download and set up JDK.
 
-* * *
+**4. GoogleBooksAPI (Data Access)**
 
-## Task 2: Dividing up the work
+   Generate an API key to make calls to the Google Books API, which Joe's Bookstore uses to retrieve detailed book data. Instructions can be found at [Google Books API Guide](https://developers.google.com/books/overview). Once you have your API key, store it in a file called api_key.env in your local repository, in the following format:
 
-There are `TODO` comments left in the files
-Recall that you can use the TODO tool window to conveniently pull up a complete list.
-
-Once the TODOs are all complete, the "Log Out" button _should_ work!
-
-As a team, split up the TODOs (see below) between the members of your team.
-
-There are TODOs in seven of the files.
-Make sure each member has at least one TODO which they will be responsible for completing.
-If your team prefers to work in pairs, that is fine too. Your individual branches
-will not be graded for this — only the final, working version.
-
-The TODOs are summarized below (by file) to help your team decide how to split them up:
-
-* * *
-
-- `Main.java`
-
-  - [ ] TODO: add the Logout Use Case to the app using the appBuilder
-
-* * *
-
-- `LoggedInView.java` (tip: refer to the other views for similar code)
-
-  - [ ] TODO: save the logout controller in the instance variable.
-  - [ ] TODO: execute the logout use case through the Controller
-
-* * *
-
-- `LogoutController.java` (tip: refer to the other controllers for similar code)
-
-  - [ ] TODO: Save the interactor in the instance variable.
-  - [ ] TODO: run the use case interactor for the logout use case
-
-* * *
-
-- `LogoutInputData.java` (should be done with the LogoutInteractor TODOs below)
-
-  - [ ] TODO: save the current username in an instance variable and add a getter.
-
-- `LogoutInteractor.java` (tip: refer to `ChangePasswordInteractor.java` for similar code)
-
-  - [ ] TODO: save the DAO and Presenter in the instance variables.
-  - [ ] TODO: implement the logic of the Logout Use Case
-
-* * *
-
-- `LogoutOutputData.java`
-
-  - [ ] TODO: save the parameters in the instance variables.
-
-* * *
-
-- `LogoutPresenter.java` (tip: refer to `SignupPresenter.java` for similar code)
-
-  - [ ] TODO: assign to the three instance variables.
-  - [ ] TODO: have prepareSuccessView update the LoggedInState
-  - [ ] TODO: have prepareSuccessView update the LoginState
-
-* * *
-
-1. Make a branch named the first part of your UofT email address, everything before the `@`.
-For example, if your email address is `paul.gries@mail.utoronto.ca`, then the branch name would
-be `paul.gries`.
-
-Make sure you switch to the new branch.
-
-In the terminal, this would look like below, but replaced with your own information:
-```
-git branch paul.gries
-git switch paul.gries
+```bash
+API_KEY="your API key here"   
 ```
 
-2. Complete your assigned TODOs and make a pull request on GitHub. In your pull request,
-   briefly describe what your TODOs were and how you implemented them. If you aren't sure
-   about part of it, include this in your pull request so everyone knows what to look
-   for when reviewing — or you can of course discuss with your team before making your
-   pull request since you are physically working in the same space.
-   - **Important: don't push any changes to the `.idea` folder, as that
-     may cause issues for your other teammates, as some files contain
-     configurations specific to your individual IntelliJ projects.**
+**5. Firebase Account & Firebase SDK (For contributors):**
 
-3. Review each other's pull requests to ensure each TODO is correctly implemented and that
-   there are no Checkstyle issues in the files that were modified.
+   Set up a [Firebase](https://firebase.google.com/) account. Once you’ve created a Firebase project, you can generate an API key and the Firebase configuration object. In src/main/resources/, include a file serviceAccount.json in the following format:
 
-4. Once all TODOs are completed, your team should debug as needed to ensure the
-   correctness of the code. Setting a breakpoint where the log-out use case
-   interactor starts its work will likely be a great place to start when debugging.
+```json
+{
+  "type": "service_account",
+  "project_id": "csc207project-ed2f9",
+  "private_key_id": "your private key ID here",
+  "private_key": "-----BEGIN PRIVATE KEY-----\n your private key here \n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-d6nlw@csc207project-ed2f9.iam.gserviceaccount.com",
+  "client_id": "105179899008478085244",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-d6nlw%40csc207project-ed2f9.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
+```
 
-And that's it; you now have a working Logout Use Case! Instructions for
-how to submit your work on MarkUs will be posted later.
+**6. Git:**
 
-Your team should spend the rest of the lab working on your project blueprint.
+   Git is required for cloning the repository. [Install Git](https://git-scm.com/downloads.)
 
-* * *
+**Special Notes:**
 
-# Project Blueprint
+IntelliJ is highly recommended for managing dependencies, building the project, and working with version control. 
+While it's not required, using it will make tasks like debugging and testing more efficient.
 
-See Quercus for details about the project blueprint! By the end of the week,
-the goal is for your team to have a fully drafted blueprint so that your team
-will be ready to get started on your project after Reading Week.
+**For MacOS:** Ensure to download the .dmg version and follow the Mac-specific installation steps.
+
+**For Windows:** Use the .exe installer and follow Windows-specific instructions for installation.
+Currently, our project does not support Android implementation, but it’s a feature planned for future updates.
+
+## Usage Guide
+
+### Usage Guide for Joe's Bookstore
+
+Once you've successfully installed Joe's Bookstore and set up your environment, follow the steps below to start using the software and begin browsing, buying, and selling books.
+
+---
+
+#### **1. Setting Up the Project Locally**
+
+**Clone the repository to your local machine:**
+
+```bash
+git clone https://github.com/williamrygao/CSC207-Project.git
+```
+Navigate to the project folder:
+
+```bash
+cd CSC207-Project
+```
+
+**Open the project in IntelliJ (or your preferred IDE):**
+
+In IntelliJ, click the Run button or use the terminal to run the main class (usually Main.java or equivalent entry point). 
+You can also use Maven to build the project:
+
+```bash
+mvn clean install
+mvn exec:java
+```
+
+Verify that the project runs without errors.
+
+**2. Interacting with the Application**
+
+Main Features:
+
+- **User Authentication:** Sign up and log in securely.
+
+- **Search for Books:** Enter search terms (e.g., book title, author) to find relevant books.
+
+- **Sorting:** You can sort all listings by title, author, price, or rating.
+
+- **Browse Categories:** Explore books sorted by genre or price.
+
+- **Sell Books:** List books for sale.
+
+**3. Google Books API Integration**
+
+The application integrates with the Google Books API to fetch book details based on your search queries.
+Search through the API by using the [endpoint.](https://www.googleapis.com/books/v1/volumes?q=search%20terms) 
+The API will return relevant book information like title, authors, descriptions, and availability.
+
+**4. Key Integrations (For Contributors)**
+
+**Google Books API**
+
+The app fetches book data from the Google Books API. 
+This integration enhances search functionality, allowing users to explore detailed information about books, including:
+
+- Title<br>
+- Author<br>
+- Category/Genre<br>
+- Description<br>
+- Availability<br>
+- Ratings
+
+**Firebase Integration**
+
+Firebase handles all database operations:
+
+- **User Authentication:** Stores user credentials securely.
+- **Book Listings:** Adds, updates, and removes book data.
+- **User Data:** Manages purchase history, wishlists, and more.
+- **Adding Data:** Contributors can access Firebase to add new books, update book details, or remove listings.
+Firebase data operations can be done through Firebase Admin SDK, with relevant permissions granted via API keys.
+
+**5. Running Tests**
+
+Unit tests and integration tests are provided for core functionalities.
+To run tests, use the built-in testing tools in IntelliJ (JUnit) or execute the tests via Maven:
+
+```bash
+mvn test
+```
+
+## License
+
+This project is dedicated to the public domain under the [CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/) license. 
+
+You are free to use, modify, and distribute the code for any purpose, including commercial use, without any restrictions. For full details, please refer to the `LICENSE` file in this repository.
+
+## Give Us Feedback
+We value your input and are always looking for ways to improve our software. If you'd like to share your thoughts,
+suggestions, or report any issues, here's how you can provide feedback:
+1. Share your feedback using our dedicated [feedback form](https://docs.google.com/forms/d/e/1FAIpQLSdMBz0mUjYl57bAOSNlAt0em3yHeEJynOQUuhzR0vUzXEaiwA/viewform?usp=sf_link).
+In doing so, you may choose whether you would like be contacted about your feedback and your general user experience. 
+2. Alternatively, you can contact us directly by [email](mailto:williamry.gao@mail.utoronto.ca). We'll be in touch ASAP!
+
+## Want To Contribute?
+We welcome contributions to improve the software! If you're interested in contributing, please follow the steps below to ensure a smooth process.
+1. **Fork the Repository**:  
+   To start contributing, first fork the project’s repository to your own GitHub account. This allows you to freely experiment and make changes without affecting the main codebase.
+
+    - Go to the project repository on GitHub: [Project Repository](https://github.com/williamrygao/CSC207-Project)
+    - Click the **Fork** button on the top right of the page.
+
+2. **Clone the Fork**:  
+   Once you've forked the project, clone your fork to your local machine to start working on the changes.
+
+   ```bash
+   git clone https://github.com/yourusername/project.git
+   cd project
+
+3. **Create a New Branch**:  
+   Always create a new branch for your changes. This keeps your work organized and makes it easier for us to review.
+
+   ```bash
+   git checkout -b feature-branch-name
+4. **Make Your Changes**:  
+   Now, make your changes to the codebase. Whether it's fixing a bug, adding a new feature, or improving documentation, make sure your changes align with the project's goals.
+
+    - If you're fixing a bug, try to include a clear description of the bug and how your fix resolves it.
+    - If you're adding a feature, ensure that it adds value to the project and aligns with the overall direction of the project.
+    - If you're updating documentation, make sure it's clear, concise, and accurate.
+5. **Commit Your Changes**:  
+   Once your changes are made, commit them with a clear and concise message explaining what was done.
+
+   ```bash
+   git add .
+   git commit -m "Description of the changes made"
+6. **Push Your Changes**:
+   Push your branch to your fork on GitHub.
+   ```bash
+   git push origin feature-branch-name
+7. **Create a Pull Request**:
+   Once your changes are pushed, create a pull request from your fork to the main repository. You can do this by visiting your fork on GitHub and clicking the New Pull Request button. 
+   Make sure your pull request is based on the latest version of the main branch (or whichever branch you're submitting to).
+   Provide a clear description of what your pull request does and why it's important.
+### Guidelines for Creating a Good Merge Request
+
+To help ensure your contribution can be merged smoothly, please follow these guidelines:
+
+- **Clarity**: Provide a detailed description of what your pull request does. If it fixes a bug, include the steps to reproduce the bug and how your changes fix it.
+- **Consistency**: Follow the code style and structure used throughout the project. If you are unsure, refer to the existing code for guidance.
+- **Testing**: Ensure that your changes don’t break any existing functionality. Run tests (if applicable) and add new tests for any new features or bug fixes.
+- **Small Changes**: Where possible, submit small, focused changes. This makes it easier for the team to review and merge your contribution.
+
+### Reviewing Contributions
+
+Our project maintainers will review your pull request to ensure it aligns with the project goals, coding standards, and overall quality.
+
+- **Code Review**: One or more maintainers will review your pull request. If necessary, they may suggest changes or improvements. Please be ready to make adjustments based on their feedback.
+- **Tests**: We will run automated tests (if applicable) to verify that your changes do not break existing functionality.
+- **Approval and Merge**: If your pull request passes review and tests, it will be approved and merged into the project. We may merge it directly or through a “squash and merge” method to keep the commit history clean.
+
+### Contribution Protocols
+
+- **Communication**: Always discuss larger changes with the team before starting. Use issues or the discussion board to propose new features or changes.
+- **Respect for Others**: Be respectful and constructive in all communications. We want to foster a positive and collaborative environment for everyone.
+- **Licensing**: Ensure that your contributions are your own work and that you have the right to submit them. By submitting a pull request, you agree to license your contributions under the project’s licensing terms.

@@ -5,8 +5,24 @@ package use_case.logout;
  */
 public class LogoutInputData {
 
-    public LogoutInputData(String username) {
-        // TODO: save the current username in an instance variable and add a getter.
+    /**
+     * String username.
+     */
+    private final String username;
+
+    /**
+     * LogoutInputData method.
+     * @param username the username
+     */
+    public LogoutInputData(final String username) {
+        this.username = username;
     }
 
+    /**
+     * Getter for username.
+     * @return username
+     */
+    public String getUsername() {
+        return username;
+    }
 }
