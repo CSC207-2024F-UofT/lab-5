@@ -1,7 +1,9 @@
 package interface_adapter.logout;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.change_password.LoggedInState;
 import interface_adapter.change_password.LoggedInViewModel;
+import interface_adapter.login.LoginState;
 import interface_adapter.login.LoginViewModel;
 import use_case.logout.LogoutOutputBoundary;
 import use_case.logout.LogoutOutputData;
@@ -9,6 +11,7 @@ import use_case.logout.LogoutOutputData;
 /**
  * The Presenter for the Logout Use Case.
  */
+
 public class LogoutPresenter implements LogoutOutputBoundary {
 
     private LoggedInViewModel loggedInViewModel;
@@ -18,7 +21,9 @@ public class LogoutPresenter implements LogoutOutputBoundary {
     public LogoutPresenter(ViewManagerModel viewManagerModel,
                           LoggedInViewModel loggedInViewModel,
                            LoginViewModel loginViewModel) {
-        // TODO: assign to the three instance variables.
+        this.viewManagerModel = viewManagerModel;
+        this.loggedInViewModel = loggedInViewModel;
+        this.loginViewModel = loginViewModel;
     }
 
     @Override
@@ -34,12 +39,20 @@ public class LogoutPresenter implements LogoutOutputBoundary {
         // 2. set the username in the state to the empty string
         // 3. set the state in the LoggedInViewModel to the updated state
         // 4. firePropertyChanged so that the View that is listening is updated.
-
+        final LoggedInState loggedinstate = loggedInViewModel.getState();
+        loggedinstate.setUsername("");
+        this.loggedInViewModel.setState(loggedinstate);
+        loggedInViewModel.firePropertyChanged();
         // TODO: have prepareSuccessView update the LoginState
         // 5. get the LoginState out of the appropriate View Model,
         // 6. set the username and password in the state to the empty string
         // 7. set the state in the LoginViewModel to the updated state
         // 8. firePropertyChanged so that the View that is listening is updated.
+        final LoginState loginstate = loginViewModel.getState();
+        loginstate.setUsername("");
+        loginstate.setPassword("");
+        this.loginViewModel.setState(loginstate);
+        loginViewModel.firePropertyChanged();
 
         // This code tells the View Manager to switch to the LoginView.
         this.viewManagerModel.setState(loginViewModel.getViewName());

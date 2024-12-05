@@ -1,181 +1,112 @@
-# Lab 5: Logout
+# **CSC207 Final Project: G1 Preparation Tool - Gear Up**
 
-## Preamble
+## Authors and Contributors
 
-In the current homework, you added code to the login use case to save the currently-logged-in
-user by saving the user in the Data Access Layer. You also added a unit test for this.
+- **Kimberly Fu** - *Quiz Feature*  
+  [Kimberly GitHub page](https://github.com/KiiimFU)
 
-In this lab, you will complete a logout use case as a team. You will also begin to discuss your project
-and the use cases that need to be implemented. 
+- **Yixuan (Amelia) Wu** - *Mode Selection & Result Display Feature*  
+  [Yixuan's GitHub page](https://github.com/amiwu421)
 
-We have created all the Clean Architecture classes necessary for the logout use case.
+- **Yanting (Clara) Fan** - *Test Mode & Study Mode*  
+  [Yanting's GitHub page](https://github.com/faenwitee)
 
-By Friday, your team will submit:
-- your completed lab code [for credit]
-- a draft of your project blueprint proposal. [required, but not for credit]
+- **Zixiang (Terry) Huang** - *API & Database & app visualization*  
+  [Zixiang's GitHub page](https://github.com/trrrrrrry)
 
-# Phase 2 [for credit]
-_(recall, Phase 1 was your solo task of adding the storage of the currently-logged-in user)_
 
-## Task 0: Fork this repo on GitHub
-**To get started, one team member should fork this repo on GitHub and share it with the team. 
-All of you should then clone it.**
+## Overview
+This program is designed to help users effectively prepare for their G1 driving test by offering a variety of practice options. Users can learn at their own pace by practicing individual topics through different modules. In addition to module-specific practice, users can simulate full G1 test experiences using our mimic test feature, which replicates the real test environment with randomized questions.
 
-* * *
+By offering both focused learning and realistic test simulations, this program provides a comprehensive way for users to build their confidence and knowledge, ensuring they are well-prepared to succeed in their G1 test.
 
-Suggested logistics: One of you should invite the others to collaborate on their fork of the
-original repo on GitHub. You can do this in your repo on GitHub under `Settings -> Collaborators`.
-This will allow you to push branches to a common repo and then use pull requests to contribute
-your code and review. To prevent others from pushing directly to the main branch,
-we recommend you set branch protection rules on GitHub. Below are how the settings might look if you
-add branch protection rules:
 
-![image of branch protection rules for main with the
-requirement of two approvers to merge in pull requests.
-](images/branch_protection_rules.png)
+## Table of Contents
+1. [Author and Contributors](#authors-and-contributors)
+2. [Overview](#overview)
+3. [Table of Contents](#table-of-contents)
+4. [Features](#features)
+5. [Installation instructions](#installation-instruction)
+6. [Usage Guide](#usage-guide)
+7. [License](#license)
+8. [Section for Feedback](#section-for-feedback)
+9. [Contribution Guidelines](#contribution-guidelines)
 
-* * *
+## Features
+* **Personalized Account (API)**: Personalized account for each use with valid email address. Invalid Email will be rejected as shown below. 
+![Invalid Email](images/invalidemail.png)
+* **Flexible Study Methods**: Provide Study Mode and Test Mode for the user to flexibly choose their study plan.
+![Mode Selection](images/mode_selection.png)
+* **Modular Learning (Study Mode)**: Practice questions through modules in Study Mode, which ensure the study process is more achievable.
+![Modules](images/Modules.png)
+* **Mimic Test Feature (Test Mode)**: Simulate a full G1 test in Test Mode, with randomized 40 questions to experience real test conditions.
+![Test Mode](images/test_mode.png)
+* **Progress Tracking (Test Result)**: Keep track of your incorrect questions which allows users to review their progress.
+* **User-Friendly Interface**: Designed for easy navigation and intuitive learning, making preparation accessible for everyone.
 
-Open the project in IntelliJ and make sure you can successfully run `app/Main.java`.
-Note: you may need to set the Project SDK in the `Project Structure...` menu, and possibly
-also manually link the Maven project, as you did in Phase 1.
+## Installation Instruction
+### Step 1: To Install this project, users are required to download specific packages and software if they haven't done. 
+**Package and Software that need to be downloaded - IntelliJ**
+- [Installation Guidelines for IntelliJ](https://www.jetbrains.com/help/idea/installation-guide.html)
 
-## Task 1: Understanding the Program
+**Required Vision - Version 17 JDK**
+- [Install Java with Version 17 JDK](https://www.jetbrains.com/help/idea/sdk.html#manage_sdks)
 
-You may notice that we have refactored the CA engine code _slightly_ since Phase 1, but the
-way we build the engine is drastically different: we have switched from using Factories to
-using the Builder design pattern, which we'll be discussing in lecture soon. 
+**Install Git**
+- [Install Git](https://git-scm.com/downloads)
+- [How to enable git integration](https://www.jetbrains.com/help/idea/enabling-version-control.html)
 
-Open up `app.Main` and read it as a team.
-- What are the Views and what are the current Use Cases?
-- Which Uses Cases are triggered from each View?
-- Which version of the DAO is `app.Main` using?
+**Get a GitHub Account**
+- [Instruction for Signing Up a GitHub Account](https://education.github.com/pack)
 
-The major change since Phase 1 is that we have added the `app.AppBuilder` class which makes
-it easier to understand how our CA engine is being constructed — it also makes `app.Main` nice and concise!
-- Why do all those `addX` methods end in `return this;`? 
+**Common Issues of Installation**
+When cloning our program to the downloaded IntelliJ, users may be required to authenticate GitHub account on their InterlliJ if they haven't done. The following link is the instruction for authenticating GitHub account on IntelliJ.
+- [Authenticate GitHub account on IntelliJ](https://www.jetbrains.com/help/idea/github.html)
 
-Run the program and make sure the signup and login Use Cases work.
+### Step 2: After downloading required software and packages, users now can clone install our project following the steps below. 
+1. Copy the following link
+> https://github.com/faenwitee/GearUp.git
+2. Click "Get from Version Control" on the top right corner
+3. Paste the above link and click "clone"
+4. locate the file named "main"
+5. Run the file
 
-Currently, you'll notice that the "Log Out" button still doesn't actually log you out. It's time to fix
-that button, which is part of the `LoggedInView`.
-We have created all the classes for you, but some of the code is missing.
-As a team, your task is to fill in the missing code so that the Logout Use Case is implemented.
-**The next part of the readme describes how your team will do this.**
+## Usage Guide
+* After locating and running the file named "main", user now can sign up for a personal account using a valid email address. 
+![SignUp](images/signup.png)
+* Then user may choose either study or test mode to aid their study.
+![ModeSelection](images/mode_selection.png)
+* Following the instruction for each mode, user can start studying
+* After complete each module or test, user would get a result summary.
+* Clicking the "finish" button on the result displaying page would allow user go back to the mode selection page, which allows user to engage again (repeating process with above). 
 
-* * *
+## License
+This project is open source licensed under the MIT License, which allows you to freely use, modify, and distribute the code for personal or commercial purposes, provided that you include the original copyright notice.
+See the [LICENSE](LICENSE) file for the full text.
 
-**Your team will know when you are done when:**
+## Section for Feedback
+We value your feedback! If you have any suggestions, bug reports, or feature requests, please feel free to open an issue in the GitHub repository. Your input will help us improve and make the G1 Test Preparation Program even better.
 
-- Clicking the "Log Out" button takes the user back to the Login View when you use the program.
-- The provided `LogoutInteractorTest` test passes.
+## Contribution Guidelines
+We welcome contriutions from you to enhance the program! If you're interested in contrubuting, please follow these steps:
+1. **Fork the Repository**: Create a copy of the repository in your own GitHub account.
 
-The "Log Out" button is an instance variable in class `LoggedInVew`. Go find it.
-Also look at the `interface_adapter.change_password.LoggedInViewModel`, which contains any
-data showing on the `LoggedInVew`.
+2. **Create a Branch**: Make a new branch for your feature or bug fix.
 
-* * *
+    >git checkout -b feature/your-feature-name
 
-## Task 2: Dividing up the work
+3. **Make Changes**: Add your changes or improvements to the code.
 
-There are `TODO` comments left in the files
-Recall that you can use the TODO tool window to conveniently pull up a complete list.
+4. **Write Tests**: If applicable, write tests to ensure that your changes work as expected.
 
-Once the TODOs are all complete, the "Log Out" button _should_ work!
+5. **Commit Changes**: Commit your changes with a meaningful commit message. 
 
-As a team, split up the TODOs (see below) between the members of your team.
+    >git commit -m "Add your meaningful commit message here"
 
-There are TODOs in seven of the files.
-Make sure each member has at least one TODO which they will be responsible for completing.
-If your team prefers to work in pairs, that is fine too. Your individual branches
-will not be graded for this — only the final, working version.
+6. **Push the Branch**: Push your changes to your forked repository.
 
-The TODOs are summarized below (by file) to help your team decide how to split them up:
+    >git push origin feature/your-feature-name
 
-* * *
+7. **Open a Pull Request**: Create a pull request from your branch to the main repository.
 
-- `Main.java`
-
-  - [ ] TODO: add the Logout Use Case to the app using the appBuilder
-
-* * *
-
-- `LoggedInView.java` (tip: refer to the other views for similar code)
-
-  - [ ] TODO: save the logout controller in the instance variable.
-  - [ ] TODO: execute the logout use case through the Controller
-
-* * *
-
-- `LogoutController.java` (tip: refer to the other controllers for similar code)
-
-  - [ ] TODO: Save the interactor in the instance variable.
-  - [ ] TODO: run the use case interactor for the logout use case
-
-* * *
-
-- `LogoutInputData.java` (should be done with the LogoutInteractor TODOs below)
-
-  - [ ] TODO: save the current username in an instance variable and add a getter.
-
-- `LogoutInteractor.java` (tip: refer to `ChangePasswordInteractor.java` for similar code)
-
-  - [ ] TODO: save the DAO and Presenter in the instance variables.
-  - [ ] TODO: implement the logic of the Logout Use Case
-
-* * *
-
-- `LogoutOutputData.java`
-
-  - [ ] TODO: save the parameters in the instance variables.
-
-* * *
-
-- `LogoutPresenter.java` (tip: refer to `SignupPresenter.java` for similar code)
-
-  - [ ] TODO: assign to the three instance variables.
-  - [ ] TODO: have prepareSuccessView update the LoggedInState
-  - [ ] TODO: have prepareSuccessView update the LoginState
-
-* * *
-
-1. Make a branch named the first part of your UofT email address, everything before the `@`.
-For example, if your email address is `paul.gries@mail.utoronto.ca`, then the branch name would
-be `paul.gries`.
-
-Make sure you switch to the new branch.
-
-In the terminal, this would look like below, but replaced with your own information:
-```
-git branch paul.gries
-git switch paul.gries
-```
-
-2. Complete your assigned TODOs and make a pull request on GitHub. In your pull request,
-   briefly describe what your TODOs were and how you implemented them. If you aren't sure
-   about part of it, include this in your pull request so everyone knows what to look
-   for when reviewing — or you can of course discuss with your team before making your
-   pull request since you are physically working in the same space.
-   - **Important: don't push any changes to the `.idea` folder, as that
-     may cause issues for your other teammates, as some files contain
-     configurations specific to your individual IntelliJ projects.**
-
-3. Review each other's pull requests to ensure each TODO is correctly implemented and that
-   there are no Checkstyle issues in the files that were modified.
-
-4. Once all TODOs are completed, your team should debug as needed to ensure the
-   correctness of the code. Setting a breakpoint where the log-out use case
-   interactor starts its work will likely be a great place to start when debugging.
-
-And that's it; you now have a working Logout Use Case! Instructions for
-how to submit your work on MarkUs will be posted later.
-
-Your team should spend the rest of the lab working on your project blueprint.
-
-* * *
-
-# Project Blueprint
-
-See Quercus for details about the project blueprint! By the end of the week,
-the goal is for your team to have a fully drafted blueprint so that your team
-will be ready to get started on your project after Reading Week.
+8. **Review**: Wait for a review and make any requested changes.
