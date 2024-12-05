@@ -1,0 +1,557 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="37038727-020f-4306-9966-45194133245d" name="Changes" comment="Added starter implementation of AssetReport">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/osiris/use_case/asset_report/AssetReportInteractor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/osiris/use_case/asset_report/AssetReportInteractor.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CoverageOptionsProvider">
+    <option name="myAddOrReplace" value="0" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="UML Use Case" />
+        <option value="editable-svg" />
+        <option value="UML Class" />
+        <option value="Interface" />
+        <option value="Class" />
+        <option value="Dockerfile" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Mahan-H&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/Mahan-H/CSC207_Project.git",
+    "accountId": "567f7439-1398-4705-9b04-777fb3067431"
+  }
+}]]></component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectColorInfo">{
+    &quot;associatedIndex&quot;: 0
+    }</component>
+  <component name="ProjectId" id="2pO0l6VvuXnd5zAlplnZqPFiiTB" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Main.executor": "Run",
+    "Application.Unnamed (1).executor": "Run",
+    "Application.Unnamed.executor": "Run",
+    "Batch.mvnw.executor": "Run",
+    "DefaultPlantUmlFileTemplate": "UML Class",
+    "JUnit.GrabTransactionControllerTest.executor": "Run",
+    "JUnit.GrabTransactionsTest.testFetchTransactionsSuccess.executor": "Run",
+    "JUnit.PlaidDataAccessObjectTest.executor": "Run",
+    "JUnit.PlaidDataAccessObjectTest.testFetchTransactions.executor": "Run",
+    "JUnit.PlaidIntegrationTest.executor": "Run",
+    "JavaScript Debug.index.html.executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
+    "Spring Boot.PlaidIntegrationApplication (1).executor": "Run",
+    "Spring Boot.PlaidIntegrationApplication.executor": "Run",
+    "app.teamhub.selectedTeam": "github.com/Mahan-H/lab-5",
+    "extract.method.default.visibility": "private",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/mahan/IdeaProjects/lab-5/mystyle.xml",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "reference.settings.ide.settings.uml",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
+    ]
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\mahan\IdeaProjects\lab-5" />
+      <recent name="C:\Users\mahan\IdeaProjects\lab-5\.idea" />
+      <recent name="C:\Users\mahan\IdeaProjects\lab-5\src\main" />
+      <recent name="C:\Users\mahan\IdeaProjects\lab-5\src\main\resources\static" />
+      <recent name="C:\Users\mahan\IdeaProjects\lab-5\src\main\resources" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\mahan\IdeaProjects\lab-5\src\main\resources" />
+      <recent name="C:\Users\mahan\IdeaProjects\lab-5" />
+    </key>
+    <key name="IntroduceConstantDialog.RECENTS_KEY">
+      <recent name="osiris.data_access.DBUserDataAccessObject" />
+      <recent name="osiris.view.WelcomeView" />
+    </key>
+    <key name="MoveInnerDialog.RECENTS_KEY">
+      <recent name="osiris.interface_adapter.plaid" />
+      <recent name="osiris.use_case.plaid" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="osiris.interface_adapter.dashboard" />
+      <recent name="osiris.use_case.dashboard" />
+      <recent name="" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.Main">
+    <configuration name="Main" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="osiris.app.Main" />
+      <module name="plaid-integration" />
+      <extension name="net.ashald.envfile">
+        <option name="IS_ENABLED" value="true" />
+        <option name="IS_SUBST" value="false" />
+        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
+        <option name="IS_IGNORE_MISSING_FILES" value="false" />
+        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
+        <ENTRIES>
+          <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
+          <ENTRY IS_ENABLED="true" PARSER="env" IS_EXECUTABLE="false" PATH=".env" />
+        </ENTRIES>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="app.Main" />
+      <module name="homework-5" />
+      <extension name="net.ashald.envfile">
+        <option name="IS_ENABLED" value="true" />
+        <option name="IS_SUBST" value="false" />
+        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
+        <option name="IS_IGNORE_MISSING_FILES" value="false" />
+        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
+        <ENTRIES>
+          <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
+          <ENTRY IS_ENABLED="true" PARSER="env" IS_EXECUTABLE="false" PATH=".env" />
+        </ENTRIES>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GrabTransactionControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="plaid-integration" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="osiris.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="use_case.grabtransactions" />
+      <option name="MAIN_CLASS_NAME" value="use_case.grabtransactions.GrabTransactionControllerTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GrabTransactionsInteractorTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="plaid-integration" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="use_case.grabtransactions.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+        <pattern>
+          <option name="PATTERN" value="osiris.use_case.grabtransactions.GrabTransactionsInteractor" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <extension name="net.ashald.envfile">
+        <option name="IS_ENABLED" value="false" />
+        <option name="IS_SUBST" value="false" />
+        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
+        <option name="IS_IGNORE_MISSING_FILES" value="false" />
+        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
+        <ENTRIES>
+          <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
+        </ENTRIES>
+      </extension>
+      <option name="PACKAGE_NAME" value="use_case.grabtransactions" />
+      <option name="MAIN_CLASS_NAME" value="use_case.grabtransactions.GrabTransactionsInteractorTest" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GrabTransactionsTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="plaid-integration" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="use_case.grabtransactions.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+        <pattern>
+          <option name="PATTERN" value="osiris.use_case.grabtransactions.GrabTransactionsInteractor" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <extension name="net.ashald.envfile">
+        <option name="IS_ENABLED" value="false" />
+        <option name="IS_SUBST" value="false" />
+        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
+        <option name="IS_IGNORE_MISSING_FILES" value="false" />
+        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
+        <ENTRIES>
+          <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
+        </ENTRIES>
+      </extension>
+      <option name="PACKAGE_NAME" value="use_case.grabtransactions" />
+      <option name="MAIN_CLASS_NAME" value="use_case.grabtransactions.GrabTransactionsTest" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PlaidDataAccessObjectTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="plaid-integration" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="use_case.grabtransactions.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="use_case.grabtransactions" />
+      <option name="MAIN_CLASS_NAME" value="use_case.grabtransactions.PlaidDataAccessObjectTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PlaidDataAccessObjectTest.testFetchTransactions" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="plaid-integration" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="osiris.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="use_case.grabtransactions" />
+      <option name="MAIN_CLASS_NAME" value="use_case.grabtransactions.PlaidDataAccessObjectTest" />
+      <option name="METHOD_NAME" value="testFetchTransactions" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PlaidDataAccessObjectTest.testFetchTransactions" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="plaid-integration" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="use_case.grabtransactions.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="use_case.grabtransactions" />
+      <option name="MAIN_CLASS_NAME" value="use_case.grabtransactions.PlaidDataAccessObjectTest" />
+      <option name="METHOD_NAME" value="testFetchTransactions" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ViewExpensesControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="plaid-integration" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="use_case.viewexpenses.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="use_case.viewexpenses" />
+      <option name="MAIN_CLASS_NAME" value="use_case.viewexpenses.ViewExpensesControllerTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ViewExpensesControllerTest" type="JUnit" factoryName="JUnit" nameIsGenerated="true">
+      <module name="plaid-integration" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="use_case.viewexpenses.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="use_case.viewexpenses" />
+      <option name="MAIN_CLASS_NAME" value="use_case.viewexpenses.ViewExpensesControllerTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ViewExpensesControllerTest.testExecute" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="plaid-integration" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="use_case.viewexpenses.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="use_case.viewexpenses" />
+      <option name="MAIN_CLASS_NAME" value="use_case.viewexpenses.ViewExpensesControllerTest" />
+      <option name="METHOD_NAME" value="testExecute" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ViewExpensesInteractorTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="plaid-integration" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="use_case.viewexpenses.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+        <pattern>
+          <option name="PATTERN" value="osiris.use_case.viewexpenses.ViewExpensesInteractor" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <extension name="net.ashald.envfile">
+        <option name="IS_ENABLED" value="false" />
+        <option name="IS_SUBST" value="false" />
+        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
+        <option name="IS_IGNORE_MISSING_FILES" value="false" />
+        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
+        <ENTRIES>
+          <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
+        </ENTRIES>
+      </extension>
+      <option name="PACKAGE_NAME" value="use_case.viewexpenses" />
+      <option name="MAIN_CLASS_NAME" value="use_case.viewexpenses.ViewExpensesInteractorTest" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ViewExpensesInteractorTest.testHandle" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="plaid-integration" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="use_case.viewexpenses.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="use_case.viewexpenses" />
+      <option name="MAIN_CLASS_NAME" value="use_case.viewexpenses.ViewExpensesInteractorTest" />
+      <option name="METHOD_NAME" value="testHandle" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PlaidIntegrationApplication (1)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="plaid-integration" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="osiris.PlaidIntegrationApplication" />
+      <extension name="net.ashald.envfile">
+        <option name="IS_ENABLED" value="false" />
+        <option name="IS_SUBST" value="false" />
+        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
+        <option name="IS_IGNORE_MISSING_FILES" value="false" />
+        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
+        <ENTRIES>
+          <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
+        </ENTRIES>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PlaidIntegrationApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="homework-5" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="osiris.app.PlaidIntegrationApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PlaidIntegrationApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="plaid-integration" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="osiris.PlaidIntegrationApplication" />
+      <extension name="net.ashald.envfile">
+        <option name="IS_ENABLED" value="true" />
+        <option name="IS_SUBST" value="false" />
+        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
+        <option name="IS_IGNORE_MISSING_FILES" value="false" />
+        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
+        <ENTRIES>
+          <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
+          <ENTRY IS_ENABLED="true" PARSER="env" IS_EXECUTABLE="false" PATH=".env" />
+        </ENTRIES>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.Unnamed" />
+      <item itemvalue="Application.Main" />
+      <item itemvalue="JUnit.GrabTransactionsInteractorTest" />
+      <item itemvalue="JUnit.GrabTransactionsTest" />
+      <item itemvalue="JUnit.ViewExpensesInteractorTest" />
+      <item itemvalue="JUnit.ViewExpensesInteractorTest.testHandle" />
+      <item itemvalue="JUnit.ViewExpensesControllerTest" />
+      <item itemvalue="JUnit.ViewExpensesControllerTest.testExecute" />
+      <item itemvalue="JUnit.GrabTransactionControllerTest" />
+      <item itemvalue="JUnit.PlaidDataAccessObjectTest" />
+      <item itemvalue="JUnit.PlaidDataAccessObjectTest.testFetchTransactions" />
+      <item itemvalue="Spring Boot.PlaidIntegrationApplication (1)" />
+      <item itemvalue="Spring Boot.PlaidIntegrationApplication" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.GrabTransactionsTest" />
+        <item itemvalue="JUnit.ViewExpensesInteractorTest" />
+        <item itemvalue="JUnit.GrabTransactionsInteractorTest" />
+        <item itemvalue="JUnit.PlaidDataAccessObjectTest.testFetchTransactions" />
+        <item itemvalue="JUnit.ViewExpensesInteractorTest.testHandle" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.21829.142" />
+        <option value="bundled-js-predefined-d6986cc7102b-7c0b70fcd90d-JavaScript-IU-242.21829.142" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="37038727-020f-4306-9966-45194133245d" name="Changes" comment="" />
+      <created>1732621971505</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1732621971505</updated>
+      <workItem from="1732621979938" duration="33000" />
+      <workItem from="1732622029302" duration="15170000" />
+      <workItem from="1732664391116" duration="4703000" />
+      <workItem from="1732716541896" duration="12536000" />
+      <workItem from="1732749621524" duration="13057000" />
+      <workItem from="1732927140228" duration="4822000" />
+      <workItem from="1732991885900" duration="19601000" />
+      <workItem from="1733046801612" duration="11202000" />
+      <workItem from="1733165874632" duration="8969000" />
+    </task>
+    <task id="LOCAL-00001" summary="Created dashboard with no button functionality yet">
+      <option name="closed" value="true" />
+      <created>1733079204900</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1733079204900</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Created dashboard with no button functionality yet">
+      <option name="closed" value="true" />
+      <created>1733079761262</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1733079761262</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Added CAPTCHA files">
+      <option name="closed" value="true" />
+      <created>1733169089199</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1733169089199</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Added more CAPTCHA files">
+      <option name="closed" value="true" />
+      <created>1733172606393</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1733172606393</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Added starter implementation of AssetReport">
+      <option name="closed" value="true" />
+      <created>1733173983523</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1733173983523</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Created dashboard with no button functionality yet" />
+    <MESSAGE value="Added CAPTCHA files" />
+    <MESSAGE value="Added more CAPTCHA files" />
+    <MESSAGE value="Added starter implementation of AssetReport" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added starter implementation of AssetReport" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.IllegalStateException" package="java.lang" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
