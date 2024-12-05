@@ -1,4 +1,8 @@
+
 package app;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
 
 import javax.swing.JFrame;
 
@@ -9,18 +13,37 @@ public class Main {
     /**
      * Builds and runs the CA architecture of the application.
      * @param args unused arguments
+     * @throws URISyntaxException a URISyntax exception
+     * @throws IOException a IOException
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws URISyntaxException, IOException {
         final AppBuilder appBuilder = new AppBuilder();
-        // TODO: add the Logout Use Case to the app using the appBuilder
         final JFrame application = appBuilder
-                                            .addLoginView()
-                                            .addSignupView()
-                                            .addLoggedInView()
-                                            .addSignupUseCase()
-                                            .addLoginUseCase()
-                                            .addChangePasswordUseCase()
-                                            .build();
+                .addLoginView()
+                .addSearchedView()
+                .addSearchView()
+                .addSignupView()
+                .addMyClubsView()
+                .addLoggedInView()
+                .addJoinClubView()
+                .addShowNotesView()
+                .addAddMessageView()
+                .addCreateClubView()
+                .addShowBooksView()
+                .addLogoutUseCase()
+                .addSignupUseCase()
+                .addChangePasswordUseCase()
+                .addExitBookClubUseCase()
+                .addBooksListUseCase()
+                .addMyClubsUsecase()
+                .addJoinClubUseCase()
+                .addShowNotesUseCase()
+                .addAddMessagesUseCase()
+                .addLoginUseCase()
+                .addCreateClubUseCase()
+                .addBookClubListUseCase()
+                .addSearchUseCase()
+                .build();
 
         application.pack();
         application.setVisible(true);

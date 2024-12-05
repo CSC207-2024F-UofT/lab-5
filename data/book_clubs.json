@@ -1,0 +1,65 @@
+{
+  "Reading Club" : {
+    "name" : "Reading Club",
+    "description" : "Literature",
+    "members" : [ "user2", "user1", "y" ],
+    "books" : [ {
+      "title" : "book1",
+      "author" : "author1",
+      "genre" : "action",
+      "rating" : 9.0,
+      "reviews" : [ ]
+    }, {
+      "title" : "book2",
+      "author" : "author2",
+      "genre" : "thriller",
+      "rating" : 8.0,
+      "reviews" : [ ]
+    } ],
+    "notes" : {
+      "Topic1" : {
+        "topic" : "topic1",
+        "messages" : [ {
+          "username" : "user1",
+          "text" : "hello"
+        }, {
+          "username" : "user1",
+          "text" : "hi"
+        }, {
+          "username" : "user1",
+          "text" : "hello"
+        }, {
+          "username" : "user1",
+          "text" : "bye"
+        }, {
+          "username" : "user1",
+          "text" : "what is up "
+        }, {
+          "username" : "user1",
+          "text" : "working aight"
+        }, {
+          "username" : "user1",
+          "text" : "lessgooo"
+        }, {
+          "username" : "user1",
+          "text" : "sup"
+        }, {
+          "username" : "user2",
+          "text" : "hi"
+        }, {
+          "username" : "user2",
+          "text" : "hey"
+        }, {
+          "username" : "user2",
+          "text" : "hi"
+        }, {
+          "username" : "user1",
+          "text" : "nice meeting you"
+        }, {
+          "username" : "user1",
+          "text" : "hello"
+        } ]
+      }
+    }
+  }
+}
