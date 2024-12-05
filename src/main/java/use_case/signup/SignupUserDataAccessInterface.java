@@ -19,4 +19,10 @@ public interface SignupUserDataAccessInterface {
      * @param user the user to save
      */
     void save(User user);
+
+    /**
+     * Saves the pwl of user.
+     * @param user the user to save
+     */
+    void savePwl(User user);
 }

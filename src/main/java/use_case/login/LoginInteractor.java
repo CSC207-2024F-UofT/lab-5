@@ -8,6 +8,7 @@ import entity.User;
 public class LoginInteractor implements LoginInputBoundary {
     private final LoginUserDataAccessInterface userDataAccessObject;
     private final LoginOutputBoundary loginPresenter;
+    private User loggedInUser;
 
     public LoginInteractor(LoginUserDataAccessInterface userDataAccessInterface,
                            LoginOutputBoundary loginOutputBoundary) {
@@ -23,18 +24,25 @@ public class LoginInteractor implements LoginInputBoundary {
             loginPresenter.prepareFailView(username + ": Account does not exist.");
         }
         else {
-            final String pwd = userDataAccessObject.get(username).getPassword();
+            final User user = userDataAccessObject.get(username);
+            final String pwd = user.getPassword();
             if (!password.equals(pwd)) {
                 loginPresenter.prepareFailView("Incorrect password for \"" + username + "\".");
             }
             else {
-
-                final User user = userDataAccessObject.get(loginInputData.getUsername());
-
-                userDataAccessObject.setCurrentUsername(user.getName());
-                final LoginOutputData loginOutputData = new LoginOutputData(user.getName(), false);
+                loggedInUser = user;
+                userDataAccessObject.setCurrentUsername(loggedInUser.getName());
+                final LoginOutputData loginOutputData = new LoginOutputData(loggedInUser.getName(), false);
                 loginPresenter.prepareSuccessView(loginOutputData);
             }
         }
+    }
+
+    /**
+     * Executes the switch to signup view use case.
+     */
+    @Override
+    public void switchToSignUpView() {
+        loginPresenter.switchToSignUpView();
     }
 }

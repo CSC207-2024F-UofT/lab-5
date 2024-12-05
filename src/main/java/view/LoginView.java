@@ -1,6 +1,6 @@
 package view;
 
-import java.awt.Component;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -34,27 +34,45 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     private final JLabel passwordErrorField = new JLabel();
 
     private final JButton logIn;
-    private final JButton cancel;
+    private final JButton toSignUp;
     private LoginController loginController;
 
     public LoginView(LoginViewModel loginViewModel) {
-
         this.loginViewModel = loginViewModel;
         this.loginViewModel.addPropertyChangeListener(this);
 
         final JLabel title = new JLabel("Login Screen");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+        final JLabel greetings = new JLabel("Welcome Back!");
+        greetings.setFont(new Font("Sans Serif", Font.BOLD, 20));
+        greetings.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        final JLabel userNameLabel = new JLabel("Username");
+
         final LabelTextPanel usernameInfo = new LabelTextPanel(
-                new JLabel("Username"), usernameInputField);
+                userNameLabel, usernameInputField);
+        final JLabel passwordLabel = new JLabel("Password");
+
         final LabelTextPanel passwordInfo = new LabelTextPanel(
-                new JLabel("Password"), passwordInputField);
+                passwordLabel, passwordInputField);
 
         final JPanel buttons = new JPanel();
-        logIn = new JButton("log in");
+
+        toSignUp = new JButton("Create an account");
+        toSignUp.setBackground(new Color(238, 232, 170));
+        toSignUp.setOpaque(true);
+        toSignUp.setBorderPainted(false);
+        toSignUp.setForeground(Color.BLACK);
+        buttons.add(toSignUp);
+
+        logIn = new JButton("Log in");
+        logIn.setBackground(new Color(173, 216, 230));
+        logIn.setOpaque(true);
+        logIn.setBorderPainted(false);
+        logIn.setForeground(Color.BLACK);
+
         buttons.add(logIn);
-        cancel = new JButton("cancel");
-        buttons.add(cancel);
 
         logIn.addActionListener(
                 new ActionListener() {
@@ -71,7 +89,12 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                 }
         );
 
-        cancel.addActionListener(this);
+        toSignUp.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        loginController.switchToSignUpView();
+                    }
+                });
 
         usernameInputField.getDocument().addDocumentListener(new DocumentListener() {
 
@@ -123,7 +146,13 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
             }
         });
 
+        // styling
+        this.setPreferredSize(new Dimension(450, 500));
+        final JLabel blank = new JLabel(" ");
+
         this.add(title);
+        this.add(blank);
+        this.add(greetings);
         this.add(usernameInfo);
         this.add(usernameErrorField);
         this.add(passwordInfo);

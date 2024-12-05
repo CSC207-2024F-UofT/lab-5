@@ -33,6 +33,11 @@ class LoginInteractorTest {
             public void prepareFailView(String error) {
                 fail("Use case failure is unexpected.");
             }
+
+            @Override
+            public void switchToSignUpView() {
+                fail("Switch is unexpected.");
+            }
         };
 
         LoginInputBoundary interactor = new LoginInteractor(userRepository, successPresenter);
@@ -60,6 +65,11 @@ class LoginInteractorTest {
             public void prepareFailView(String error) {
                 fail("Use case failure is unexpected.");
             }
+
+            @Override
+            public void switchToSignUpView() {
+                fail("Switch is unexpected.");
+            }
         };
 
         LoginInputBoundary interactor = new LoginInteractor(userRepository, successPresenter);
@@ -67,6 +77,36 @@ class LoginInteractorTest {
 
         interactor.execute(inputData);
     }
+
+    @Test
+    void switchToSignUpViewTest() {
+        LoginUserDataAccessInterface userRepository = new InMemoryUserDataAccessObject();
+
+        // Create a presenter to test the switchToSignUpView functionality.
+        LoginOutputBoundary presenter = new LoginOutputBoundary() {
+            @Override
+            public void prepareSuccessView(LoginOutputData user) {
+                fail("Success view preparation is unexpected.");
+            }
+
+            @Override
+            public void prepareFailView(String error) {
+                fail("Failure view preparation is unexpected.");
+            }
+
+            @Override
+            public void switchToSignUpView() {
+                // If this is called, the test passes.
+                assertTrue(true, "Switch to SignUp view was called successfully.");
+            }
+        };
+
+        LoginInputBoundary interactor = new LoginInteractor(userRepository, presenter);
+
+        // Call the method to switch to the signup view.
+        interactor.switchToSignUpView();
+    }
+
 
     @Test
     void failurePasswordMismatchTest() {
@@ -90,6 +130,11 @@ class LoginInteractorTest {
             @Override
             public void prepareFailView(String error) {
                 assertEquals("Incorrect password for \"Paul\".", error);
+            }
+
+            @Override
+            public void switchToSignUpView() {
+                fail("Switch is unexpected.");
             }
         };
 
@@ -115,6 +160,11 @@ class LoginInteractorTest {
             @Override
             public void prepareFailView(String error) {
                 assertEquals("Paul: Account does not exist.", error);
+            }
+
+            @Override
+            public void switchToSignUpView() {
+                fail("Switch is unexpected.");
             }
         };
 

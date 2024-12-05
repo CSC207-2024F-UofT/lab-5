@@ -1,6 +1,6 @@
 package view;
 
-import java.awt.Component;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -33,7 +33,6 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
     private SignupController signupController;
 
     private final JButton signUp;
-    private final JButton cancel;
     private final JButton toLogin;
 
     public SignupView(SignupViewModel signupViewModel) {
@@ -41,6 +40,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         signupViewModel.addPropertyChangeListener(this);
 
         final JLabel title = new JLabel(SignupViewModel.TITLE_LABEL);
+        title.setFont(new Font("Sans Serif", Font.BOLD, 16));
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         final LabelTextPanel usernameInfo = new LabelTextPanel(
@@ -52,11 +52,18 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
 
         final JPanel buttons = new JPanel();
         toLogin = new JButton(SignupViewModel.TO_LOGIN_BUTTON_LABEL);
+        toLogin.setBackground(new Color(238, 232, 170));
+        toLogin.setOpaque(true);
+        toLogin.setBorderPainted(false);
+        toLogin.setForeground(Color.BLACK);
         buttons.add(toLogin);
+
         signUp = new JButton(SignupViewModel.SIGNUP_BUTTON_LABEL);
+        signUp.setBackground(new Color(173, 216, 230));
+        signUp.setOpaque(true);
+        signUp.setBorderPainted(false);
+        signUp.setForeground(Color.BLACK);
         buttons.add(signUp);
-        cancel = new JButton(SignupViewModel.CANCEL_BUTTON_LABEL);
-        buttons.add(cancel);
 
         signUp.addActionListener(
                 // This creates an anonymous subclass of ActionListener and instantiates it.
@@ -70,10 +77,12 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                                     currentState.getPassword(),
                                     currentState.getRepeatPassword()
                             );
+                            signupController.switchToSurvey1View(currentState.getUsername());
                         }
                     }
                 }
         );
+        this.setBackground(new Color(255, 255, 255));
 
         toLogin.addActionListener(
                 new ActionListener() {
@@ -82,8 +91,6 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                     }
                 }
         );
-
-        cancel.addActionListener(this);
 
         addUsernameListener();
         addPasswordListener();

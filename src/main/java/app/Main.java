@@ -1,5 +1,7 @@
 package app;
 
+import java.io.IOException;
+
 import javax.swing.JFrame;
 
 /**
@@ -9,19 +11,46 @@ public class Main {
     /**
      * Builds and runs the CA architecture of the application.
      * @param args unused arguments
+     * @throws IOException if an error occurs while reading the file
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         final AppBuilder appBuilder = new AppBuilder();
-        // TODO: add the Logout Use Case to the app using the appBuilder
         final JFrame application = appBuilder
                                             .addLoginView()
                                             .addSignupView()
                                             .addLoggedInView()
+                                            .addWatchlistsView()
+                                            .addWatchlistView()
+                                            .addSurvey1View()
+                                            .addMovieView()
+                                            .addMyReviewsView()
+                                            .addSearchResultsView()
+                                            .addLeaveReviewView()
+                                            .addSurveySecondPageView()
+                                            .addSearchResultsView()
+
                                             .addSignupUseCase()
                                             .addLoginUseCase()
-                                            .addChangePasswordUseCase()
-                                            .build();
+                                            .addLogoutUseCase()
+                                            .addWatchlistsUseCase()
+                                            .addWatchlistUseCase()
+                                            .addHomeUseCase()
+                                            .addLeaveReviewUseCase()
+                                            .addCreateWatchlistUseCase()
+                                            .addRenameUseCase()
+                                            .addDeleteUseCase()
+                                            .addMyReviewsUseCase()
+                                            .addSurvey1UseCase()
+                                            .addSearchResultsUseCase()
+                                            .addMovieUseCase()
+                                            .addSurveySecondPageUseCase()
+                                            .addSearchResultsUseCase()
+                                            .addMovieUseCase()
+                                            .addAddToWatchlistUseCase()
+                                            .addRemoveUseCase()
 
+                                            .build();
+        
         application.pack();
         application.setVisible(true);
     }
